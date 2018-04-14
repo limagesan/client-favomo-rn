@@ -1,11 +1,13 @@
 import { StyleSheet } from "react-native";
 
-export const favomoBase = "#FFFA73";
+export const Color = {
+  base: "#FFFA73"
+};
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: favomoBase,
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center"
   },
