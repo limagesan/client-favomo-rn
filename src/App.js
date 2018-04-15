@@ -1,49 +1,145 @@
 import React, { Component } from "react";
+import { Linking, View, Text, Button } from "react-native";
 
 import { StackNavigator, TabNavigator, TabBarBottom } from "react-navigation";
 
 import { Color } from "./styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import HomeScreen from "./HomeScreen";
-import PostScreen from "./PostScreen";
-import FeedScreen from "./FeedScreen";
+import {
+  MyboxScreen,
+  PostScreen,
+  FeedScreen,
+  LoginScreen,
+  RegisterScreen,
+  NotificationScreen,
+  ProfileScreen
+} from "./screens";
 
-// export default class App extends Component {
-//   render() {
-//     return <RootTab />;
-//   }
-// }
+import firebase from "react-native-firebase";
 
-const HomeStack = StackNavigator({
-  Home: {
-    screen: HomeScreen
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true
+    };
+  }
+
+  /**
+   * When the App component mounts, we listen for any authentication
+   * state changes in Firebase.
+   * Once subscribed, the 'user' parameter will either be null 
+   * (logged out) or an Object (logged in)
+   */
+  componentDidMount() {
+    this.authSubscription = firebase.auth().onAuthStateChanged(user => {
+      this.setState({
+        loading: false,
+        user
+      });
+    });
+    Linking.addEventListener("url", this.handleOpenURL);
+  }
+  /**
+   * Don't forget to stop listening for authentication state changes
+   * when the component unmounts.
+   */
+  componentWillUnmount() {
+    this.authSubscription();
+    Linking.removeEventListener("url", this.handleOpenURL);
+  }
+
+  handleOpenURL(event) {
+    console.log("DeepLink: ", event.url);
+    const route = e.url.replace(/.*?:\/\//g, "");
+    // do something with the url, in our case navigate(route)
+  }
+
+  render() {
+    return <TabNav />;
+  }
+}
+
+class ModalScreen extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+        <Button
+          onPress={() => this.props.navigation.goBack()}
+          title="Dismiss"
+        />
+      </View>
+    );
+  }
+}
+
+const FeedStack = StackNavigator({
+  Feed: {
+    screen: FeedScreen
+  },
+  Login: {
+    screen: LoginScreen
+  }
+});
+
+const NotificationStack = StackNavigator({
+  Notification: {
+    screen: NotificationScreen
+  }
+});
+
+const ProfileStack = StackNavigator({
+  Profile: {
+    screen: ProfileScreen
+  }
+});
+
+const MyboxStack = StackNavigator({
+  Mybox: {
+    screen: MyboxScreen
   },
   Post: {
     screen: PostScreen
   }
 });
 
-const FeedStack = StackNavigator({
-  Feed: {
-    screen: FeedScreen
-  }
-});
-
-export default TabNavigator(
+const ModalStack = StackNavigator(
   {
-    Home: { screen: HomeStack },
-    Feed: { screen: FeedStack }
+    Mybox: {
+      screen: MyboxScreen
+    },
+    MyModal: {
+      screen: ModalScreen
+    }
+  },
+  {
+    mode: "modal",
+    headerMode: "none"
+  }
+);
+
+const TabNav = TabNavigator(
+  {
+    Feed: { screen: FeedStack },
+    Mybox: { screen: MyboxStack },
+    Notification: { screen: NotificationStack },
+    Profile: { screen: ProfileStack }
   },
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === "Home") {
-          iconName = `ios-information-circle${focused ? "" : "-outline"}`;
-        } else if (routeName === "Settings") {
-          iconName = `ios-options${focused ? "" : "-outline"}`;
+        if (routeName === "Mybox") {
+          iconName = `ios-filing${focused ? "" : "-outline"}`;
+        } else if (routeName === "Feed") {
+          iconName = `ios-list${focused ? "" : "-outline"}`;
+        } else if (routeName === "Profile") {
+          iconName = `ios-person${focused ? "" : "-outline"}`;
+        } else if (routeName === "Notification") {
+          iconName = `ios-notifications${focused ? "" : "-outline"}`;
         }
 
         // You can return any component that you like here! We usually use an
@@ -54,7 +150,7 @@ export default TabNavigator(
     tabBarComponent: TabBarBottom,
     tabBarPosition: "bottom",
     tabBarOptions: {
-      activeTintColor: "tomato",
+      activeTintColor: "orange",
       inactiveTintColor: "gray"
     },
     animationEnabled: false,
