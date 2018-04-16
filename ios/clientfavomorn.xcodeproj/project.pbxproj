@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -54,6 +55,7 @@
 		DAAD7196305B417584CD5C29 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DC24D0B2C5E483A8ABD5DCF /* MaterialIcons.ttf */; };
 		DF0D204CC5494D828EAAD4C4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43973F400872460C88698709 /* MaterialCommunityIcons.ttf */; };
 		F5025C342082131700A06DEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5025C0C2082131600A06DEB /* GoogleService-Info.plist */; };
+		F5025D1620849AAD00A06DEB /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5025D1520849A8500A06DEB /* libSafariViewManager.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -281,6 +283,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFirebase;
 		};
+		F5025D1420849A8500A06DEB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5025D1020849A8500A06DEB /* SafariViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = SafariViewManager;
+		};
 		F508E8EB20818F51006163CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -407,6 +416,7 @@
 		C2A4458EBB764FD9B98C330E /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		F1515B7FEB250829C75E827D /* Pods-clientfavomornTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-clientfavomornTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-clientfavomornTests/Pods-clientfavomornTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F5025C0C2082131600A06DEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F5025D1020849A8500A06DEB /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
 		F508E9D82081F17A006163CC /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		F508E9D92081F17A006163CC /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		F508E9DA2081F17A006163CC /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
@@ -445,6 +455,7 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				F5025D1620849AAD00A06DEB /* libSafariViewManager.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				7F708E550B2D4AE9AD8F4B9F /* libReactNativeNavigation.a in Frameworks */,
@@ -642,6 +653,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F5025D1020849A8500A06DEB /* SafariViewManager.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -729,6 +741,14 @@
 			isa = PBXGroup;
 			children = (
 				F5025C8A20822BA000A06DEB /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5025D1120849A8500A06DEB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5025D1520849A8500A06DEB /* libSafariViewManager.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -962,6 +982,10 @@
 					ProductGroup = F508E9CD2081EF21006163CC /* Products */;
 					ProjectRef = 7529839E11CD46EDAE94F5FB /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = F5025D1120849A8500A06DEB /* Products */;
+					ProjectRef = F5025D1020849A8500A06DEB /* SafariViewManager.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1182,6 +1206,13 @@
 			fileType = archive.ar;
 			path = libRNFirebase.a;
 			remoteRef = F5025C8920822BA000A06DEB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F5025D1520849A8500A06DEB /* libSafariViewManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSafariViewManager.a;
+			remoteRef = F5025D1420849A8500A06DEB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F508E8EC20818F51006163CC /* libjsinspector.a */ = {

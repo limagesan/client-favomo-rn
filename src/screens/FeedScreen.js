@@ -16,6 +16,9 @@ import basicStyles, { Color } from "../styles";
 
 import { StackNavigator } from "react-navigation";
 
+import SafariView from "react-native-safari-view";
+// var SafariView = require("react-native-safari-view");
+
 const items = [
   { id: 1, title: "kimu" },
   { id: 2, title: "kimu" },
@@ -123,14 +126,26 @@ class MyListItem extends React.PureComponent {
                     paddingRight: 10
                   }}
                 >
-                  <Image
-                    style={{ width: 30, height: 30 }}
-                    source={require("../assets/thumbs-up.png")}
-                  />
-                  <Image
-                    style={{ marginLeft: 10, width: 25, height: 25 }}
-                    source={require("../assets/happiness.png")}
-                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log("liked");
+                    }}
+                  >
+                    <Image
+                      style={{ width: 30, height: 30 }}
+                      source={require("../assets/thumbs-up.png")}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log("smiled");
+                    }}
+                  >
+                    <Image
+                      style={{ marginLeft: 10, width: 25, height: 25 }}
+                      source={require("../assets/happiness.png")}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -148,6 +163,16 @@ class MultiSelectList extends React.PureComponent {
 
   _onPressItem = id => {
     // updater functions are preferred for transactional updates
+    SafariView.isAvailable()
+      .then(
+        SafariView.show({
+          url:
+            "https://open.spotify.com/track/3Vo4wInECJQuz9BIBMOu8i?si=AV6Nzqj3T321tPm43iLdfw"
+        })
+      )
+      .catch(error => {
+        // Fallback WebView code for iOS 8 and earlier
+      });
     this.setState(state => {
       // copy the map rather than modifying state.
       const selected = new Map(state.selected);

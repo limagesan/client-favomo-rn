@@ -12,6 +12,8 @@ target 'clientfavomorn' do
   target 'clientfavomorn-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'react-native-safari-view', :path => '../node_modules/react-native-safari-view'
+
   end
 
   target 'clientfavomornTests' do

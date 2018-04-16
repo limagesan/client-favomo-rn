@@ -149,6 +149,11 @@ dependencies {
     }
     compile project(':react-native-vector-icons')
     compile project(':react-native-navigation')
+    compile(project(':react-native-firebase')) {
+        transitive = false
+    }
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-navigation')
     compile project(':react-native-firebase')
     compile project(':react-native-vector-icons')
     compile project(':react-native-navigation')
