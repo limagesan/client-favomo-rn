@@ -1,20 +1,8 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
-  FlatList,
-  Image
-} from "react-native";
+
+import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 
 import basicStyles, { Color } from "../styles";
-
-import { StackNavigator } from "react-navigation";
 
 const items = [
   { id: 1, title: "kimu" },
@@ -28,23 +16,15 @@ const items = [
   { id: 9, title: "kimu" }
 ];
 
-export default class FeedScreen extends Component {
+export default class TextScreen extends Component {
   constructor() {
     super();
-    this._onPressButton = this._onPressButton.bind(this);
-  }
-
-  static navigationOptions = {
-    title: "Feed"
-  };
-
-  _onPressButton() {
-    this.props.navigation.goBack();
   }
 
   render() {
     return (
       <View style={basicStyles.container}>
+        <Text style={basicStyles.button}>Test</Text>
         <MultiSelectList data={items} />
       </View>
     );

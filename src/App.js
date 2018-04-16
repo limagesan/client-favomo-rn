@@ -16,6 +16,8 @@ import {
   ProfileScreen
 } from "./screens";
 
+import TestScreen from "./screens/TestScreen";
+
 import firebase from "react-native-firebase";
 import { log } from "./utils";
 
