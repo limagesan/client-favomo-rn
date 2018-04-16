@@ -32,7 +32,7 @@ export default class MyboxScreen extends Component {
     this.api.get().then(res => {
       console.log("result", res);
     });
-    this.props.navigation.navigate("Post");
+    this.props.navigation.navigate("MyModal");
   }
 
   render() {

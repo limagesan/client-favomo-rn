@@ -17,6 +17,7 @@ import {
 } from "./screens";
 
 import firebase from "react-native-firebase";
+import { log } from "./utils";
 
 export default class App extends Component {
   constructor() {
@@ -57,7 +58,7 @@ export default class App extends Component {
   }
 
   render() {
-    return <TabNav />;
+    return <RootStack />;
   }
 }
 
@@ -78,9 +79,12 @@ class ModalScreen extends Component {
 const FeedStack = StackNavigator({
   Feed: {
     screen: FeedScreen
-  },
-  Login: {
-    screen: LoginScreen
+  }
+});
+
+const MyboxStack = StackNavigator({
+  Mybox: {
+    screen: MyboxScreen
   }
 });
 
@@ -96,38 +100,29 @@ const ProfileStack = StackNavigator({
   }
 });
 
-const MyboxStack = StackNavigator({
-  Mybox: {
-    screen: MyboxScreen
-  },
-  Post: {
-    screen: PostScreen
-  }
-});
-
-const ModalStack = StackNavigator(
-  {
-    Mybox: {
-      screen: MyboxScreen
-    },
-    MyModal: {
-      screen: ModalScreen
-    }
-  },
-  {
-    mode: "modal",
-    headerMode: "none"
-  }
-);
 
 const TabNav = TabNavigator(
   {
     Feed: { screen: FeedStack },
     Mybox: { screen: MyboxStack },
+    Post: { screen: FeedStack },
     Notification: { screen: NotificationStack },
     Profile: { screen: ProfileStack }
   },
   {
+    tabBarComponent: ({ jumpToIndex, ...props, navigation }) => (
+      <TabBarBottom
+        {...props}
+        jumpToIndex={index => {
+          if (index === 2) {
+              navigation.navigate('MyModal')
+          }
+          else {
+              jumpToIndex(index)
+          }
+        }}
+      />
+    ),
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -140,6 +135,8 @@ const TabNav = TabNavigator(
           iconName = `ios-person${focused ? "" : "-outline"}`;
         } else if (routeName === "Notification") {
           iconName = `ios-notifications${focused ? "" : "-outline"}`;
+        } else if (routeName === "Post") {
+          iconName = `ios-add-circle-outline`;
         }
 
         // You can return any component that you like here! We usually use an
@@ -147,7 +144,6 @@ const TabNav = TabNavigator(
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       }
     }),
-    tabBarComponent: TabBarBottom,
     tabBarPosition: "bottom",
     tabBarOptions: {
       activeTintColor: "orange",
@@ -155,5 +151,16 @@ const TabNav = TabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false
+  }
+);
+
+const RootStack = StackNavigator({
+    TabNav: { screen: TabNav },
+    MyModal: { screen: ModalScreen }, 
+    Login: { screen: LoginScreen }
+  },
+  {
+    mode: "modal",
+    headerMode: "none"
   }
 );
