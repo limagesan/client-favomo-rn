@@ -17,7 +17,6 @@ import basicStyles, { Color } from "../styles";
 import { StackNavigator } from "react-navigation";
 
 import SafariView from "react-native-safari-view";
-// var SafariView = require("react-native-safari-view");
 
 const items = [
   { id: 1, title: "kimu" },
