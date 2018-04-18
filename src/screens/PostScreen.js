@@ -6,40 +6,38 @@ import {
   TextInput,
   Alert,
   Button,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from "react-native";
 
 import basicStyles, { Color } from "../styles";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { StackNavigator } from "react-navigation";
 
 export default class PostScreen extends Component {
   constructor() {
     super();
-    this._onPressButton = this._onPressButton.bind(this);
-  }
-
-  static navigationOptions = {
-    title: "Post"
-  };
-
-  _onPressButton() {
-    // this.props.navigation.goBack();
-    this.props.navigation.navigate("MyModal");
   }
 
   render() {
     return (
-      <View style={basicStyles.container}>
-        <Text style={basicStyles.title}>Post</Text>
-        <TouchableHighlight
-          onPress={this._onPressButton}
-          underlayColor={Color.base}
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          alignItems: "center"
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.goBack();
+          }}
+          style={{ alignSelf: "flex-start", marginTop: 30, marginLeft: 30 }}
         >
-          <View style={basicStyles.button}>
-            <Text style={basicStyles.buttonText}>ログイン</Text>
-          </View>
-        </TouchableHighlight>
+          <Ionicons name="ios-close" size={30} color="black" />;
+        </TouchableOpacity>
+        <Text>シェア</Text>
       </View>
     );
   }

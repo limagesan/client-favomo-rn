@@ -117,7 +117,7 @@ const TabNav = TabNavigator(
         {...props}
         jumpToIndex={index => {
           if (index === 2) {
-              navigation.navigate('MyModal')
+              navigation.navigate('PostModal')
           }
           else {
               jumpToIndex(index)
@@ -158,7 +158,7 @@ const TabNav = TabNavigator(
 
 const RootStack = StackNavigator({
     TabNav: { screen: TabNav },
-    MyModal: { screen: ModalScreen }, 
+    PostModal: { screen: PostScreen }, 
     Login: { screen: LoginScreen }
   },
   {
