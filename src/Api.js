@@ -1,13 +1,9 @@
 class Api {
-  constructor() {}
-
   get() {
-    return fetch("https://api-server-favomo.herokuapp.com/api/users/")
+    return fetch('https://api-server-favomo.herokuapp.com/api/users/')
       .then(response => response.json())
-      .then(responseJson => {
-        return responseJson;
-      })
-      .catch(error => {
+      .then(responseJson => responseJson)
+      .catch((error) => {
         console.error(error);
       });
   }

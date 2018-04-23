@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,30 +6,31 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  Keyboard,
-  TouchableWithoutFeedback
-} from "react-native";
+  KeyboardAvoidingView,
+} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import firebase from 'react-native-firebase';
 
-import basicStyles, { Color } from "../styles";
+import basicStyles, { Color } from '../styles';
 
-import { StackNavigator } from "react-navigation";
-
-import firebase from "react-native-firebase";
-
-import log from "../utils/log";
+import log from '../utils/log';
 
 const sub = {
-  firebase: "Firebase"
+  firebase: 'Firebase',
 };
 
 export default class LoginScreen extends Component {
+  static navigationOptions = {
+    title: 'Login',
+  };
+
   constructor() {
     super();
-    this._onPressButton = this._onPressButton.bind(this);
+    this.onPressButton = this.onPressButton.bind(this);
     this.state = {
-      email: "",
-      password: "",
-      loading: true
+      email: '',
+      password: '',
+      loading: true,
     };
 
     this.onLogin = this.onLogin.bind(this);
@@ -37,20 +38,41 @@ export default class LoginScreen extends Component {
     this.verifyEmail = this.verifyEmail.bind(this);
   }
 
-  static navigationOptions = {
-    title: "Login"
-  };
+  componentDidMount() {
+    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: false,
+        user,
+      });
+    });
+  }
 
-  _onPressButton() {
+  componentWillUnmount() {
+    this.authSubscription();
+  }
+
+  onPressButton() {
     this.onLogin();
   }
 
-  logout() {
+  onRegister() {
+    const { email, password } = this.state;
     firebase
       .auth()
-      .signOut()
-      .then(res => {
-        console.log("Firebase: signOut", res);
+      .createUserAndRetrieveDataWithEmailAndPassword(email, password)
+      .then((user) => {
+        log(sub.firebase, 'create user', user);
+        // If you need to do anything with the user, do it here
+        // The user will be logged in automatically by the
+        // `onAuthStateChanged` listener we set up in App.js earlier
+      })
+      .catch((error) => {
+        const { code, message } = error;
+        log(sub.firebase, 'error create user', message);
+
+        // For details of error codes, see the docs
+        // The message contains the default Firebase string
+        // representation of the error
       });
   }
 
@@ -59,14 +81,14 @@ export default class LoginScreen extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log("Firebasecreate user", user);
+      .then((user) => {
+        console.log('Firebasecreate user', user);
 
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
       })
-      .catch(error => {
+      .catch((error) => {
         const { code, message } = error;
         // For details of error codes, see the docs
         // The message contains the default Firebase string
@@ -74,24 +96,12 @@ export default class LoginScreen extends Component {
       });
   }
 
-  onRegister() {
-    const { email, password } = this.state;
+  logout() {
     firebase
       .auth()
-      .createUserAndRetrieveDataWithEmailAndPassword(email, password)
-      .then(user => {
-        log(sub.firebase, "create user", user);
-        // If you need to do anything with the user, do it here
-        // The user will be logged in automatically by the
-        // `onAuthStateChanged` listener we set up in App.js earlier
-      })
-      .catch(error => {
-        const { code, message } = error;
-        log(sub.firebase, "error create user", message);
-
-        // For details of error codes, see the docs
-        // The message contains the default Firebase string
-        // representation of the error
+      .signOut()
+      .then((res) => {
+        console.log('Firebase: signOut', res);
       });
   }
 
@@ -103,33 +113,22 @@ export default class LoginScreen extends Component {
     this.state.user
       .sendEmailVerification({
         iOS: {
-          bundleId: "com.limage.clientfavomorn"
+          bundleId: 'com.limage.clientfavomorn',
         },
-        url: "favomoapp://"
+        url: 'favomoapp://',
       })
-      .then(res => {
-        log(sub.firebase, "send email", res);
+      .then((res) => {
+        log(sub.firebase, 'send email', res);
       });
-  }
-
-  componentDidMount() {
-    this.authSubscription = firebase.auth().onAuthStateChanged(user => {
-      this.setState({
-        loading: false,
-        user
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.authSubscription();
   }
 
   render() {
-    const { email, password, user, loading } = this.state;
+    const {
+      email, password, user, loading,
+    } = this.state;
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <KeyboardAvoidingView behavior="padding">
         <View style={basicStyles.container}>
           <Text style={{ fontSize: 30, marginBottom: 20 }}>ログイン</Text>
           {loading ? <Text>loading</Text> : <Text>didload</Text>}
@@ -141,10 +140,7 @@ export default class LoginScreen extends Component {
             <Text>not logined</Text>
           )}
           {user && (
-            <TouchableHighlight
-              onPress={this.logout}
-              underlayColor={Color.base}
-            >
+            <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
               <View style={basicStyles.button}>
                 <Text style={basicStyles.buttonText}>ログアウト</Text>
               </View>
@@ -154,9 +150,9 @@ export default class LoginScreen extends Component {
             style={{
               height: 40,
               width: 300,
-              borderColor: "gray",
+              borderColor: 'gray',
               borderWidth: 1,
-              marginBottom: 20
+              marginBottom: 20,
             }}
             onChangeText={email => this.setState({ email })}
             value={email}
@@ -168,25 +164,22 @@ export default class LoginScreen extends Component {
             style={{
               height: 40,
               width: 300,
-              borderColor: "gray",
+              borderColor: 'gray',
               borderWidth: 1,
-              marginBottom: 20
+              marginBottom: 20,
             }}
             onChangeText={password => this.setState({ password })}
             value={password}
             maxLength={40}
-            secureTextEntry={true}
+            secureTextEntry
           />
-          <TouchableHighlight
-            onPress={this._onPressButton}
-            underlayColor={Color.base}
-          >
+          <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
             <View style={basicStyles.button}>
               <Text style={basicStyles.buttonText}>ログイン</Text>
             </View>
           </TouchableHighlight>
         </View>
-      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 }
