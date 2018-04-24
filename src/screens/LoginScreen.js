@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
-  Button,
   TouchableHighlight,
+  TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
 import firebase from 'react-native-firebase';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { BaseTextInput } from '../components/TextInput';
+import { Container } from '../components/Container';
 
 import basicStyles, { Color } from '../styles';
 
@@ -52,7 +55,8 @@ export default class LoginScreen extends Component {
   }
 
   onPressButton() {
-    this.onLogin();
+    console.log('press');
+    this.onRegister();
   }
 
   onRegister() {
@@ -80,10 +84,9 @@ export default class LoginScreen extends Component {
     const { email, password } = this.state;
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInAndRetrieveDataWithEmailAndPassword(email, password)
       .then((user) => {
-        console.log('Firebasecreate user', user);
-
+        log(sub.firebase, 'login', user);
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
@@ -127,59 +130,73 @@ export default class LoginScreen extends Component {
       email, password, user, loading,
     } = this.state;
 
-    return (
-      <KeyboardAvoidingView behavior="padding">
-        <View style={basicStyles.container}>
-          <Text style={{ fontSize: 30, marginBottom: 20 }}>ログイン</Text>
-          {loading ? <Text>loading</Text> : <Text>didload</Text>}
-          {user ? user.emailVerified ? (
-            <Text>logined (verified)</Text>
-          ) : (
-            <Text>logined (not verified)</Text>
-          ) : (
-            <Text>not logined</Text>
-          )}
-          {user && (
-            <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
-              <View style={basicStyles.button}>
-                <Text style={basicStyles.buttonText}>ログアウト</Text>
-              </View>
-            </TouchableHighlight>
-          )}
-          <TextInput
-            style={{
-              height: 40,
-              width: 300,
-              borderColor: 'gray',
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-            onChangeText={email => this.setState({ email })}
-            value={email}
-            maxLength={40}
-            keyboardType="default"
-          />
+    let LoadingState = <Text>not logined</Text>;
+    if (user) {
+      if (user.emailVerified) {
+        LoadingState = <Text>loading (verified)</Text>;
+      } else {
+        LoadingState = <Text>loading (not verified)</Text>;
+      }
+    }
 
-          <TextInput
-            style={{
-              height: 40,
-              width: 300,
-              borderColor: 'gray',
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-            onChangeText={password => this.setState({ password })}
-            value={password}
-            maxLength={40}
-            secureTextEntry
-          />
-          <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          backgroundColor: '#FFF',
+          padding: 20,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.goBack();
+          }}
+          style={{ alignSelf: 'flex-start', marginTop: 30, marginLeft: 30 }}
+        >
+          <Ionicons name="ios-close" size={30} color="black" />;
+        </TouchableOpacity>
+        <Text style={{ marginTop: 40, fontSize: 30, marginBottom: 20 }}>サインイン</Text>
+        {LoadingState}
+        {user && (
+          <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
             <View style={basicStyles.button}>
-              <Text style={basicStyles.buttonText}>ログイン</Text>
+              <Text style={basicStyles.buttonText}>ログアウト</Text>
             </View>
           </TouchableHighlight>
-        </View>
-      </KeyboardAvoidingView>
+        )}
+        <TextInput
+          onChangeText={value => this.setState({ email: value })}
+          value={email}
+          maxLength={40}
+          keyboardType="default"
+          style={{
+            height: 40,
+            width: 300,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+          }}
+        />
+        <TextInput
+          onChangeText={value => this.setState({ password: value })}
+          value={password}
+          maxLength={40}
+          secureTextEntry
+          style={{
+            height: 40,
+            width: 300,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+          }}
+        />
+        <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
+          <View style={basicStyles.button}>
+            <Text style={basicStyles.buttonText}>ログイン</Text>
+          </View>
+        </TouchableHighlight>
+      </View>
     );
   }
 }
