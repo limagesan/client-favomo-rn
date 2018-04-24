@@ -9,8 +9,9 @@ import {
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { NavigationActions } from 'react-navigation';
 
 import basicStyles, { Color } from '../styles';
 
@@ -20,7 +21,7 @@ const sub = {
   firebase: 'Firebase',
 };
 
-class LoginScreen extends Component {
+class SignUpScreen extends Component {
   static navigationOptions = {
     title: 'Login',
   };
@@ -34,7 +35,7 @@ class LoginScreen extends Component {
       loading: true,
     };
 
-    this.onLogin = this.onLogin.bind(this);
+    this.onRegister = this.onRegister.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
   }
 
@@ -61,22 +62,24 @@ class LoginScreen extends Component {
 
   onPressButton() {
     console.log('press');
-    this.onLogin();
+    this.onRegister();
   }
 
-  onLogin() {
+  onRegister() {
     const { email, password } = this.state;
     firebase
       .auth()
-      .signInAndRetrieveDataWithEmailAndPassword(email, password)
+      .createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then((user) => {
-        log(sub.firebase, 'login', user);
+        log(sub.firebase, 'create user', user);
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
       })
       .catch((error) => {
         const { code, message } = error;
+        log(sub.firebase, 'error create user', message);
+
         // For details of error codes, see the docs
         // The message contains the default Firebase string
         // representation of the error
@@ -115,7 +118,7 @@ class LoginScreen extends Component {
     } = this.state;
 
     const {
-      user,
+      user, navigation,
     } = this.props;
 
     console.log('check in render', this.props);
@@ -140,13 +143,13 @@ class LoginScreen extends Component {
       >
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.goBack();
+            this.props.navigation.dispatch(NavigationActions.back());
           }}
           style={{ alignSelf: 'flex-start', marginTop: 30, marginLeft: 30 }}
         >
           <Ionicons name="ios-close" size={30} color="black" />;
         </TouchableOpacity>
-        <Text style={{ marginTop: 40, fontSize: 30, marginBottom: 20 }}>ログイン</Text>
+        <Text style={{ marginTop: 40, fontSize: 30, marginBottom: 20 }}>サインイン</Text>
         {LoadingState}
         {user && (
           <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
@@ -183,9 +186,14 @@ class LoginScreen extends Component {
         />
         <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
           <View style={basicStyles.button}>
-            <Text style={basicStyles.buttonText}>ログイン</Text>
+            <Text style={basicStyles.buttonText}>サインアップ</Text>
           </View>
         </TouchableHighlight>
+        <TouchableOpacity onPress={() => { navigation.navigate('Login'); }}>
+          <Text>
+          アカウントをお持ちの方は ログイン
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -194,4 +202,4 @@ class LoginScreen extends Component {
 const mapStateToProps = state => ({ user: state.user });
 
 
-export default connect(mapStateToProps)(LoginScreen);
+export default connect(mapStateToProps)(SignUpScreen);

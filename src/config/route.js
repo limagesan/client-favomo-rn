@@ -3,12 +3,14 @@ import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import DismissableStackNavigator from '../components/DismissableStackNavigator';
+
 import {
   MyboxScreen,
   PostScreen,
   FeedScreen,
   LoginScreen,
-  RegisterScreen,
+  SignUpScreen,
   NotificationScreen,
   ProfileScreen,
 } from '../screens';
@@ -37,6 +39,14 @@ const ProfileStack = StackNavigator({
   },
 });
 
+const AuthStack = DismissableStackNavigator({
+  SignUp: {
+    screen: SignUpScreen,
+  },
+
+  Login: { screen: LoginScreen },
+});
+
 const TabNav = TabNavigator(
   {
     Feed: { screen: FeedStack },
@@ -54,7 +64,7 @@ const TabNav = TabNavigator(
           {...props}
           jumpToIndex={(index) => {
             if (index === 2) {
-              navigation.navigate('LoginModal');
+              navigation.navigate('AuthModal');
             } else {
               jumpToIndex(index);
             }
@@ -97,7 +107,7 @@ export default StackNavigator(
   {
     TabNav: { screen: TabNav },
     PostModal: { screen: PostScreen },
-    LoginModal: { screen: LoginScreen },
+    AuthModal: { screen: AuthStack },
   },
   {
     mode: 'modal',
