@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Text, View } from "react-native";
+import React, { Component } from 'react';
+import { Text, View } from 'react-native';
 
-import basicStyles from "../styles";
+import basicStyles from '../styles';
 
 export default class NotificationScreen extends Component {
   constructor() {
@@ -9,7 +9,7 @@ export default class NotificationScreen extends Component {
   }
 
   static navigationOptions = {
-    title: "Notification"
+    title: 'Notification',
   };
 
   render() {

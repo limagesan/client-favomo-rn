@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Linking } from 'react-native';
+import { Provider } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import RootStack from './config/route';
+import store from './config/store';
 
 EStyleSheet.build({
   $white: '#FFFFFF',
@@ -47,6 +49,10 @@ export default class App extends Component {
   }
 
   render() {
-    return <RootStack />;
+    return (
+      <Provider store={store}>
+        <RootStack />
+      </Provider>
+    );
   }
 }

@@ -11,12 +11,14 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-
-import basicStyles, { Color } from '../styles';
+import { connect } from 'react-redux';
 
 import { StackNavigator } from 'react-navigation';
 
 import SafariView from 'react-native-safari-view';
+
+import basicStyles, { Color } from '../styles';
+
 
 const items = [
   {
@@ -57,7 +59,7 @@ const items = [
   },
 ];
 
-export default class FeedScreen extends Component {
+class FeedScreen extends Component {
   static navigationOptions = {
     title: 'Feed',
   };
@@ -67,6 +69,9 @@ export default class FeedScreen extends Component {
     this.onPressButton = this.onPressButton.bind(this);
   }
 
+  componentDidMount() {
+    console.log('check state in FeedScreen', this.props);
+  }
 
   onPressButton() {
     this.props.navigation.goBack();
@@ -261,9 +266,8 @@ class MultiSelectList extends React.PureComponent {
     selected: new Map(),
   };
 
-  _keyExtractor = (item, index) => item.id;
 
-  _onPressItem = (id) => {
+  onPressItem = (id) => {
     // updater functions are preferred for transactional updates
     SafariView.isAvailable()
       .then(SafariView.show({
@@ -282,10 +286,12 @@ class MultiSelectList extends React.PureComponent {
     });
   };
 
-  _renderItem = ({ item }) => (
+  keyExtractor = (item, index) => item.id;
+
+  renderItem = ({ item }) => (
     <MyListItem
       id={item.id}
-      onPressItem={this._onPressItem}
+      onPressItem={this.onPressItem}
       selected={!!this.state.selected.get(item.id)}
       title={item.title}
     />
@@ -296,8 +302,8 @@ class MultiSelectList extends React.PureComponent {
       <FlatList
         data={this.props.data}
         extraData={this.state}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
         style={{
           width: 375,
         }}
@@ -305,3 +311,5 @@ class MultiSelectList extends React.PureComponent {
     );
   }
 }
+
+export default FeedScreen;

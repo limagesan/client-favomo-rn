@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,23 +7,23 @@ import {
   Button,
   TouchableHighlight,
   Keyboard,
-  TouchableWithoutFeedback
-} from "react-native";
+  TouchableWithoutFeedback,
+} from 'react-native';
 
-import basicStyles, { Color } from "../styles";
+import basicStyles, { Color } from '../styles';
 
-import { StackNavigator } from "react-navigation";
+import { StackNavigator } from 'react-navigation';
 
-import firebase from "react-native-firebase";
+import firebase from 'react-native-firebase';
 
 export default class RegisterScreen extends Component {
   constructor() {
     super();
     this._onPressButton = this._onPressButton.bind(this);
     this.state = {
-      email: "",
-      password: "",
-      loading: true
+      email: '',
+      password: '',
+      loading: true,
     };
 
     this.onLogin = this.onLogin.bind(this);
@@ -32,7 +32,7 @@ export default class RegisterScreen extends Component {
   }
 
   static navigationOptions = {
-    title: "Register"
+    title: 'Register',
   };
 
   _onPressButton() {
@@ -43,8 +43,8 @@ export default class RegisterScreen extends Component {
     firebase
       .auth()
       .signOut()
-      .then(res => {
-        console.log("Firebase: signOut", res);
+      .then((res) => {
+        console.log('Firebase: signOut', res);
       });
   }
 
@@ -53,12 +53,12 @@ export default class RegisterScreen extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(user => {
+      .then((user) => {
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
       })
-      .catch(error => {
+      .catch((error) => {
         const { code, message } = error;
         // For details of error codes, see the docs
         // The message contains the default Firebase string
@@ -71,16 +71,16 @@ export default class RegisterScreen extends Component {
     firebase
       .auth()
       .createUserAndRetrieveDataWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log("create user", user);
+      .then((user) => {
+        console.log('create user', user);
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
       })
-      .catch(error => {
+      .catch((error) => {
         const { code, message } = error;
 
-        console.log("Error: create user", message);
+        console.log('Error: create user', message);
 
         // For details of error codes, see the docs
         // The message contains the default Firebase string
@@ -96,20 +96,20 @@ export default class RegisterScreen extends Component {
     this.state.user
       .sendEmailVerification({
         iOS: {
-          bundleId: "com.limage.clientfavomorn"
+          bundleId: 'com.limage.clientfavomorn',
         },
-        url: "favomoapp://"
+        url: 'favomoapp://',
       })
-      .then(res => {
-        console.log("Send Email", res);
+      .then((res) => {
+        console.log('Send Email', res);
       });
   }
 
   componentDidMount() {
-    this.authSubscription = firebase.auth().onAuthStateChanged(user => {
+    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.setState({
         loading: false,
-        user
+        user,
       });
     });
   }
@@ -119,7 +119,9 @@ export default class RegisterScreen extends Component {
   }
 
   render() {
-    const { email, password, user, loading } = this.state;
+    const {
+      email, password, user, loading,
+    } = this.state;
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -158,9 +160,9 @@ export default class RegisterScreen extends Component {
             style={{
               height: 40,
               width: 300,
-              borderColor: "gray",
+              borderColor: 'gray',
               borderWidth: 1,
-              marginBottom: 20
+              marginBottom: 20,
             }}
             onChangeText={email => this.setState({ email })}
             value={email}
@@ -172,14 +174,14 @@ export default class RegisterScreen extends Component {
             style={{
               height: 40,
               width: 300,
-              borderColor: "gray",
+              borderColor: 'gray',
               borderWidth: 1,
-              marginBottom: 20
+              marginBottom: 20,
             }}
             onChangeText={password => this.setState({ password })}
             value={password}
             maxLength={40}
-            secureTextEntry={true}
+            secureTextEntry
           />
           <TouchableHighlight
             onPress={this._onPressButton}

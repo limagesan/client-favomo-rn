@@ -8,11 +8,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import firebase from 'react-native-firebase';
+import { connect } from 'react-redux';
+
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { BaseTextInput } from '../components/TextInput';
 import { Container } from '../components/Container';
+
 
 import basicStyles, { Color } from '../styles';
 
@@ -22,7 +25,7 @@ const sub = {
   firebase: 'Firebase',
 };
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
   static navigationOptions = {
     title: 'Login',
   };
@@ -42,7 +45,15 @@ export default class LoginScreen extends Component {
   }
 
   componentDidMount() {
+    console.log('check store', this.props);
+
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+      const action = {
+        type: 'UPDATE_USER',
+        user,
+      };
+
+      this.props.dispatch(action);
       this.setState({
         loading: false,
         user,
@@ -127,8 +138,14 @@ export default class LoginScreen extends Component {
 
   render() {
     const {
-      email, password, user, loading,
+      email, password, loading,
     } = this.state;
+
+    const {
+      user,
+    } = this.props;
+
+    console.log('check in render', this.props);
 
     let LoadingState = <Text>not logined</Text>;
     if (user) {
@@ -200,3 +217,8 @@ export default class LoginScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({ user: state.user });
+
+
+export default connect(mapStateToProps)(LoginScreen);
