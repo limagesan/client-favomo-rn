@@ -5,8 +5,6 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  Image,
-  StatusBar,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
@@ -14,7 +12,6 @@ import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import basicStyles, { Color } from '../styles';
-import { Header, LeftButton, Title } from '../components/Header';
 
 import log, { sub } from '../utils/log';
 
@@ -29,7 +26,6 @@ class LoginScreen extends Component {
     this.state = {
       email: '',
       password: '',
-      loading: true,
     };
 
     this.onLogin = this.onLogin.bind(this);
@@ -38,7 +34,6 @@ class LoginScreen extends Component {
   }
 
   onPressButton() {
-    console.log('press');
     this.onLogin();
   }
 
@@ -95,12 +90,10 @@ class LoginScreen extends Component {
 
   render() {
     const {
-      email, password, loading, emailValidationMsg, passwordValidationMsg,
+      email, password, emailValidationMsg, passwordValidationMsg,
     } = this.state;
 
     const { user } = this.props;
-
-    console.log('check in render', this.props);
 
     let LoadingState = <Text>not logined</Text>;
     if (user) {

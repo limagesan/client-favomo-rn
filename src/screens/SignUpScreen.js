@@ -5,17 +5,9 @@ import { connect } from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { NavigationActions } from 'react-navigation';
-
 import basicStyles, { Color } from '../styles';
 
-import log from '../utils/log';
-
-const sub = {
-  firebase: 'Firebase',
-};
-
-function getMessage(code) {}
+import log, { sub } from '../utils/log';
 
 class SignUpScreen extends Component {
   static navigationOptions = {
@@ -31,7 +23,6 @@ class SignUpScreen extends Component {
       password2: '',
       emailValidationMsg: '',
       passwordValidationMsg: '',
-      loading: true,
     };
 
     this.onRegister = this.onRegister.bind(this);
@@ -39,29 +30,7 @@ class SignUpScreen extends Component {
     this.handleFirebaseError = this.handleFirebaseError.bind(this);
   }
 
-  componentDidMount() {
-    console.log('check store', this.props);
-
-    // this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
-    //   const action = {
-    //     type: 'UPDATE_USER',
-    //     user,
-    //   };
-
-    //   this.props.dispatch(action);
-    //   this.setState({
-    //     loading: false,
-    //     user,
-    //   });
-    // });
-  }
-
-  componentWillUnmount() {
-    // this.authSubscription();
-  }
-
   onPressButton() {
-    console.log('press');
     this.onRegister();
   }
 
@@ -72,18 +41,11 @@ class SignUpScreen extends Component {
       .createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then((user) => {
         log(sub.firebase, 'create user', user);
-        // If you need to do anything with the user, do it here
-        // The user will be logged in automatically by the
-        // `onAuthStateChanged` listener we set up in App.js earlier
       })
       .catch((error) => {
         const { code, message } = error;
         log(sub.firebase, 'error create user', { message, code });
         this.handleFirebaseError(code);
-
-        // For details of error codes, see the docs
-        // The message contains the default Firebase string
-        // representation of the error
       });
   }
 
@@ -111,7 +73,7 @@ class SignUpScreen extends Component {
       .auth()
       .signOut()
       .then((res) => {
-        console.log('Firebase: signOut', res);
+        log(sub.firebase, 'signOut', res);
       });
   }
 
@@ -141,12 +103,11 @@ class SignUpScreen extends Component {
       email,
       password,
       password2,
-      loading,
       emailValidationMsg,
       passwordValidationMsg,
     } = this.state;
 
-    const { user, navigation } = this.props;
+    const { user } = this.props;
 
     console.log('check in render', this.props);
 
