@@ -1,36 +1,21 @@
 import React, { Component } from 'react';
 import { Linking } from 'react-native';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import firebase from 'react-native-firebase';
 
+import { updateUser } from './actions';
 import RootStack from './config/route';
-import store from './config/store';
 
 EStyleSheet.build({
   $white: '#FFFFFF',
 });
 
-export default class App extends Component {
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     loading: true,
-  //   };
-  // }
-
-  /**
-   * When the App component mounts, we listen for any authentication
-   * state changes in Firebase.
-   * Once subscribed, the 'user' parameter will either be null
-   * (logged out) or an Object (logged in)
-   */
+class App extends Component {
   componentDidMount() {
-    // this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
-    //   this.setState({
-    //     loading: false,
-    //     user,
-    //   });
-    // });
+    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+      this.props.dispatch(updateUser(user));
+    });
     Linking.addEventListener('url', this.handleOpenURL);
   }
   /**
@@ -38,7 +23,7 @@ export default class App extends Component {
    * when the component unmounts.
    */
   componentWillUnmount() {
-    // this.authSubscription();
+    this.authSubscription();
     Linking.removeEventListener('url', this.handleOpenURL);
   }
 
@@ -49,10 +34,8 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Provider store={store}>
-        <RootStack />
-      </Provider>
-    );
+    return <RootStack />;
   }
 }
+
+export default connect()(App);

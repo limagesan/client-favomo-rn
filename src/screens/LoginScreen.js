@@ -16,11 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import basicStyles, { Color } from '../styles';
 import { Header, LeftButton, Title } from '../components/Header';
 
-import log from '../utils/log';
-
-const sub = {
-  firebase: 'Firebase',
-};
+import log, { sub } from '../utils/log';
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -41,27 +37,6 @@ class LoginScreen extends Component {
     this.handleFirebaseError = this.handleFirebaseError.bind(this);
   }
 
-  componentDidMount() {
-    console.log('check store', this.props);
-
-    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
-      const action = {
-        type: 'UPDATE_USER',
-        user,
-      };
-
-      this.props.dispatch(action);
-      this.setState({
-        loading: false,
-        user,
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.authSubscription();
-  }
-
   onPressButton() {
     console.log('press');
     this.onLogin();
@@ -73,27 +48,12 @@ class LoginScreen extends Component {
       .auth()
       .signInAndRetrieveDataWithEmailAndPassword(email, password)
       .then((user) => {
-        log(sub.firebase, 'login', user);
-        // If you need to do anything with the user, do it here
-        // The user will be logged in automatically by the
-        // `onAuthStateChanged` listener we set up in App.js earlier
+        log(sub.firebase, 'logined', user);
       })
       .catch((error) => {
         const { code, message } = error;
         log(sub.firebase, 'error create user', { message, code });
         this.handleFirebaseError(code);
-        // For details of error codes, see the docs
-        // The message contains the default Firebase string
-        // representation of the error
-      });
-  }
-
-  logout() {
-    firebase
-      .auth()
-      .signOut()
-      .then((res) => {
-        console.log('Firebase: signOut', res);
       });
   }
 

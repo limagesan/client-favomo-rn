@@ -42,22 +42,22 @@ class SignUpScreen extends Component {
   componentDidMount() {
     console.log('check store', this.props);
 
-    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
-      const action = {
-        type: 'UPDATE_USER',
-        user,
-      };
+    // this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+    //   const action = {
+    //     type: 'UPDATE_USER',
+    //     user,
+    //   };
 
-      this.props.dispatch(action);
-      this.setState({
-        loading: false,
-        user,
-      });
-    });
+    //   this.props.dispatch(action);
+    //   this.setState({
+    //     loading: false,
+    //     user,
+    //   });
+    // });
   }
 
   componentWillUnmount() {
-    this.authSubscription();
+    // this.authSubscription();
   }
 
   onPressButton() {

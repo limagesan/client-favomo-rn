@@ -1,7 +1,7 @@
 import { AppRegistry } from 'react-native';
-import App from './src/App';
+import RootContainer from './src/RootContainer';
 
-AppRegistry.registerComponent('clientfavomorn', () => App);
+AppRegistry.registerComponent('clientfavomorn', () => RootContainer);
 
 // in development
 console.disableYellowBox = true;
