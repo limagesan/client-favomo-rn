@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, TextInput, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
@@ -21,6 +15,8 @@ const sub = {
   firebase: 'Firebase',
 };
 
+function getMessage(code) {}
+
 class SignUpScreen extends Component {
   static navigationOptions = {
     title: 'Login',
@@ -32,11 +28,15 @@ class SignUpScreen extends Component {
     this.state = {
       email: '',
       password: '',
+      password2: '',
+      emailValidationMsg: '',
+      passwordValidationMsg: '',
       loading: true,
     };
 
     this.onRegister = this.onRegister.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
+    this.handleFirebaseError = this.handleFirebaseError.bind(this);
   }
 
   componentDidMount() {
@@ -78,12 +78,32 @@ class SignUpScreen extends Component {
       })
       .catch((error) => {
         const { code, message } = error;
-        log(sub.firebase, 'error create user', message);
+        log(sub.firebase, 'error create user', { message, code });
+        this.handleFirebaseError(code);
 
         // For details of error codes, see the docs
         // The message contains the default Firebase string
         // representation of the error
       });
+  }
+
+  handleFirebaseError(code) {
+    switch (code) {
+      case 'auth/invalid-email':
+        this.setState({ emailValidationMsg: '正しいメールアドレスを入力してください' });
+        break;
+      case 'auth/user-disabled':
+        this.setState({ emailValidationMsg: 'このメールアドレスは使用できません' });
+        break;
+      case 'auth/weak-password':
+      case 'auth/wrong-password':
+        this.setState({ passwordValidationMsg: '適切なパスワードを入力してください' });
+        break;
+      case 'auth/user-not-found':
+        break;
+      default:
+        break;
+    }
   }
 
   logout() {
@@ -112,14 +132,21 @@ class SignUpScreen extends Component {
       });
   }
 
+  handleChange = (e) => {
+    console.log('handleChage', e);
+  };
+
   render() {
     const {
-      email, password, loading,
+      email,
+      password,
+      password2,
+      loading,
+      emailValidationMsg,
+      passwordValidationMsg,
     } = this.state;
 
-    const {
-      user, navigation,
-    } = this.props;
+    const { user, navigation } = this.props;
 
     console.log('check in render', this.props);
 
@@ -138,68 +165,105 @@ class SignUpScreen extends Component {
           flex: 1,
           alignItems: 'center',
           backgroundColor: '#FFF',
-          padding: 20,
         }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.dispatch(NavigationActions.back());
+        <View
+          style={{
+            width: 375,
+            height: 44,
+            marginTop: 20,
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
-          style={{ alignSelf: 'flex-start', marginTop: 30, marginLeft: 30 }}
         >
-          <Ionicons name="ios-close" size={30} color="black" />;
-        </TouchableOpacity>
-        <Text style={{ marginTop: 40, fontSize: 30, marginBottom: 20 }}>サインイン</Text>
-        {LoadingState}
-        {user && (
-          <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
-            <View style={basicStyles.button}>
-              <Text style={basicStyles.buttonText}>ログアウト</Text>
-            </View>
-          </TouchableHighlight>
-        )}
-        <TextInput
-          onChangeText={value => this.setState({ email: value })}
-          value={email}
-          maxLength={40}
-          keyboardType="default"
-          style={{
-            height: 40,
-            width: 300,
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginBottom: 20,
-          }}
-        />
-        <TextInput
-          onChangeText={value => this.setState({ password: value })}
-          value={password}
-          maxLength={40}
-          secureTextEntry
-          style={{
-            height: 40,
-            width: 300,
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginBottom: 20,
-          }}
-        />
-        <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
-          <View style={basicStyles.button}>
-            <Text style={basicStyles.buttonText}>サインアップ</Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.goBack();
+            }}
+            style={{
+              flex: 2,
+              marginLeft: 20,
+              alignSelf: 'center',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Ionicons name="ios-arrow-back" size={30} color="black" />;
+          </TouchableOpacity>
+          <View style={{ flex: 6, justifyContent: 'center' }}>
+            <Text style={{ alignSelf: 'center', fontSize: 20 }}>サインアップ</Text>
           </View>
-        </TouchableHighlight>
-        <TouchableOpacity onPress={() => { navigation.navigate('Login'); }}>
-          <Text>
-          アカウントをお持ちの方は ログイン
-          </Text>
-        </TouchableOpacity>
+          <View style={{ flex: 2, marginRight: 20, alignItems: 'flex-end' }} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            {LoadingState}
+            {user && (
+              <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
+                <View style={basicStyles.button}>
+                  <Text style={basicStyles.buttonText}>ログアウト</Text>
+                </View>
+              </TouchableHighlight>
+            )}
+            <TextInput
+              onChangeText={value => this.setState({ email: value, emailValidationMsg: '' })}
+              value={email}
+              maxLength={40}
+              placeholder="メールアドレス"
+              keyboardType="default"
+              style={{
+                height: 40,
+                width: 300,
+                borderColor: 'gray',
+                borderWidth: 1,
+                marginTop: 20,
+              }}
+            />
+            <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
+            <TextInput
+              onChangeText={value => this.setState({ password: value, passwordValidationMsg: '' })}
+              value={password}
+              maxLength={40}
+              secureTextEntry
+              placeholder="パスワード"
+              style={{
+                height: 40,
+                width: 300,
+                borderColor: 'gray',
+                borderWidth: 1,
+                marginTop: 20,
+              }}
+            />
+            <TextInput
+              onChangeText={value => this.setState({ password2: value, passwordValidationMsg: '' })}
+              value={password2}
+              maxLength={40}
+              secureTextEntry
+              placeholder="パスワード(確認用)"
+              style={{
+                height: 40,
+                width: 300,
+                borderColor: 'gray',
+                borderWidth: 1,
+                marginTop: 20,
+              }}
+            />
+            <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>
+              {passwordValidationMsg}
+            </Text>
+          </View>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+            <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
+              <View style={basicStyles.button}>
+                <Text style={basicStyles.buttonText}>サインアップ</Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+        </View>
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({ user: state.user });
-
 
 export default connect(mapStateToProps)(SignUpScreen);

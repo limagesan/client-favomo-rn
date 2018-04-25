@@ -5,3 +5,4 @@ export { default as NotificationScreen } from './NotificationScreen';
 export { default as PostScreen } from './PostScreen';
 export { default as SignUpScreen } from './SignUpScreen';
 export { default as ProfileScreen } from './ProfileScreen';
+export { default as WelcomeScreen } from './WelcomeScreen';

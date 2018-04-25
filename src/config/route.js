@@ -3,8 +3,6 @@ import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import DismissableStackNavigator from '../components/DismissableStackNavigator';
-
 import {
   MyboxScreen,
   PostScreen,
@@ -13,6 +11,7 @@ import {
   SignUpScreen,
   NotificationScreen,
   ProfileScreen,
+  WelcomeScreen,
 } from '../screens';
 
 const FeedStack = StackNavigator({
@@ -39,13 +38,17 @@ const ProfileStack = StackNavigator({
   },
 });
 
-const AuthStack = DismissableStackNavigator({
-  SignUp: {
-    screen: SignUpScreen,
-  },
+const AuthStack = StackNavigator(
+  {
+    Welcome: { screen: WelcomeScreen },
+    SignUp: {
+      screen: SignUpScreen,
+    },
 
-  Login: { screen: LoginScreen },
-});
+    Login: { screen: LoginScreen },
+  },
+  { headerMode: 'none' },
+);
 
 const TabNav = TabNavigator(
   {
