@@ -38,7 +38,7 @@ const ProfileStack = StackNavigator({
   },
 });
 
-const AuthStack = StackNavigator(
+export const AuthStack = StackNavigator(
   {
     Welcome: { screen: WelcomeScreen },
     SignUp: {
@@ -67,7 +67,7 @@ const TabNav = TabNavigator(
           {...props}
           jumpToIndex={(index) => {
             if (index === 2) {
-              navigation.navigate('AuthModal');
+              navigation.navigate('PostModal');
             } else {
               jumpToIndex(index);
             }
@@ -106,11 +106,10 @@ const TabNav = TabNavigator(
   },
 );
 
-export default StackNavigator(
+export const MainStack = StackNavigator(
   {
     TabNav: { screen: TabNav },
     PostModal: { screen: PostScreen },
-    AuthModal: { screen: AuthStack },
   },
   {
     mode: 'modal',

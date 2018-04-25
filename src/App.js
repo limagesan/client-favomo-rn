@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import firebase from 'react-native-firebase';
 
 import { updateUser } from './actions';
-import RootStack from './config/route';
+import { MainStack, AuthStack } from './config/route';
 
 EStyleSheet.build({
   $white: '#FFFFFF',
@@ -18,10 +18,7 @@ class App extends Component {
     });
     Linking.addEventListener('url', this.handleOpenURL);
   }
-  /**
-   * Don't forget to stop listening for authentication state changes
-   * when the component unmounts.
-   */
+
   componentWillUnmount() {
     this.authSubscription();
     Linking.removeEventListener('url', this.handleOpenURL);
@@ -34,8 +31,15 @@ class App extends Component {
   }
 
   render() {
-    return <RootStack />;
+    let Stack = AuthStack;
+    if (this.props.user) {
+      Stack = MainStack;
+    }
+
+    return <Stack />;
   }
 }
 
-export default connect()(App);
+const mapStateToProps = state => ({ user: state.user });
+
+export default connect(mapStateToProps)(App);
