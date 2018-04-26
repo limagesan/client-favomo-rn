@@ -19,7 +19,6 @@ import SafariView from 'react-native-safari-view';
 
 import basicStyles, { Color } from '../styles';
 
-
 const items = [
   {
     id: 1,
@@ -59,6 +58,92 @@ const items = [
   },
 ];
 
+const Users = [
+  {
+    id: 'limage',
+    iconUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBN7GPW1zWM13R7FwB2iEIENUdAcK0MlDfGxSFM6ScStYpiF0rOw',
+  },
+  {
+    id: 'xdjapan02',
+    iconUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBN7GPW1zWM13R7FwB2iEIENUdAcK0MlDfGxSFM6ScStYpiF0rOw',
+  },
+  {
+    id: 'tomosan',
+    iconUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBN7GPW1zWM13R7FwB2iEIENUdAcK0MlDfGxSFM6ScStYpiF0rOw',
+  },
+];
+
+const Reactions = [{ user: Users[1], type: 'good' }, { user: Users[2], type: 'laugh' }];
+
+const posts = [
+  {
+    id: 1,
+    url: 'https://open.spotify.com/track/3Vo4wInECJQuz9BIBMOu8i?si=AV6Nzqj3T321tPm43iLdfw',
+    user: Users[0],
+    caption: 'かっこいい',
+    reactions: Reactions,
+  },
+  {
+    id: 2,
+    url: 'https://www.youtube.com/watch?v=Xkkf3N2vFdw&index=14&list=LLx02vX4SlD9TyzyyoC9dUCw&t=0s',
+    user: Users[1],
+    caption: 'わろた',
+    reactions: Reactions,
+  },
+  {
+    id: 3,
+    url: 'https://www.walkerplus.com/event/ar0313e302574/?head=01',
+    user: Users[2],
+    caption: 'ここ行きたい！',
+    reactions: Reactions,
+  },
+  {
+    id: 4,
+    url: 'https://open.spotify.com/track/3Vo4wInECJQuz9BIBMOu8i?si=AV6Nzqj3T321tPm43iLdfw',
+    user: Users[0],
+    caption: 'かっこいい',
+    reactions: Reactions,
+  },
+  {
+    id: 5,
+    url: 'https://www.youtube.com/watch?v=Xkkf3N2vFdw&index=14&list=LLx02vX4SlD9TyzyyoC9dUCw&t=0s',
+    user: Users[1],
+    caption: 'わろた',
+    reactions: Reactions,
+  },
+  {
+    id: 6,
+    url: 'https://www.walkerplus.com/event/ar0313e302574/?head=01',
+    user: Users[2],
+    caption: 'ここ行きたい！',
+    reactions: Reactions,
+  },
+  {
+    id: 7,
+    url: 'https://open.spotify.com/track/3Vo4wInECJQuz9BIBMOu8i?si=AV6Nzqj3T321tPm43iLdfw',
+    user: Users[0],
+    caption: 'かっこいい',
+    reactions: Reactions,
+  },
+  {
+    id: 8,
+    url: 'https://www.youtube.com/watch?v=Xkkf3N2vFdw&index=14&list=LLx02vX4SlD9TyzyyoC9dUCw&t=0s',
+    user: Users[1],
+    caption: 'わろた',
+    reactions: Reactions,
+  },
+  {
+    id: 9,
+    url: 'https://www.walkerplus.com/event/ar0313e302574/?head=01',
+    user: Users[2],
+    caption: 'ここ行きたい！',
+    reactions: Reactions,
+  },
+];
+
 class FeedScreen extends Component {
   static navigationOptions = {
     title: 'Feed',
@@ -80,7 +165,7 @@ class FeedScreen extends Component {
   render() {
     return (
       <View style={basicStyles.container}>
-        <MultiSelectList data={items} />
+        <MultiSelectList data={posts} />
       </View>
     );
   }
@@ -88,11 +173,13 @@ class FeedScreen extends Component {
 
 class MyListItem extends React.PureComponent {
   onPress = () => {
-    this.props.onPressItem(this.props.id);
+    this.props.onPressItem(this.props.post);
   };
 
   render() {
     const textColor = this.props.selected ? 'red' : 'black';
+    const post = this.props.post.item;
+    console.log('post', post);
     return (
       <View
         style={{
@@ -101,161 +188,131 @@ class MyListItem extends React.PureComponent {
           height: 140,
         }}
       >
-        <TouchableOpacity onPress={this.onPress}>
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-          >
-            <View
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 4 }}>
+            <Image
               style={{
-                flex: 4,
-              }}
-            >
-              <Image
-                style={{
                   width: 94,
                   height: 94,
                   borderRadius: 10,
                 }}
-                source={require('../assets/bruno.png')}
-              />{' '}
-            </View>{' '}
-            <View
-              style={{
-                paddingLeft: 10,
-                flex: 11,
-              }}
-            >
-              <View
-                style={{
+              source={require('../assets/bruno.png')}
+            />
+          </View>
+          <View style={{ paddingLeft: 10, flex: 11 }}>
+            <TouchableOpacity onPress={this.onPress}>
+
+              <View>
+                <View
+                  style={{
                   flexDirection: 'row',
                   overflow: 'hidden',
                   alignItems: 'center',
                 }}
-                removeClippedSubviews
-              >
-                <Image
-                  style={{
+                  removeClippedSubviews
+                >
+                  <Image
+                    style={{
                     width: 15,
                     height: 15,
                   }}
-                  source={require('../assets/spotify.png')}
-                />{' '}
-                <Text
-                  style={{
+                    source={require('../assets/spotify.png')}
+                  />
+                  <Text
+                    style={{
                     flex: 1,
                     marginLeft: 5,
                     fontSize: 13,
                   }}
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
-                  https: //open.spotify.com/track/3Vo4wInECJQuz9BIBMOu8i?si=AV6Nzqj3T321tPm43iLdfw
-                </Text>{' '}
-              </View>{' '}
-              <Text
-                style={{
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {post.url}
+                  </Text>
+                </View>
+                <Text
+                  style={{
                   marginTop: 7,
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}
-              >
-                finesse(Remix)[feat.Cardi B]{' '}
-              </Text>{' '}
-              <Text
-                style={{
-                  fontSize: 11,
-                }}
-              >
-                Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify{' '}
-              </Text>{' '}
-              <View
-                style={{
+                >
+                finesse(Remix)[feat.Cardi B]
+                </Text>
+                <Text style={{ fontSize: 11 }}>
+                Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <View
+              style={{
                   flexDirection: 'row',
                   marginTop: 10,
                 }}
-              >
-                <Image
-                  style={{
+            >
+              <Image
+                style={{
                     width: 35,
                     height: 35,
                     borderRadius: 17.5,
                   }}
-                  source={require('../assets/moriyama.jpg')}
-                />{' '}
-                <View
-                  style={{
+                source={{ uri: post.user.iconUrl }}
+              />
+              <View
+                style={{
                     paddingTop: 11.5,
                     marginLeft: 10,
                     flexDirection: 'row',
                     flex: 1,
                   }}
-                >
-                  <View
-                    style={{
-                      flex: 4,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 10,
-                      }}
-                    >
-                      {' '}
-                      limagesan{' '}
-                    </Text>{' '}
-                    <Text
-                      style={{
-                        marginTop: 5,
-                      }}
-                    >
-                      {' '}
-                      "かっこいい"{' '}
-                    </Text>{' '}
-                  </View>{' '}
-                </View>{' '}
-                <View
-                  style={{
+              >
+                <View style={{ flex: 4 }}>
+                  <Text style={{ fontSize: 10 }}>{post.user.id}</Text>
+                  <Text style={{ marginTop: 5 }}>
+                    {post.caption}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'flex-end',
                     alignItems: 'flex-end',
                     paddingRight: 10,
                   }}
-                >
-                  <TouchableOpacity
-                    onPress={() => {
+              >
+                <TouchableOpacity
+                  onPress={() => {
                       console.log('liked');
                     }}
-                  >
-                    <Image
-                      style={{
+                >
+                  <Image
+                    style={{
                         width: 30,
                         height: 30,
                       }}
-                      source={require('../assets/thumbs-up.png')}
-                    />{' '}
-                  </TouchableOpacity>{' '}
-                  <TouchableOpacity
-                    onPress={() => {
+                    source={require('../assets/thumbs-up.png')}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
                       console.log('smiled');
                     }}
-                  >
-                    <Image
-                      style={{
+                >
+                  <Image
+                    style={{
                         marginLeft: 10,
                         width: 25,
                         height: 25,
                       }}
-                      source={require('../assets/happiness.png')}
-                    />{' '}
-                  </TouchableOpacity>{' '}
-                </View>{' '}
-              </View>{' '}
-            </View>{' '}
-          </View>{' '}
-        </TouchableOpacity>{' '}
+                    source={require('../assets/happiness.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     );
   }
@@ -266,12 +323,11 @@ class MultiSelectList extends React.PureComponent {
     selected: new Map(),
   };
 
-
-  onPressItem = (id) => {
+  onPressItem = ({ item }) => {
     // updater functions are preferred for transactional updates
     SafariView.isAvailable()
       .then(SafariView.show({
-        url: 'https://open.spotify.com/track/3Vo4wInECJQuz9BIBMOu8i?si=AV6Nzqj3T321tPm43iLdfw',
+        url: item.url,
       }))
       .catch((error) => {
         // Fallback WebView code for iOS 8 and earlier
@@ -279,21 +335,21 @@ class MultiSelectList extends React.PureComponent {
     this.setState((state) => {
       // copy the map rather than modifying state.
       const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id)); // toggle
+      selected.set(item.id, !selected.get(item.id)); // toggle
       return {
         selected,
       };
     });
   };
 
-  keyExtractor = (item, index) => item.id;
+  keyExtractor = (post, index) => post;
 
-  renderItem = ({ item }) => (
+  renderItem = item => (
     <MyListItem
       id={item.id}
       onPressItem={this.onPressItem}
       selected={!!this.state.selected.get(item.id)}
-      title={item.title}
+      post={item}
     />
   );
 
