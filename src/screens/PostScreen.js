@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// import { StackNavigator } from 'react-navigation';
-
 export default class PostScreen extends Component {
-  // constructor() {
-  //   super();
-  // }
-
   comopnentWillMount() {
     this.setState();
   }
