@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ import basicStyles, { Color } from '../styles';
 import log, { sub } from '../utils/log';
 import { Container } from '../components/Container';
 
-class LoginScreen extends Component {
+class SignUp extends Component {
   static navigationOptions = {
     title: 'Login',
   };
@@ -21,46 +21,32 @@ class LoginScreen extends Component {
     this.state = {
       email: '',
       password: '',
+      password2: '',
+      emailValidationMsg: '',
+      passwordValidationMsg: '',
     };
 
-    this.onLogin = this.onLogin.bind(this);
+    this.onRegister = this.onRegister.bind(this);
     this.verifyEmail = this.verifyEmail.bind(this);
     this.handleFirebaseError = this.handleFirebaseError.bind(this);
   }
 
   onPressButton() {
-    this.onLogin();
+    this.onRegister();
   }
 
-  onLogin() {
+  onRegister() {
     const { email, password } = this.state;
     firebase
       .auth()
-      .signInAndRetrieveDataWithEmailAndPassword(email, password)
+      .createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then((user) => {
-        log(sub.firebase, 'logined', user);
+        log(sub.firebase, 'create user', user);
       })
       .catch((error) => {
         const { code, message } = error;
         log(sub.firebase, 'error create user', { message, code });
         this.handleFirebaseError(code);
-      });
-  }
-
-  verifyEmail() {
-    if (!this.state.user) {
-      return;
-    }
-
-    this.state.user
-      .sendEmailVerification({
-        iOS: {
-          bundleId: 'com.limage.clientfavomorn',
-        },
-        url: 'favomoapp://',
-      })
-      .then((res) => {
-        log(sub.firebase, 'send email', res);
       });
   }
 
@@ -83,12 +69,44 @@ class LoginScreen extends Component {
     }
   }
 
+  logout() {
+    firebase
+      .auth()
+      .signOut()
+      .then((res) => {
+        log(sub.firebase, 'signOut', res);
+      });
+  }
+
+  verifyEmail() {
+    if (!this.state.user) {
+      return;
+    }
+
+    this.state.user
+      .sendEmailVerification({
+        iOS: {
+          bundleId: 'com.limage.clientfavomorn',
+        },
+        url: 'favomoapp://',
+      })
+      .then((res) => {
+        log(sub.firebase, 'send email', res);
+      });
+  }
+
+  handleChange = (e) => {
+    console.log('handleChage', e);
+  };
+
   render() {
     const {
-      email, password, emailValidationMsg, passwordValidationMsg,
+      email, password, password2, emailValidationMsg, passwordValidationMsg,
     } = this.state;
 
     const { user } = this.props;
+
+    console.log('check in render', this.props);
 
     let LoadingState = <Text>not logined</Text>;
     if (user) {
@@ -124,7 +142,7 @@ class LoginScreen extends Component {
             <Ionicons name="ios-arrow-back" size={30} color="black" />;
           </TouchableOpacity>
           <View style={{ flex: 6, justifyContent: 'center' }}>
-            <Text style={{ alignSelf: 'center', fontSize: 20 }}>ログイン</Text>
+            <Text style={{ alignSelf: 'center', fontSize: 20 }}>サインアップ</Text>
           </View>
           <View style={{ flex: 2, marginRight: 20, alignItems: 'flex-end' }} />
         </View>
@@ -146,6 +164,7 @@ class LoginScreen extends Component {
               onChangeText={value => this.setState({ email: value, emailValidationMsg: '' })}
               value={email}
               maxLength={40}
+              placeholder="メールアドレス"
               keyboardType="default"
               style={{
                 height: 40,
@@ -156,12 +175,26 @@ class LoginScreen extends Component {
               }}
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
-
             <TextInput
               onChangeText={value => this.setState({ password: value, passwordValidationMsg: '' })}
               value={password}
               maxLength={40}
               secureTextEntry
+              placeholder="パスワード"
+              style={{
+                height: 40,
+                width: 300,
+                borderColor: 'gray',
+                borderWidth: 1,
+                marginTop: 20,
+              }}
+            />
+            <TextInput
+              onChangeText={value => this.setState({ password2: value, passwordValidationMsg: '' })}
+              value={password2}
+              maxLength={40}
+              secureTextEntry
+              placeholder="パスワード(確認用)"
               style={{
                 height: 40,
                 width: 300,
@@ -181,7 +214,7 @@ class LoginScreen extends Component {
               style={basicStyles.button}
             >
               <View>
-                <Text style={basicStyles.buttonText}>ログイン</Text>
+                <Text style={basicStyles.buttonText}>サインアップ</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -193,4 +226,4 @@ class LoginScreen extends Component {
 
 const mapStateToProps = state => ({ user: state.user });
 
-export default connect(mapStateToProps)(LoginScreen);
+export default connect(mapStateToProps)(SignUp);

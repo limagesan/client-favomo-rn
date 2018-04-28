@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableOpacity, TouchableHighlight } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { View, TextInput, Text, TouchableHighlight } from 'react-native';
 
 import baseStyles, { Color } from '../styles';
 import Loader from '../components/Loader';
 import { Container } from '../components/Container';
 
-class AddFriendScreen extends Component {
+class AddFriend extends Component {
   static navigationOptions = {
     title: 'AddFriends',
     headerTintColor: 'black',
@@ -59,4 +58,4 @@ class AddFriendScreen extends Component {
   }
 }
 
-export default AddFriendScreen;
+export default AddFriend;

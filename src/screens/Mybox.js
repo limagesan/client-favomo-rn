@@ -8,7 +8,7 @@ import basicStyles from '../styles';
 import { posts } from '../assets/data';
 import { Container } from '../components/Container';
 
-export default class MyboxScreen extends Component {
+export default class Mybox extends Component {
   static navigationOptions = {
     title: 'Mybox',
   };

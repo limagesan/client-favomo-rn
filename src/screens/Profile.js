@@ -9,7 +9,7 @@ import { Container } from '../components/Container';
 import basicStyles, { Color } from '../styles';
 import log, { sub } from '../utils/log';
 
-class ProfileScreen extends Component {
+class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Profile',
     headerLeft: (
@@ -75,4 +75,4 @@ class ProfileScreen extends Component {
 
 const mapStateToProps = state => ({ ...state });
 
-export default connect(mapStateToProps)(ProfileScreen);
+export default connect(mapStateToProps)(Profile);

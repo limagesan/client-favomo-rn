@@ -16,7 +16,7 @@ const items = [
   { id: 9, title: 'kimu' },
 ];
 
-export default class TextScreen extends Component {
+export default class Text extends Component {
   constructor() {
     super();
   }
@@ -73,8 +73,7 @@ class MyListItem extends React.PureComponent {
                 finesse(Remix) [feat. Cardi B]
               </Text>
               <Text style={{ fontSize: 11 }}>
-                Finesse (Remix) [feat. Cardi B], an album by Bruno Mars, Cardi B
-                on Spotify
+                Finesse (Remix) [feat. Cardi B], an album by Bruno Mars, Cardi B on Spotify
               </Text>
               <View style={{ flexDirection: 'row', marginTop: 10 }}>
                 <Image

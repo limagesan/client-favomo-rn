@@ -3,11 +3,10 @@ import { Text, View, TouchableOpacity, FlatList, Image } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
 
-import basicStyles from '../styles';
 import { posts } from '../assets/data';
 import { Container } from '../components/Container';
 
-class FeedScreen extends Component {
+class Feed extends Component {
   static navigationOptions = {
     title: 'Feed',
   };
@@ -18,7 +17,7 @@ class FeedScreen extends Component {
   }
 
   componentDidMount() {
-    console.log('check state in FeedScreen', this.props);
+    console.log('check state in Feed', this.props);
   }
 
   onPressButton() {
@@ -228,4 +227,4 @@ class MultiSelectList extends React.PureComponent {
   }
 }
 
-export default FeedScreen;
+export default Feed;

@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import basicStyles from '../styles';
 
-export default class NotificationScreen extends Component {
+export default class Notification extends Component {
   static navigationOptions = {
     title: 'Notification',
   };

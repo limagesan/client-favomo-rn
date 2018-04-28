@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Container } from '../components/Container';
 
-export default class PostScreen extends Component {
+export default class Post extends Component {
   comopnentWillMount() {
     this.setState();
   }

@@ -5,45 +5,45 @@ import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {
-  MyboxScreen,
-  PostScreen,
-  FeedScreen,
-  LoginScreen,
-  SignUpScreen,
-  NotificationScreen,
-  ProfileScreen,
-  WelcomeScreen,
-  AddFriendsScreen,
+  Mybox,
+  Post,
+  Feed,
+  Login,
+  SignUp,
+  Notification,
+  Profile,
+  Welcome,
+  AddFriends,
 } from '../screens';
 
 const FeedStack = StackNavigator({
   Feed: {
-    screen: FeedScreen,
+    screen: Feed,
   },
 });
 
 const MyboxStack = StackNavigator({
   Mybox: {
-    screen: MyboxScreen,
+    screen: Mybox,
   },
 });
 
 const NotificationStack = StackNavigator({
   Notification: {
-    screen: NotificationScreen,
+    screen: Notification,
   },
 });
 
 const ProfileStack = StackNavigator(
   {
     Profile: {
-      screen: ProfileScreen,
+      screen: Profile,
     },
     AddFriends: {
-      screen: AddFriendsScreen,
+      screen: AddFriends,
     },
     Notice: {
-      screen: NotificationScreen,
+      screen: Notification,
     },
   },
   { headerMode: 'screen' },
@@ -51,12 +51,12 @@ const ProfileStack = StackNavigator(
 
 export const AuthStack = StackNavigator(
   {
-    Welcome: { screen: WelcomeScreen },
+    Welcome: { screen: Welcome },
     SignUp: {
-      screen: SignUpScreen,
+      screen: SignUp,
     },
 
-    Login: { screen: LoginScreen },
+    Login: { screen: Login },
   },
   { headerMode: 'none' },
 );
@@ -120,7 +120,7 @@ const TabNav = TabNavigator(
 export const MainStack = StackNavigator(
   {
     TabNav: { screen: TabNav },
-    PostModal: { screen: PostScreen },
+    PostModal: { screen: Post },
   },
   {
     mode: 'modal',
