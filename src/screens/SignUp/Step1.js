@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
+import { Text, View, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import basicStyles, { Color } from '../styles';
+import basicStyles, { Color } from '../../styles';
 
-import log, { sub } from '../utils/log';
-import { Container } from '../components/Container';
+import log, { sub } from '../../utils/log';
+import { Container } from '../../components/Container';
 
-class SignUp extends Component {
+class Step1 extends Component {
   static navigationOptions = {
     title: 'Login',
   };
@@ -226,4 +226,4 @@ class SignUp extends Component {
 
 const mapStateToProps = state => ({ user: state.user });
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(Step1);

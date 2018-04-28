@@ -16,6 +16,8 @@ import {
   AddFriends,
 } from '../screens';
 
+import { Step1, Step2, Step3 } from '../screens/SignUp';
+
 const FeedStack = StackNavigator({
   Feed: {
     screen: Feed,
@@ -49,11 +51,20 @@ const ProfileStack = StackNavigator(
   { headerMode: 'screen' },
 );
 
+const SignUpStack = StackNavigator(
+  {
+    Step1: { screen: Step1 },
+    Step2: { screen: Step2 },
+    Step3: { screen: Step3 },
+  },
+  { headerMode: 'none' },
+);
+
 export const AuthStack = StackNavigator(
   {
     Welcome: { screen: Welcome },
     SignUp: {
-      screen: SignUp,
+      screen: SignUpStack,
     },
 
     Login: { screen: Login },
