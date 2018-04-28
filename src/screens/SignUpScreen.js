@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import basicStyles, { Color } from '../styles';
 
 import log, { sub } from '../utils/log';
+import { Container } from '../components/Container';
 
 class SignUpScreen extends Component {
   static navigationOptions = {
@@ -100,11 +101,7 @@ class SignUpScreen extends Component {
 
   render() {
     const {
-      email,
-      password,
-      password2,
-      emailValidationMsg,
-      passwordValidationMsg,
+      email, password, password2, emailValidationMsg, passwordValidationMsg,
     } = this.state;
 
     const { user } = this.props;
@@ -121,13 +118,7 @@ class SignUpScreen extends Component {
     }
 
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          backgroundColor: '#FFF',
-        }}
-      >
+      <Container>
         <View
           style={{
             width: 375,
@@ -159,8 +150,12 @@ class SignUpScreen extends Component {
           <View style={{ flex: 1, alignItems: 'center' }}>
             {LoadingState}
             {user && (
-              <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
-                <View style={basicStyles.button}>
+              <TouchableHighlight
+                onPress={this.logout}
+                underlayColor={Color.white}
+                style={basicStyles.button}
+              >
+                <View>
                   <Text style={basicStyles.buttonText}>ログアウト</Text>
                 </View>
               </TouchableHighlight>
@@ -213,14 +208,18 @@ class SignUpScreen extends Component {
             </Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-            <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
-              <View style={basicStyles.button}>
+            <TouchableHighlight
+              onPress={this.onPressButton}
+              underlayColor={Color.white}
+              style={basicStyles.button}
+            >
+              <View>
                 <Text style={basicStyles.buttonText}>サインアップ</Text>
               </View>
             </TouchableHighlight>
           </View>
         </View>
-      </View>
+      </Container>
     );
   }
 }

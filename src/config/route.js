@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,6 +13,7 @@ import {
   NotificationScreen,
   ProfileScreen,
   WelcomeScreen,
+  AddFriendsScreen,
 } from '../screens';
 
 const FeedStack = StackNavigator({
@@ -32,11 +34,20 @@ const NotificationStack = StackNavigator({
   },
 });
 
-const ProfileStack = StackNavigator({
-  Profile: {
-    screen: ProfileScreen,
+const ProfileStack = StackNavigator(
+  {
+    Profile: {
+      screen: ProfileScreen,
+    },
+    AddFriends: {
+      screen: AddFriendsScreen,
+    },
+    Notice: {
+      screen: NotificationScreen,
+    },
   },
-});
+  { headerMode: 'screen' },
+);
 
 export const AuthStack = StackNavigator(
   {
@@ -114,5 +125,6 @@ export const MainStack = StackNavigator(
   {
     mode: 'modal',
     headerMode: 'none',
+    cardStyle: { paddingTop: StatusBar.currentHeight },
   },
 );

@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
@@ -14,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import basicStyles, { Color } from '../styles';
 
 import log, { sub } from '../utils/log';
+import { Container } from '../components/Container';
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -105,13 +100,7 @@ class LoginScreen extends Component {
     }
 
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          backgroundColor: '#FFF',
-        }}
-      >
+      <Container>
         <View
           style={{
             width: 375,
@@ -143,8 +132,12 @@ class LoginScreen extends Component {
           <View style={{ flex: 1, alignItems: 'center' }}>
             {LoadingState}
             {user && (
-              <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
-                <View style={basicStyles.button}>
+              <TouchableHighlight
+                onPress={this.logout}
+                underlayColor={Color.white}
+                style={basicStyles.button}
+              >
+                <View>
                   <Text style={basicStyles.buttonText}>ログアウト</Text>
                 </View>
               </TouchableHighlight>
@@ -182,14 +175,18 @@ class LoginScreen extends Component {
             </Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-            <TouchableHighlight onPress={this.onPressButton} underlayColor={Color.base}>
-              <View style={basicStyles.button}>
+            <TouchableHighlight
+              onPress={this.onPressButton}
+              underlayColor={Color.white}
+              style={basicStyles.button}
+            >
+              <View>
                 <Text style={basicStyles.buttonText}>ログイン</Text>
               </View>
             </TouchableHighlight>
           </View>
         </View>
-      </View>
+      </Container>
     );
   }
 }

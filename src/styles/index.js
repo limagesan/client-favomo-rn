@@ -2,6 +2,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 export const Color = {
   base: '#FFFA73',
+  white: '#FFFFFF',
 };
 
 export default EStyleSheet.create({
@@ -34,5 +35,20 @@ export default EStyleSheet.create({
     padding: 20,
     color: 'black',
     fontSize: 20,
+  },
+  leftBarButtonContainer: {
+    width: 60,
+    alignItems: 'center',
+  },
+  rightBarButtonContainer: {
+    width: 60,
+    alignItems: 'center',
+  },
+  mainIndicator: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    left: '50%',
+    top: '50%',
   },
 });

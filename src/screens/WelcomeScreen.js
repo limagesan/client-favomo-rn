@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 import basicStyles, { Color } from '../styles';
+import { Container } from '../components/Container';
 
 export default props => (
-  <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#FFF ' }}>
+  <Container>
     <View style={{ flex: 1 }}>
       <Text style={{ marginTop: 70, fontSize: 36 }}>Favomo</Text>
     </View>
@@ -13,9 +14,10 @@ export default props => (
         onPress={() => {
           props.navigation.navigate('SignUp');
         }}
-        underlayColor={Color.base}
+        underlayColor={Color.white}
+        style={basicStyles.button}
       >
-        <View style={basicStyles.button}>
+        <View>
           <Text style={basicStyles.buttonText}>サインアップ</Text>
         </View>
       </TouchableHighlight>
@@ -27,5 +29,5 @@ export default props => (
         <Text>アカウントをお持ちの方は ログイン</Text>
       </TouchableOpacity>
     </View>
-  </View>
+  </Container>
 );

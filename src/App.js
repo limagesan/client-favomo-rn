@@ -9,6 +9,7 @@ import { MainStack, AuthStack } from './config/route';
 
 EStyleSheet.build({
   $white: '#FFFFFF',
+  $base: '#FFFA73',
 });
 
 class App extends Component {

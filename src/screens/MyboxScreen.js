@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  Alert,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
+import { Text, View, Alert, TouchableOpacity, FlatList, Image } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
 
 import Api from '../Api';
 import basicStyles from '../styles';
 import { posts } from '../assets/data';
+import { Container } from '../components/Container';
 
 export default class MyboxScreen extends Component {
   static navigationOptions = {
@@ -26,19 +20,19 @@ export default class MyboxScreen extends Component {
     this.onPressButton = this.onPressButton.bind(this);
   }
 
-  onPressButton() {
+  onPressButton = () => {
     Alert.alert('You tapped the button!');
     this.api.get().then((res) => {
       console.log('result', res);
     });
-    this.props.navigation.navigate('MyModal');
-  }
+    this.props.navigation.navigate('Notice');
+  };
 
   render() {
     return (
-      <View style={basicStyles.container}>
-        <MultiSelectList data={posts} />
-      </View>
+      <Container>
+        <MultiSelectList data={posts} onPress={this.onPressButton} />
+      </Container>
     );
   }
 }
@@ -52,7 +46,13 @@ class MyListItem extends React.PureComponent {
     const { post } = this.props;
 
     return (
-      <View style={{ borderTopWidth: 1, padding: 10, height: 145 }}>
+      <View
+        style={{
+          borderTopWidth: 1,
+          padding: 10,
+          height: 140,
+        }}
+      >
         <View>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flex: 4 }}>
@@ -66,10 +66,10 @@ class MyListItem extends React.PureComponent {
                 <View>
                   <View
                     style={{
-                        flexDirection: 'row',
-                        overflow: 'hidden',
-                        alignItems: 'center',
-                      }}
+                      flexDirection: 'row',
+                      overflow: 'hidden',
+                      alignItems: 'center',
+                    }}
                     removeClippedSubviews
                   >
                     <Image
@@ -85,10 +85,10 @@ class MyListItem extends React.PureComponent {
                     </Text>
                   </View>
                   <Text style={{ marginTop: 7, fontSize: 15, fontWeight: 'bold' }}>
-                      finesse(Remix) [feat. Cardi B]
+                    finesse(Remix) [feat. Cardi B]
                   </Text>
                   <Text style={{ fontSize: 11 }}>
-                      Finesse (Remix) [feat. Cardi B], an album by Bruno Mars, Cardi B on Spotify
+                    Finesse (Remix) [feat. Cardi B], an album by Bruno Mars, Cardi B on Spotify
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -99,8 +99,8 @@ class MyListItem extends React.PureComponent {
         <View style={{ marginTop: 5 }}>
           <TouchableOpacity
             onPress={() => {
-                console.log('liked');
-              }}
+              console.log('liked');
+            }}
           >
             <View style={{ flexDirection: 'row' }}>
               <Image
@@ -131,20 +131,22 @@ class MultiSelectList extends React.PureComponent {
   state = { selected: new Map() };
 
   onPressItem = (post) => {
-    // updater functions are preferred for transactional updates
-    SafariView.isAvailable()
-      .then(SafariView.show({
-        url: post.url,
-      }))
-      .catch((error) => {
-        // Fallback WebView code for iOS 8 and earlier
-      });
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      const selected = new Map(state.selected);
-      selected.set(post.id, !selected.get(post.id)); // toggle
-      return { selected };
-    });
+    this.props.onPress();
+
+    //   // updater functions are preferred for transactional updates
+    //   SafariView.isAvailable()
+    //     .then(SafariView.show({
+    //       url: post.url,
+    //     }))
+    //     .catch((error) => {
+    //       // Fallback WebView code for iOS 8 and earlier
+    //     });
+    //   this.setState((state) => {
+    //     // copy the map rather than modifying state.
+    //     const selected = new Map(state.selected);
+    //     selected.set(post.id, !selected.get(post.id)); // toggle
+    //     return { selected };
+    // });
   };
 
   keyExtractor = (item, index) => item.id;

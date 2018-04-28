@@ -6,3 +6,4 @@ export { default as PostScreen } from './PostScreen';
 export { default as SignUpScreen } from './SignUpScreen';
 export { default as ProfileScreen } from './ProfileScreen';
 export { default as WelcomeScreen } from './WelcomeScreen';
+export { default as AddFriendsScreen } from './AddFriendsScreen';

@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
-import { connect } from 'react-redux';
-
-import { StackNavigator } from 'react-navigation';
+import { Text, View, TouchableOpacity, FlatList, Image } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
 
-import basicStyles, { Color } from '../styles';
+import basicStyles from '../styles';
 import { posts } from '../assets/data';
+import { Container } from '../components/Container';
 
 class FeedScreen extends Component {
   static navigationOptions = {
@@ -40,9 +27,9 @@ class FeedScreen extends Component {
 
   render() {
     return (
-      <View style={basicStyles.container}>
+      <Container>
         <MultiSelectList data={posts} />
-      </View>
+      </Container>
     );
   }
 }
@@ -68,38 +55,37 @@ class MyListItem extends React.PureComponent {
           <View style={{ flex: 4 }}>
             <Image
               style={{
-                  width: 94,
-                  height: 94,
-                  borderRadius: 10,
-                }}
+                width: 94,
+                height: 94,
+                borderRadius: 10,
+              }}
               source={require('../assets/bruno.png')}
             />
           </View>
           <View style={{ paddingLeft: 10, flex: 11 }}>
             <TouchableOpacity onPress={this.onPress}>
-
               <View>
                 <View
                   style={{
-                  flexDirection: 'row',
-                  overflow: 'hidden',
-                  alignItems: 'center',
-                }}
+                    flexDirection: 'row',
+                    overflow: 'hidden',
+                    alignItems: 'center',
+                  }}
                   removeClippedSubviews
                 >
                   <Image
                     style={{
-                    width: 15,
-                    height: 15,
-                  }}
+                      width: 15,
+                      height: 15,
+                    }}
                     source={require('../assets/spotify.png')}
                   />
                   <Text
                     style={{
-                    flex: 1,
-                    marginLeft: 5,
-                    fontSize: 13,
-                  }}
+                      flex: 1,
+                      marginLeft: 5,
+                      fontSize: 13,
+                    }}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
@@ -108,80 +94,78 @@ class MyListItem extends React.PureComponent {
                 </View>
                 <Text
                   style={{
-                  marginTop: 7,
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}
+                    marginTop: 7,
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                  }}
                 >
-                finesse(Remix)[feat.Cardi B]
+                  finesse(Remix)[feat.Cardi B]
                 </Text>
                 <Text style={{ fontSize: 11 }}>
-                Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify
+                  Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify
                 </Text>
               </View>
             </TouchableOpacity>
             <View
               style={{
-                  flexDirection: 'row',
-                  marginTop: 10,
-                }}
+                flexDirection: 'row',
+                marginTop: 10,
+              }}
             >
               <Image
                 style={{
-                    width: 35,
-                    height: 35,
-                    borderRadius: 17.5,
-                  }}
+                  width: 35,
+                  height: 35,
+                  borderRadius: 17.5,
+                }}
                 source={{ uri: post.user.iconUrl }}
               />
               <View
                 style={{
-                    paddingTop: 11.5,
-                    marginLeft: 10,
-                    flexDirection: 'row',
-                    flex: 1,
-                  }}
+                  paddingTop: 11.5,
+                  marginLeft: 10,
+                  flexDirection: 'row',
+                  flex: 1,
+                }}
               >
                 <View style={{ flex: 4 }}>
                   <Text style={{ fontSize: 10 }}>{post.user.id}</Text>
-                  <Text style={{ marginTop: 5 }}>
-                    {post.caption}
-                  </Text>
+                  <Text style={{ marginTop: 5 }}>{post.caption}</Text>
                 </View>
               </View>
               <View
                 style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-end',
-                    paddingRight: 10,
-                  }}
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  paddingRight: 10,
+                }}
               >
                 <TouchableOpacity
                   onPress={() => {
-                      console.log('liked');
-                    }}
+                    console.log('liked');
+                  }}
                 >
                   <Image
                     style={{
-                        width: 30,
-                        height: 30,
-                      }}
+                      width: 30,
+                      height: 30,
+                    }}
                     source={require('../assets/thumbs-up.png')}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                      console.log('smiled');
-                    }}
+                    console.log('smiled');
+                  }}
                 >
                   <Image
                     style={{
-                        marginLeft: 10,
-                        width: 25,
-                        height: 25,
-                      }}
+                      marginLeft: 10,
+                      width: 25,
+                      height: 25,
+                    }}
                     source={require('../assets/happiness.png')}
                   />
                 </TouchableOpacity>
@@ -199,11 +183,11 @@ class MultiSelectList extends React.PureComponent {
     selected: new Map(),
   };
 
-  onPressItem = ({ item }) => {
+  onPressItem = (post) => {
     // updater functions are preferred for transactional updates
     SafariView.isAvailable()
       .then(SafariView.show({
-        url: item.url,
+        url: post.url,
       }))
       .catch((error) => {
         // Fallback WebView code for iOS 8 and earlier
@@ -211,7 +195,7 @@ class MultiSelectList extends React.PureComponent {
     this.setState((state) => {
       // copy the map rather than modifying state.
       const selected = new Map(state.selected);
-      selected.set(item.id, !selected.get(item.id)); // toggle
+      selected.set(post.id, !selected.get(post.id)); // toggle
       return {
         selected,
       };

@@ -3,6 +3,8 @@ import { Text, View, TouchableOpacity } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { Container } from '../components/Container';
+
 export default class PostScreen extends Component {
   comopnentWillMount() {
     this.setState();
@@ -10,13 +12,7 @@ export default class PostScreen extends Component {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-          alignItems: 'center',
-        }}
-      >
+      <Container>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.goBack();
@@ -26,7 +22,7 @@ export default class PostScreen extends Component {
           <Ionicons name="ios-close" size={30} color="black" />;
         </TouchableOpacity>
         <Text>シェア</Text>
-      </View>
+      </Container>
     );
   }
 }

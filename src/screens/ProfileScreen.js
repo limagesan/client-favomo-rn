@@ -1,15 +1,38 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { Container } from '../components/Container';
 
 import basicStyles, { Color } from '../styles';
 import log, { sub } from '../utils/log';
 
 class ProfileScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Profile',
-  };
+    headerLeft: (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('AddFriends');
+        }}
+        style={basicStyles.leftBarButtonContainer}
+      >
+        <Ionicons name="ios-person-add" size={30} color="black" />
+      </TouchableOpacity>
+    ),
+    headerRight: (
+      <TouchableOpacity
+        onPress={() => {
+          console.log('tap settings');
+        }}
+        style={basicStyles.rightBarButtonContainer}
+      >
+        <Ionicons name="ios-settings" size={30} color="black" />
+      </TouchableOpacity>
+    ),
+  });
 
   constructor() {
     super();
@@ -27,13 +50,17 @@ class ProfileScreen extends Component {
 
   render() {
     return (
-      <View style={basicStyles.container}>
+      <Container>
         <Text>
           {this.props.user && (
             <View>
               <Text>{this.props.user.email}</Text>
-              <TouchableHighlight onPress={this.logout} underlayColor={Color.base}>
-                <View style={basicStyles.button}>
+              <TouchableHighlight
+                onPress={this.logout}
+                underlayColor={Color.white}
+                style={basicStyles.button}
+              >
+                <View>
                   <Text style={basicStyles.buttonText}>ログアウト</Text>
                 </View>
               </TouchableHighlight>
@@ -41,7 +68,7 @@ class ProfileScreen extends Component {
           )}
           {!this.props.user && <Text>ログインしていません</Text>}
         </Text>
-      </View>
+      </Container>
     );
   }
 }
