@@ -1,11 +1,23 @@
 export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_SIGNUP_EMAIL = 'UPDATE_SIGNUP_EMAIL';
 export const UPDATE_SIGNUP_PASSWORD = 'UPDATE_SIGNUP_PASSWORD';
+export const UPDATE_SIGNUP_PASSWORD2 = 'UPDATE_SIGNUP_PASSWORD2';
 export const UPDATE_SIGNUP_USERID = 'UPDATE_SIGNUP_USERID';
 export const CLEAR_SIGNUP_VALUE = 'CLEAR_SIGNUP_VALUE';
+export const UPDATE_IDTOKEN = 'UPDATE_IDTOKEN';
+export const CLEAR_IDTOKEN = 'CLEAR_IDTOKEN';
+export const UPDATE_LOGIN_EMAIL = 'UPDATE_LOGIN_EMAIL';
+export const UPDATE_LOGIN_PASSWORD = 'UPDATE_LOGIN_PASSWORD';
+export const CLEAR_LOGIN_VALUE = 'CLEAR_LOGIN_VALUE';
 
 export const updateUser = user => ({ type: UPDATE_USER, user });
-export const updateSignUPEmail = value => ({ type: UPDATE_SIGNUP_EMAIL, value });
-export const updateSignUPPassWord = value => ({ type: UPDATE_SIGNUP_PASSWORD, value });
-export const updateSignUPUserId = value => ({ type: UPDATE_SIGNUP_USERID, value });
-export const clearSignUPValue = () => ({ type: CLEAR_SIGNUP_VALUE });
+export const updateSignUpEmail = value => ({ type: UPDATE_SIGNUP_EMAIL, value });
+export const updateSignUpPassword = value => ({ type: UPDATE_SIGNUP_PASSWORD, value });
+export const updateSignUpPassword2 = value => ({ type: UPDATE_SIGNUP_PASSWORD2, value });
+export const updateSignUpUserId = value => ({ type: UPDATE_SIGNUP_USERID, value });
+export const clearSignUpValue = () => ({ type: CLEAR_SIGNUP_VALUE });
+export const updateIdToken = value => ({ type: UPDATE_IDTOKEN, value });
+export const clearIdToken = () => ({ type: CLEAR_IDTOKEN });
+export const updateLoginEmail = value => ({ type: UPDATE_LOGIN_EMAIL, value });
+export const updateLoginPassword = value => ({ type: UPDATE_LOGIN_PASSWORD, value });
+export const clearLoginValue = () => ({ type: CLEAR_LOGIN_VALUE });

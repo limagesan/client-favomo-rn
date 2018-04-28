@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { Text, View, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
-
+import { NavigationActions } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import basicStyles, { Color } from '../../styles';
+import { updateSignUpEmail, updateSignUpPassword, updateSignUpPassword2 } from '../../actions';
+import Loader from '../../components/Loader';
 
-import log, { sub } from '../../utils/log';
+import basicStyles, { Color } from '../../styles';
+import log, { sub } from '../../utils';
+
 import { Container } from '../../components/Container';
 
 class Step1 extends Component {
@@ -15,42 +18,39 @@ class Step1 extends Component {
     title: 'Login',
   };
 
-  constructor() {
-    super();
-    this.onPressButton = this.onPressButton.bind(this);
-    this.state = {
-      email: '',
-      password: '',
-      password2: '',
-      emailValidationMsg: '',
-      passwordValidationMsg: '',
-    };
+  state = {
+    emailValidationMsg: '',
+    passwordValidationMsg: '',
+    password2ValidationMsg: '',
+    loading: false,
+  };
 
-    this.onRegister = this.onRegister.bind(this);
-    this.verifyEmail = this.verifyEmail.bind(this);
-    this.handleFirebaseError = this.handleFirebaseError.bind(this);
-  }
-
-  onPressButton() {
-    this.onRegister();
-  }
-
-  onRegister() {
+  onRegister = () => {
+    this.setState({ loading: true });
     const { email, password } = this.state;
     firebase
       .auth()
       .createUserAndRetrieveDataWithEmailAndPassword(email, password)
       .then((user) => {
+        this.setState({ loading: false });
         log(sub.firebase, 'create user', user);
       })
       .catch((error) => {
+        this.setState({ loading: false });
+
         const { code, message } = error;
         log(sub.firebase, 'error create user', { message, code });
         this.handleFirebaseError(code);
       });
-  }
+  };
 
-  handleFirebaseError(code) {
+  onPressButton = () => {
+    if (this.validate()) {
+      this.onRegister();
+    }
+  };
+
+  handleFirebaseError = (code) => {
     switch (code) {
       case 'auth/invalid-email':
         this.setState({ emailValidationMsg: '正しいメールアドレスを入力してください' });
@@ -67,58 +67,43 @@ class Step1 extends Component {
       default:
         break;
     }
-  }
+  };
 
-  logout() {
-    firebase
-      .auth()
-      .signOut()
-      .then((res) => {
-        log(sub.firebase, 'signOut', res);
-      });
-  }
+  validate = () => {
+    this.setState({
+      emailValidationMsg: '',
+      passwordValidationMsg: '',
+      password2ValidationMsg: '',
+    });
+    const { signUpEmail, signUpPassword, signUpPassword2 } = this.props;
 
-  verifyEmail() {
-    if (!this.state.user) {
-      return;
+    const mailformat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    if (!signUpEmail.match(mailformat)) {
+      this.setState({ emailValidationMsg: '正しいメールアドレスを入力してください' });
+      return false;
     }
 
-    this.state.user
-      .sendEmailVerification({
-        iOS: {
-          bundleId: 'com.limage.clientfavomorn',
-        },
-        url: 'favomoapp://',
-      })
-      .then((res) => {
-        log(sub.firebase, 'send email', res);
-      });
-  }
+    if (signUpPassword !== signUpPassword2) {
+      this.setState({ password2ValidationMsg: 'パスワードが一致しません' });
+      return false;
+    }
 
-  handleChange = (e) => {
-    console.log('handleChage', e);
+    if (signUpPassword.length < 6) {
+      this.setState({ passwordValidationMsg: 'パスワードが短すぎます' });
+      return false;
+    }
+
+    return true;
   };
 
   render() {
-    const {
-      email, password, password2, emailValidationMsg, passwordValidationMsg,
-    } = this.state;
+    const { emailValidationMsg, passwordValidationMsg, password2ValidationMsg } = this.state;
 
-    const { user } = this.props;
-
-    console.log('check in render', this.props);
-
-    let LoadingState = <Text>not logined</Text>;
-    if (user) {
-      if (user.emailVerified) {
-        LoadingState = <Text>loading (verified)</Text>;
-      } else {
-        LoadingState = <Text>loading (not verified)</Text>;
-      }
-    }
+    const { signUpEmail, signUpPassword, signUpPassword2 } = this.props;
 
     return (
       <Container>
+        <Loader loading={this.state.loading} />
         <View
           style={{
             width: 375,
@@ -130,7 +115,7 @@ class Step1 extends Component {
         >
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.goBack();
+              this.props.navigation.dispatch(NavigationActions.back());
             }}
             style={{
               flex: 2,
@@ -148,21 +133,12 @@ class Step1 extends Component {
         </View>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            {LoadingState}
-            {user && (
-              <TouchableHighlight
-                onPress={this.logout}
-                underlayColor={Color.white}
-                style={basicStyles.button}
-              >
-                <View>
-                  <Text style={basicStyles.buttonText}>ログアウト</Text>
-                </View>
-              </TouchableHighlight>
-            )}
             <TextInput
-              onChangeText={value => this.setState({ email: value, emailValidationMsg: '' })}
-              value={email}
+              onChangeText={(value) => {
+                this.props.dispatch(updateSignUpEmail(value));
+                this.setState({ emailValidationMsg: '' });
+              }}
+              value={signUpEmail}
               maxLength={40}
               placeholder="メールアドレス"
               keyboardType="default"
@@ -176,8 +152,11 @@ class Step1 extends Component {
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
             <TextInput
-              onChangeText={value => this.setState({ password: value, passwordValidationMsg: '' })}
-              value={password}
+              onChangeText={(value) => {
+                this.props.dispatch(updateSignUpPassword(value));
+                this.setState({ passwordValidationMsg: '' });
+              }}
+              value={signUpPassword}
               maxLength={40}
               secureTextEntry
               placeholder="パスワード"
@@ -189,9 +168,15 @@ class Step1 extends Component {
                 marginTop: 20,
               }}
             />
+            <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>
+              {passwordValidationMsg}
+            </Text>
             <TextInput
-              onChangeText={value => this.setState({ password2: value, passwordValidationMsg: '' })}
-              value={password2}
+              onChangeText={(value) => {
+                this.props.dispatch(updateSignUpPassword2(value));
+                this.setState({ password2ValidationMsg: '' });
+              }}
+              value={signUpPassword2}
               maxLength={40}
               secureTextEntry
               placeholder="パスワード(確認用)"
@@ -204,7 +189,7 @@ class Step1 extends Component {
               }}
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>
-              {passwordValidationMsg}
+              {password2ValidationMsg}
             </Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
@@ -224,6 +209,6 @@ class Step1 extends Component {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({ ...state });
 
 export default connect(mapStateToProps)(Step1);

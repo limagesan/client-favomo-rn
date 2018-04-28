@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
+import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Container } from '../components/Container';
 
+import { clearIdToken } from '../actions';
 import basicStyles, { Color } from '../styles';
 import log, { sub } from '../utils/log';
 
@@ -45,29 +46,52 @@ class Profile extends Component {
       .signOut()
       .then((res) => {
         log(sub.firebase, 'logout', res);
+        this.props.dispatch(clearIdToken());
+      });
+  }
+
+  verifyEmail() {
+    if (!this.state.user) {
+      return;
+    }
+
+    this.state.user
+      .sendEmailVerification({
+        iOS: {
+          bundleId: 'com.limage.clientfavomorn',
+        },
+        url: 'favomoapp://',
+      })
+      .then((res) => {
+        log(sub.firebase, 'send email', res);
       });
   }
 
   render() {
+    const { user, idToken } = this.props;
     return (
       <Container>
-        <Text>
-          {this.props.user && (
-            <View>
-              <Text>{this.props.user.email}</Text>
-              <TouchableHighlight
-                onPress={this.logout}
-                underlayColor={Color.white}
-                style={basicStyles.button}
-              >
-                <View>
-                  <Text style={basicStyles.buttonText}>ログアウト</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-          )}
-          {!this.props.user && <Text>ログインしていません</Text>}
-        </Text>
+        {user && (
+          <View>
+            <Text>ユーザー情報</Text>
+            <Text>{user.email}</Text>
+            <Text>{user.emailVerified ? 'メール認証済み' : 'メール未認証'}</Text>
+          </View>
+        )}
+        {idToken && (
+          <View>
+            <TouchableHighlight
+              onPress={this.logout}
+              underlayColor={Color.white}
+              style={basicStyles.button}
+            >
+              <View>
+                <Text style={basicStyles.buttonText}>ログアウト</Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+        )}
+        {!idToken && <Text>ログインしていません</Text>}
       </Container>
     );
   }

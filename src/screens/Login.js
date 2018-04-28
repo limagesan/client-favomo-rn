@@ -5,102 +5,90 @@ import { connect } from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { updateLoginEmail, updateLoginPassword } from '../actions';
 import basicStyles, { Color } from '../styles';
 
 import log, { sub } from '../utils/log';
 import { Container } from '../components/Container';
+import Loader from '../components/Loader';
 
 class Login extends Component {
   static navigationOptions = {
     title: 'Login',
   };
 
-  constructor() {
-    super();
-    this.onPressButton = this.onPressButton.bind(this);
-    this.state = {
-      email: '',
-      password: '',
-    };
+  state = {
+    emailValidationMsg: '',
+    passwordValidationMsg: '',
+    loading: false,
+  };
 
-    this.onLogin = this.onLogin.bind(this);
-    this.verifyEmail = this.verifyEmail.bind(this);
-    this.handleFirebaseError = this.handleFirebaseError.bind(this);
-  }
+  onPressButton = () => {
+    if (this.validate()) {
+      this.onLogin();
+    }
+  };
 
-  onPressButton() {
-    this.onLogin();
-  }
-
-  onLogin() {
-    const { email, password } = this.state;
+  onLogin = () => {
+    this.setState({ loading: true });
+    const { loginEmail, loginPassword } = this.props;
     firebase
       .auth()
-      .signInAndRetrieveDataWithEmailAndPassword(email, password)
+      .signInAndRetrieveDataWithEmailAndPassword(loginEmail, loginPassword)
       .then((user) => {
+        this.setState({ loading: false });
+
         log(sub.firebase, 'logined', user);
       })
       .catch((error) => {
+        this.setState({ loading: false });
+
         const { code, message } = error;
         log(sub.firebase, 'error create user', { message, code });
         this.handleFirebaseError(code);
       });
-  }
+  };
 
-  verifyEmail() {
-    if (!this.state.user) {
-      return;
-    }
-
-    this.state.user
-      .sendEmailVerification({
-        iOS: {
-          bundleId: 'com.limage.clientfavomorn',
-        },
-        url: 'favomoapp://',
-      })
-      .then((res) => {
-        log(sub.firebase, 'send email', res);
-      });
-  }
-
-  handleFirebaseError(code) {
+  handleFirebaseError = (code) => {
     switch (code) {
-      case 'auth/invalid-email':
-        this.setState({ emailValidationMsg: '正しいメールアドレスを入力してください' });
-        break;
       case 'auth/user-disabled':
-        this.setState({ emailValidationMsg: 'このメールアドレスは使用できません' });
-        break;
-      case 'auth/weak-password':
-      case 'auth/wrong-password':
-        this.setState({ passwordValidationMsg: '適切なパスワードを入力してください' });
-        break;
-      case 'auth/user-not-found':
+        this.setState({ emailValidationMsg: 'このアカウントは使用できません' });
         break;
       default:
+        this.setState({ emailValidationMsg: 'メールアドレスまたはパスワードが間違っています' });
         break;
     }
-  }
+  };
+
+  validate = () => {
+    this.setState({
+      emailValidationMsg: '',
+      passwordValidationMsg: '',
+    });
+    const { loginEmail, loginPassword } = this.props;
+
+    if (!loginEmail.length) {
+      this.setState({ emailValidationMsg: 'メールアドレスを入力してください' });
+      return false;
+    }
+
+    if (!loginPassword.length) {
+      this.setState({ passwordValidationMsg: 'パスワードを入力してください' });
+      return false;
+    }
+
+    return true;
+  };
 
   render() {
-    const {
-      email, password, emailValidationMsg, passwordValidationMsg,
-    } = this.state;
+    const { emailValidationMsg, passwordValidationMsg } = this.state;
 
-    const { user } = this.props;
-
-    let LoadingState = <Text>not logined</Text>;
-    if (user) {
-      if (user.emailVerified) {
-        LoadingState = <Text>loading (verified)</Text>;
-      } else {
-        LoadingState = <Text>loading (not verified)</Text>;
-      }
-    }
+    const { loginEmail, loginPassword } = this.props;
 
     return (
       <Container>
+        <Loader loading={this.state.loading} />
+
         <View
           style={{
             width: 375,
@@ -130,21 +118,12 @@ class Login extends Component {
         </View>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            {LoadingState}
-            {user && (
-              <TouchableHighlight
-                onPress={this.logout}
-                underlayColor={Color.white}
-                style={basicStyles.button}
-              >
-                <View>
-                  <Text style={basicStyles.buttonText}>ログアウト</Text>
-                </View>
-              </TouchableHighlight>
-            )}
             <TextInput
-              onChangeText={value => this.setState({ email: value, emailValidationMsg: '' })}
-              value={email}
+              onChangeText={(value) => {
+                this.props.dispatch(updateLoginEmail(value));
+                this.setState({ emailValidationMsg: '' });
+              }}
+              value={loginEmail}
               maxLength={40}
               keyboardType="default"
               style={{
@@ -156,10 +135,12 @@ class Login extends Component {
               }}
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
-
             <TextInput
-              onChangeText={value => this.setState({ password: value, passwordValidationMsg: '' })}
-              value={password}
+              onChangeText={(value) => {
+                this.props.dispatch(updateLoginPassword(value));
+                this.setState({ passwordValidationMsg: '' });
+              }}
+              value={loginPassword}
               maxLength={40}
               secureTextEntry
               style={{
@@ -191,6 +172,6 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({ ...state });
 
 export default connect(mapStateToProps)(Login);
