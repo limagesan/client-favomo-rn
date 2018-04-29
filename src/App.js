@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import firebase from 'react-native-firebase';
 
-import { updateIdToken, updateUser } from './actions';
+import { updateIdToken, updateUser, login, logout } from './actions';
 import { MainStack, AuthStack } from './config/route';
 
 EStyleSheet.build({
@@ -14,6 +14,8 @@ EStyleSheet.build({
 
 class App extends Component {
   componentDidMount() {
+    // this.props.dispatch(logout());
+
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.props.dispatch(updateUser(user));
       if (user) {
@@ -38,7 +40,7 @@ class App extends Component {
 
   render() {
     let Stack = AuthStack;
-    if (this.props.idToken) {
+    if (this.props.logined) {
       Stack = MainStack;
     }
 
@@ -46,6 +48,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({ idToken: state.idToken });
+const mapStateToProps = state => ({ logined: state.logined });
 
 export default connect(mapStateToProps)(App);

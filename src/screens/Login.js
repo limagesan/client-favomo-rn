@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { updateLoginEmail, updateLoginPassword } from '../actions';
+import { updateLoginEmail, updateLoginPassword, login } from '../actions';
 import basicStyles, { Color } from '../styles';
 
 import log, { sub } from '../utils/log';
@@ -37,6 +37,7 @@ class Login extends Component {
       .signInAndRetrieveDataWithEmailAndPassword(loginEmail, loginPassword)
       .then((user) => {
         this.setState({ loading: false });
+        this.props.dispatch(login());
 
         log(sub.firebase, 'logined', user);
       })
@@ -126,6 +127,7 @@ class Login extends Component {
               value={loginEmail}
               maxLength={40}
               keyboardType="default"
+              placeholder="メールアドレス"
               style={{
                 height: 40,
                 width: 300,
@@ -143,6 +145,7 @@ class Login extends Component {
               value={loginPassword}
               maxLength={40}
               secureTextEntry
+              placeholder="パスワード"
               style={{
                 height: 40,
                 width: 300,

@@ -9,7 +9,7 @@ import { updateSignUpEmail, updateSignUpPassword, updateSignUpPassword2 } from '
 import Loader from '../../components/Loader';
 
 import basicStyles, { Color } from '../../styles';
-import log, { sub } from '../../utils';
+import log, { sub } from '../../utils/log';
 
 import { Container } from '../../components/Container';
 
@@ -27,13 +27,14 @@ class Step1 extends Component {
 
   onRegister = () => {
     this.setState({ loading: true });
-    const { email, password } = this.state;
+    const { signUpEmail, signUpPassword } = this.props;
     firebase
       .auth()
-      .createUserAndRetrieveDataWithEmailAndPassword(email, password)
+      .createUserAndRetrieveDataWithEmailAndPassword(signUpEmail, signUpPassword)
       .then((user) => {
-        this.setState({ loading: false });
         log(sub.firebase, 'create user', user);
+        this.setState({ loading: false });
+        this.props.navigation.navigate('Step2');
       })
       .catch((error) => {
         this.setState({ loading: false });
@@ -45,9 +46,10 @@ class Step1 extends Component {
   };
 
   onPressButton = () => {
-    if (this.validate()) {
-      this.onRegister();
-    }
+    // if (this.validate()) {
+    //   this.onRegister();
+    // }
+    this.props.navigation.navigate('Step2');
   };
 
   handleFirebaseError = (code) => {

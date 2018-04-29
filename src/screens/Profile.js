@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Container } from '../components/Container';
 
-import { clearIdToken } from '../actions';
+import { clearIdToken, clearUser, logout } from '../actions';
 import basicStyles, { Color } from '../styles';
 import log, { sub } from '../utils/log';
 
@@ -47,6 +47,8 @@ class Profile extends Component {
       .then((res) => {
         log(sub.firebase, 'logout', res);
         this.props.dispatch(clearIdToken());
+        this.props.dispatch(clearUser());
+        this.props.dispatch(logout());
       });
   }
 

@@ -1,5 +1,10 @@
+import { AsyncStorage } from 'react-native';
+
 import {
   UPDATE_USER,
+  CLEAR_USER,
+  LOGIN,
+  LOGOUT,
   UPDATE_SIGNUP_EMAIL,
   UPDATE_SIGNUP_PASSWORD,
   UPDATE_SIGNUP_PASSWORD2,
@@ -12,21 +17,43 @@ import {
   CLEAR_LOGIN_VALUE,
 } from '../actions';
 
-const initialState = {
-  user: null,
-  idToken: null,
-  signUpEmail: '',
-  signUpPassword: '',
-  signUpPassword2: '',
-  signUpUserid: '',
-  loginEmail: '',
-  loginPassword: '',
-};
+import log, { sub } from '../utils/log';
+
+let initialState = {};
+async function initializeState() {
+  try {
+    const logined = await !!AsyncStorage.getItem('logined');
+
+    initialState = {
+      user: null,
+      idToken: null,
+      logined,
+      signUpEmail: '',
+      signUpPassword: '',
+      signUpPassword2: '',
+      signUpUserid: '',
+      loginEmail: '',
+      loginPassword: '',
+    };
+  } catch (error) {
+    log(sub.localStorage, 'getItem error', error);
+  }
+}
+
+initializeState();
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USER:
       return { ...state, user: action.user };
+    case CLEAR_USER:
+      return { ...state, user: null };
+    case LOGIN:
+      AsyncStorage.setItem('logined', 'true');
+      return { ...state, logined: true };
+    case LOGOUT:
+      AsyncStorage.removeItem('logined');
+      return { ...state, logined: false };
     case UPDATE_SIGNUP_EMAIL:
       return { ...state, signUpEmail: action.value };
     case UPDATE_SIGNUP_PASSWORD:

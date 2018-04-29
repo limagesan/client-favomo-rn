@@ -1,4 +1,7 @@
 export const UPDATE_USER = 'UPDATE_USER';
+export const CLEAR_USER = 'CLEAR_USER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 export const UPDATE_SIGNUP_EMAIL = 'UPDATE_SIGNUP_EMAIL';
 export const UPDATE_SIGNUP_PASSWORD = 'UPDATE_SIGNUP_PASSWORD';
 export const UPDATE_SIGNUP_PASSWORD2 = 'UPDATE_SIGNUP_PASSWORD2';
@@ -11,6 +14,9 @@ export const UPDATE_LOGIN_PASSWORD = 'UPDATE_LOGIN_PASSWORD';
 export const CLEAR_LOGIN_VALUE = 'CLEAR_LOGIN_VALUE';
 
 export const updateUser = user => ({ type: UPDATE_USER, user });
+export const clearUser = () => ({ type: CLEAR_USER });
+export const login = () => ({ type: LOGIN });
+export const logout = () => ({ type: LOGOUT });
 export const updateSignUpEmail = value => ({ type: UPDATE_SIGNUP_EMAIL, value });
 export const updateSignUpPassword = value => ({ type: UPDATE_SIGNUP_PASSWORD, value });
 export const updateSignUpPassword2 = value => ({ type: UPDATE_SIGNUP_PASSWORD2, value });

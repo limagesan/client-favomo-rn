@@ -4,17 +4,7 @@ import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {
-  Mybox,
-  Post,
-  Feed,
-  Login,
-  SignUp,
-  Notification,
-  Profile,
-  Welcome,
-  AddFriends,
-} from '../screens';
+import { Mybox, Post, Feed, Login, Notification, Profile, Welcome, AddFriends } from '../screens';
 
 import { Step1, Step2, Step3 } from '../screens/SignUp';
 

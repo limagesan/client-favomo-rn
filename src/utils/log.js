@@ -4,4 +4,5 @@ export default (subject, did, data) => {
 
 export const sub = {
   firebase: 'Firebase',
+  localStorage: 'localStorage',
 };
