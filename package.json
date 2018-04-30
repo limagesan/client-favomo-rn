@@ -3,12 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
     "babel-preset-react-native-stage-0": "^1.0.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.3",
     "jest-react-native": "^18.0.0",
     "react-test-renderer": "16.3.0-alpha.1"
@@ -17,28 +12,14 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "jest",
-    "eslint": "eslint ./src",
-    "eslint:fix": "eslint ./src --fix"
+    "test": "jest"
   },
   "jest": {
     "preset": "react-native"
   },
   "dependencies": {
-    "eslint": "^4.19.1",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.0",
-    "react-native-extended-stylesheet": "^0.8.1",
-    "react-native-firebase": "^4.0.3",
-    "react-native-hide-show-password-input": "^1.0.7",
-    "react-native-image-crop-picker": "^0.20.1",
-    "react-native-navigation": "^1.1.440",
-    "react-native-safari-view": "^2.1.0",
-    "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^1.5.11",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "redux-logger": "^3.0.6",
-    "tcomb-form-native": "^0.6.11"
+    "react-native-navigation": "^1.1.440"
   }
 }
