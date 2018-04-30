@@ -1,10 +1,6 @@
-# Uncomment the next line to define a global platform for your project
 platform :ios, '9.0'
 
 target 'clientfavomorn' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
-
   # this is very important to have!
   rn_path = '../node_modules/react-native'
   pod 'yoga', path: "#{rn_path}/ReactCommon/yoga/yoga.podspec"
@@ -22,25 +18,8 @@ target 'clientfavomorn' do
     'RCTWebSocket'
   ]
 
-  # Pods for clientfavomorn
-  pod 'Firebase/Core'
-  pod 'Firebase/Auth'
-
-  target 'clientfavomorn-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-    pod 'react-native-safari-view', :path => '../node_modules/react-native-safari-view'
-
-    pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
-
-  end
-
-  target 'clientfavomornTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
 end
-
 
 # very important to have, unless you removed React dependencies for Libraries 
 # and you rely on Cocoapods to manage it

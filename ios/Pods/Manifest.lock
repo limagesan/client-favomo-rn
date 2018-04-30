@@ -1,44 +1,5 @@
 PODS:
-  - Firebase/Auth (4.10.1):
-    - Firebase/Core
-    - FirebaseAuth (= 4.4.4)
-  - Firebase/Core (4.10.1):
-    - FirebaseAnalytics (= 4.1.0)
-    - FirebaseCore (= 4.0.17)
-  - FirebaseAnalytics (4.1.0):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.4):
-    - FirebaseAnalytics (~> 4.1)
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.17):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.9):
-    - FirebaseCore (~> 4.0)
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
-  - GTMSessionFetcher/Core (1.1.14)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
   - QBImagePickerController (3.4.0)
-  - React (0.54.0):
-    - React/Core (= 0.54.0)
-  - react-native-safari-view (1.0.0):
-    - React
   - React/Core (0.54.0):
     - yoga (= 0.54.0.React)
   - React/fishhook (0.54.0)
@@ -75,9 +36,6 @@ PODS:
   - yoga (0.54.0.React)
 
 DEPENDENCIES:
-  - Firebase/Auth
-  - Firebase/Core
-  - react-native-safari-view (from `../node_modules/react-native-safari-view`)
   - React/Core (from `../node_modules/react-native`)
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
@@ -95,29 +53,18 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   React:
     :path: ../node_modules/react-native
-  react-native-safari-view:
-    :path: ../node_modules/react-native-safari-view
   RNImageCropPicker:
     :path: ../node_modules/react-native-image-crop-picker
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga/yoga.podspec
 
 SPEC CHECKSUMS:
-  Firebase: 92c6ba593e32db0defde464a9adc981d5cb49f97
-  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
-  FirebaseAuth: d040bb7a9db6dfc29d0e7ec82d48be51352b2581
-  FirebaseCore: 872307b001bbefda1dfa0dbfffa50a6919023d4a
-  FirebaseInstanceID: d2058a35e9bebda1b6dd42486b84917bde552a9d
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: c237e42de9c70e5cac6eeb52b4cfd3a0910c1f00
-  react-native-safari-view: a20edf45cdf96f32649e66924ee04d725a170bff
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RSKImageCropper: 50d5a3e4160f0309b14d75b89d5ae2f496d56e0d
   yoga: 55da126afc384965b96bff46652464373b330add
 
-PODFILE CHECKSUM: 806110bb0991121a1ec7b6745f79ce9cc6052bd9
+PODFILE CHECKSUM: abfae9dc44a36f8b931d91b592ce884dad138e29
 
 COCOAPODS: 1.4.0
