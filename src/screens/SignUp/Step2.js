@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+// import ImagePicker from 'react-native-image-crop-picker';
 
 import { Container } from '../../components/Container';
 import Loader from '../../components/Loader';
@@ -16,6 +17,16 @@ class Step2 extends Component {
     validationMessage: '',
     loading: false,
   };
+
+  // onPressButton = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   }).then((image) => {
+  //     console.log(image);
+  //   });
+  // };
 
   render() {
     return (

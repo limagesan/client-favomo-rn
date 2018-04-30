@@ -4785,6 +4785,10 @@ react-native-hide-show-password-input@^1.0.7:
     react-native-material-textfield "^0.8.4"
     react-native-vector-icons "^4.3.0"
 
+react-native-image-crop-picker@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.1.tgz#048c70219ba9f4fcf70fea5819f8dcaadefc63f9"
+
 react-native-material-textfield@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.8.4.tgz#267f3a46e9257a25a6b719ebaf34131019f901a0"

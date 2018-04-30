@@ -56,6 +56,12 @@
 		DF0D204CC5494D828EAAD4C4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43973F400872460C88698709 /* MaterialCommunityIcons.ttf */; };
 		F5025C342082131700A06DEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5025C0C2082131600A06DEB /* GoogleService-Info.plist */; };
 		F5025D1620849AAD00A06DEB /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5025D1520849A8500A06DEB /* libSafariViewManager.a */; };
+		F512156A2096DA2600688155 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F51215692096D9FD00688155 /* libimageCropPicker.a */; };
+		F512156C2096DC8D00688155 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F512156B2096DC8D00688155 /* RSKImageCropper.framework */; };
+		F512156D2096DC8D00688155 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F512156B2096DC8D00688155 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F512156F2096DC9100688155 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F512156E2096DC9100688155 /* QBImagePicker.framework */; };
+		F51215702096DC9100688155 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F512156E2096DC9100688155 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F56D1D632095D41D0056B8ED /* clientfavomorn-tvOS.app in Resources */ = {isa = PBXBuildFile; fileRef = 2D02E47B1E0B4A5D006451C7 /* clientfavomorn-tvOS.app */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -360,7 +366,36 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		F51215682096D9FD00688155 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F51215622096D9FC00688155 /* imageCropPicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3400A8081CEB54A6008A0BC7;
+			remoteInfo = imageCropPicker;
+		};
+		F56D1D642095D41D0056B8ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
+			remoteInfo = "clientfavomorn-tvOS";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F56D1DC32095E3610056B8ED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F512156D2096DC8D00688155 /* RSKImageCropper.framework in Embed Frameworks */,
+				F51215702096DC9100688155 /* QBImagePicker.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -428,6 +463,9 @@
 		F508E9E02081F17A006163CC /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		F508E9E12081F17A006163CC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		F508E9E22081F17A006163CC /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		F51215622096D9FC00688155 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		F512156B2096DC8D00688155 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F512156E2096DC9100688155 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,13 +493,16 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				F512156C2096DC8D00688155 /* RSKImageCropper.framework in Frameworks */,
 				F5025D1620849AAD00A06DEB /* libSafariViewManager.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				7F708E550B2D4AE9AD8F4B9F /* libReactNativeNavigation.a in Frameworks */,
 				2F51CB3EC15043F9AAF11FA0 /* libRNVectorIcons.a in Frameworks */,
+				F512156A2096DA2600688155 /* libimageCropPicker.a in Frameworks */,
 				48D62351F36F1C167F81B791 /* libPods-clientfavomorn.a in Frameworks */,
 				26644EB4715B4D879DF4C422 /* libRNFirebase.a in Frameworks */,
+				F512156F2096DC9100688155 /* QBImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +694,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F51215622096D9FC00688155 /* imageCropPicker.xcodeproj */,
 				F5025D1020849A8500A06DEB /* SafariViewManager.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -685,6 +727,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F512156E2096DC9100688155 /* QBImagePicker.framework */,
+				F512156B2096DC8D00688155 /* RSKImageCropper.framework */,
 				13B07FAE1A68108700A75B9A /* clientfavomorn */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* clientfavomornTests */,
@@ -799,6 +843,14 @@
 			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		F51215632096D9FC00688155 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F51215692096D9FD00688155 /* libimageCropPicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -834,10 +886,12 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E0707CEB78ADBB76D46D56D3 /* [CP] Embed Pods Frameworks */,
 				29364604B52A8D6950780AD6 /* [CP] Copy Pods Resources */,
+				F56D1DC32095E3610056B8ED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F56D1D652095D41D0056B8ED /* PBXTargetDependency */,
 			);
 			name = clientfavomorn;
 			productName = "Hello World";
@@ -901,6 +955,7 @@
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = R4KEAY5QEE;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
@@ -922,6 +977,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = F51215632096D9FC00688155 /* Products */;
+					ProjectRef = F51215622096D9FC00688155 /* imageCropPicker.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1285,6 +1344,13 @@
 			remoteRef = F508E9D52081EF21006163CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F51215692096D9FD00688155 /* libimageCropPicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libimageCropPicker.a;
+			remoteRef = F51215682096D9FD00688155 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1311,6 +1377,7 @@
 				DAAD7196305B417584CD5C29 /* MaterialIcons.ttf in Resources */,
 				A51C6A1BC608488F85E26CE6 /* Octicons.ttf in Resources */,
 				AD425F40C8844784B3550484 /* SimpleLineIcons.ttf in Resources */,
+				F56D1D632095D41D0056B8ED /* clientfavomorn-tvOS.app in Resources */,
 				040F488E3BCF4F468104EF1B /* Zocial.ttf in Resources */,
 				F5025C342082131700A06DEB /* GoogleService-Info.plist in Resources */,
 			);
@@ -1482,9 +1549,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-clientfavomorn-tvOSTests/Pods-clientfavomorn-tvOSTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
+				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1555,6 +1627,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* clientfavomorn-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		F56D1D652095D41D0056B8ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D02E47A1E0B4A5D006451C7 /* clientfavomorn-tvOS */;
+			targetProxy = F56D1D642095D41D0056B8ED /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1647,9 +1724,22 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"a$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
 				);
 				INFOPLIST_FILE = clientfavomorn/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1674,9 +1764,22 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"a$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
+					"$(SRCROOT)/../nodemodules/react-native-image-crop-picker/ios",
 				);
 				INFOPLIST_FILE = clientfavomorn/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1699,6 +1802,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = R4KEAY5QEE;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1738,6 +1842,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = R4KEAY5QEE;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1855,7 +1960,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1890,7 +1995,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
