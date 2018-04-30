@@ -19,6 +19,9 @@ target 'clientfavomorn' do
   ]
 
   pod 'RNImageCropPicker', :path =>  '../node_modules/react-native-image-crop-picker'
+
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
 end
 
 # very important to have, unless you removed React dependencies for Libraries 

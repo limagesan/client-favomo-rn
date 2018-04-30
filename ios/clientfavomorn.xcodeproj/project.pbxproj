@@ -38,6 +38,11 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		E682C05A631148569383DEF0 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 290FEBAF2499449BAD1AED92 /* libRNFirebase.a */; };
+		F51216C72097579900688155 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F51216A12097579900688155 /* GoogleService-Info.plist */; };
+		F5BD573B20976132003D1B09 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5BD571420976132003D1B09 /* FontAwesome.ttf */; };
+		F5BD573D2097613C003D1B09 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5BD573C2097613C003D1B09 /* Ionicons.ttf */; };
+		F5BD578720976597003D1B09 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BD57862097657C003D1B09 /* libSafariViewManager.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -314,6 +319,20 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		F51217092097584100688155 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 873468E7743D48D5ABA4EEAA /* RNFirebase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFirebase;
+		};
+		F5BD57852097657C003D1B09 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = SafariViewManager;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -336,6 +355,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = clientfavomorn/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = clientfavomorn/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		290FEBAF2499449BAD1AED92 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		2A293192ABD2A550852D8B06 /* libPods-clientfavomorn.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-clientfavomorn.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* clientfavomorn-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clientfavomorn-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* clientfavomorn-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "clientfavomorn-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -344,8 +364,13 @@
 		6163D1833DDB8811C21DEB6B /* Pods-clientfavomorn.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-clientfavomorn.release.xcconfig"; path = "Pods/Target Support Files/Pods-clientfavomorn/Pods-clientfavomorn.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		873468E7743D48D5ABA4EEAA /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		9E50E07C7AA0D9B197E07A4F /* Pods-clientfavomorn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-clientfavomorn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-clientfavomorn/Pods-clientfavomorn.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		F51216A12097579900688155 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F5BD571420976132003D1B09 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		F5BD573C2097613C003D1B09 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,7 +399,9 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				F5BD578720976597003D1B09 /* libSafariViewManager.a in Frameworks */,
 				21BEE336EC8B8BF4F90128DE /* libPods-clientfavomorn.a in Frameworks */,
+				E682C05A631148569383DEF0 /* libRNFirebase.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +512,9 @@
 		13B07FAE1A68108700A75B9A /* clientfavomorn */ = {
 			isa = PBXGroup;
 			children = (
+				F5BD571420976132003D1B09 /* FontAwesome.ttf */,
+				F5BD573C2097613C003D1B09 /* Ionicons.ttf */,
+				F51216A12097579900688155 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -551,6 +581,7 @@
 			children = (
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
+				F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -561,6 +592,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				873468E7743D48D5ABA4EEAA /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -583,6 +615,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				CDC42BAC8E8AE3A8F634B6CD /* Pods */,
+				F51216E02097584000688155 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -616,6 +649,30 @@
 				6163D1833DDB8811C21DEB6B /* Pods-clientfavomorn.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F51216E02097584000688155 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				290FEBAF2499449BAD1AED92 /* libRNFirebase.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		F51217062097584100688155 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F512170A2097584100688155 /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5BD575C2097657C003D1B09 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5BD57862097657C003D1B09 /* libSafariViewManager.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -702,7 +759,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -782,6 +839,14 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = F51217062097584100688155 /* Products */;
+					ProjectRef = 873468E7743D48D5ABA4EEAA /* RNFirebase.xcodeproj */;
+				},
+				{
+					ProductGroup = F5BD575C2097657C003D1B09 /* Products */;
+					ProjectRef = F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1054,6 +1119,20 @@
 			remoteRef = F508E8F920818F51006163CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F512170A2097584100688155 /* libRNFirebase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFirebase.a;
+			remoteRef = F51217092097584100688155 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F5BD57862097657C003D1B09 /* libSafariViewManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSafariViewManager.a;
+			remoteRef = F5BD57852097657C003D1B09 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1068,8 +1147,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5BD573D2097613C003D1B09 /* Ionicons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				F51216C72097579900688155 /* GoogleService-Info.plist in Resources */,
+				F5BD573B20976132003D1B09 /* FontAwesome.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,9 +1327,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+				);
 				INFOPLIST_FILE = clientfavomornTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1262,9 +1352,17 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+				);
 				INFOPLIST_FILE = clientfavomornTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1282,6 +1380,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = R4KEAY5QEE;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"$(SRCROOT)/../nodemodules/react-native-safari-view/ios/**",
+				);
 				INFOPLIST_FILE = clientfavomorn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1290,6 +1393,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.limage.clientfavomorn;
 				PRODUCT_NAME = clientfavomorn;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1302,6 +1406,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R4KEAY5QEE;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"$(SRCROOT)/../nodemodules/react-native-safari-view/ios/**",
+				);
 				INFOPLIST_FILE = clientfavomorn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1310,6 +1419,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.limage.clientfavomorn;
 				PRODUCT_NAME = clientfavomorn;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1327,8 +1437,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+				);
 				INFOPLIST_FILE = "clientfavomorn-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1353,8 +1471,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+				);
 				INFOPLIST_FILE = "clientfavomorn-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1380,6 +1506,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "clientfavomorn-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.clientfavomorn-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -1401,6 +1531,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "clientfavomorn-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.clientfavomorn-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
