@@ -9,38 +9,27 @@ import {
   UPDATE_SIGNUP_PASSWORD,
   UPDATE_SIGNUP_PASSWORD2,
   UPDATE_SIGNUP_USERID,
-  CLEAR_SIGNUP_VALUE,
+  UPDATE_SIGNUP_NAME,
+  CLEAR_SIGNUP_VALUES,
   UPDATE_IDTOKEN,
   CLEAR_IDTOKEN,
   UPDATE_LOGIN_EMAIL,
   UPDATE_LOGIN_PASSWORD,
-  CLEAR_LOGIN_VALUE,
+  CLEAR_LOGIN_VALUES,
 } from '../actions';
 
-import log, { sub } from '../utils/log';
-
-let initialState = {};
-async function initializeState() {
-  try {
-    const logined = await !!AsyncStorage.getItem('logined');
-
-    initialState = {
-      user: null,
-      idToken: null,
-      logined,
-      signUpEmail: '',
-      signUpPassword: '',
-      signUpPassword2: '',
-      signUpUserid: '',
-      loginEmail: '',
-      loginPassword: '',
-    };
-  } catch (error) {
-    log(sub.localStorage, 'getItem error', error);
-  }
-}
-
-initializeState();
+const initialState = {
+  user: null,
+  idToken: null,
+  logined: false,
+  signUpEmail: '',
+  signUpPassword: '',
+  signUpPassword2: '',
+  signUpUserid: '',
+  signUpName: '',
+  loginEmail: '',
+  loginPassword: '',
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -62,13 +51,16 @@ export default (state = initialState, action) => {
       return { ...state, signUpPassword2: action.value };
     case UPDATE_SIGNUP_USERID:
       return { ...state, signUpUserid: action.value };
-    case CLEAR_SIGNUP_VALUE:
+    case UPDATE_SIGNUP_NAME:
+      return { ...state, signUpName: action.value };
+    case CLEAR_SIGNUP_VALUES:
       return {
         ...state,
         signUpEmail: '',
         signUpPassword: '',
         signUpPassword2: '',
         signUpUserid: '',
+        signUpName: '',
       };
     case UPDATE_IDTOKEN:
       return { ...state, idToken: action.value };
@@ -78,7 +70,7 @@ export default (state = initialState, action) => {
       return { ...state, loginEmail: action.value };
     case UPDATE_LOGIN_PASSWORD:
       return { ...state, loginPassword: action.value };
-    case CLEAR_LOGIN_VALUE:
+    case CLEAR_LOGIN_VALUES:
       return { ...state, loginEmail: '', loginPassword: '' };
     default:
       return state;

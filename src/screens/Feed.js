@@ -77,7 +77,10 @@ class MyListItem extends React.PureComponent {
                       width: 15,
                       height: 15,
                     }}
-                    source={require('../assets/spotify.png')}
+                    source={{
+                      uri:
+                        'https://firebasestorage.googleapis.com/v0/b/favomo-6c925.appspot.com/o/images%2Fmountains.jpg?alt=media&token=743b06f0-ecd9-446c-9ada-42bd192f43f7',
+                    }}
                   />
                   <Text
                     style={{

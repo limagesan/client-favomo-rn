@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking } from 'react-native';
+import { Linking, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import firebase from 'react-native-firebase';
@@ -13,6 +13,15 @@ EStyleSheet.build({
 });
 
 class App extends Component {
+  constructor(props) {
+    super();
+    AsyncStorage.getItem('logined').then((logined) => {
+      if (logined) {
+        props.dispatch(login());
+      }
+    });
+  }
+
   componentDidMount() {
     // this.props.dispatch(logout());
 

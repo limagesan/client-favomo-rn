@@ -22,6 +22,8 @@ target 'clientfavomorn' do
 
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Firestore'
 end
 
 # very important to have, unless you removed React dependencies for Libraries 

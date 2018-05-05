@@ -34,6 +34,7 @@ class Step1 extends Component {
       .then((user) => {
         log(sub.firebase, 'create user', user);
         this.setState({ loading: false });
+
         this.props.navigation.navigate('Step2');
       })
       .catch((error) => {
@@ -46,10 +47,9 @@ class Step1 extends Component {
   };
 
   onPressButton = () => {
-    // if (this.validate()) {
-    //   this.onRegister();
-    // }
-    this.props.navigation.navigate('Step2');
+    if (this.validate()) {
+      this.onRegister();
+    }
   };
 
   handleFirebaseError = (code) => {
