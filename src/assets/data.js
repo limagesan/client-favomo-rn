@@ -41,7 +41,7 @@ export const Users = [
   {
     id: 'limage',
     iconUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBN7GPW1zWM13R7FwB2iEIENUdAcK0MlDfGxSFM6ScStYpiF0rOw',
+      'https://firebasestorage.googleapis.com/v0/b/favomo-6c925.appspot.com/o/images%2FsAKiD7KYxITlhIAxAgkosKVDMnm2%2Fthumb_profile.jpg?alt=media&token=ba860879-dd3c-4a17-b07b-25cafcc23191',
   },
   {
     id: 'xdjapan02',

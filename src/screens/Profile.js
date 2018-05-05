@@ -3,7 +3,6 @@ import { Text, View, TouchableHighlight, TouchableOpacity, Image } from 'react-n
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-crop-picker';
 
 import { Container } from '../components/Container';
 
@@ -37,44 +36,20 @@ class Profile extends Component {
   });
 
   state = {
-    downloadURL: '',
+    userData: {},
   };
 
-  uploadImage = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then((image) => {
-      console.log(image);
-
-      // Create a root reference
-      const storageRef = firebase.storage().ref('images');
-
-      // Create a reference to 'mountains.jpg'
-      // const mountainsRef = storageRef.child('mountains.jpg');
-
-      // Create a reference to 'images/mountains.jpg'
-      const { uid } = this.props.user;
-      if (!uid) return;
-      const mountainImagesRef = storageRef.child(`${uid}/profile.jpg`);
-
-      // While the file names are the same, the references point to different files
-      // mountainsRef.name === mountainImagesRef.name; // true
-      // mountainsRef.fullPath === mountainImagesRef.fullPath; // false
-
-      const file = image.path; // use the Blob or File API
-      mountainImagesRef
-        .put(file)
-        .then((snapshot) => {
-          console.log('Uploaded a blob or file!', snapshot);
-          this.setState({ downloadURL: snapshot.downloadURL });
-        })
-        .catch((err) => {
-          console.error('Uploading error', err);
-        });
-    });
-  };
+  componentWillMount() {
+    const { uid } = this.props.user;
+    const db = firebase.firestore();
+    db
+      .doc(`users/${uid}`)
+      .get()
+      .then((snapshot) => {
+        const userData = snapshot.data();
+        this.setState({ userData });
+      });
+  }
 
   logout = () => {
     firebase
@@ -107,6 +82,7 @@ class Profile extends Component {
 
   render() {
     const { user, idToken } = this.props;
+    const { iconURL, name, iconURLThumb } = this.state.userData;
     return (
       <Container>
         {user && (
@@ -114,7 +90,9 @@ class Profile extends Component {
             <Text>ユーザー情報</Text>
             <Text>{user.email}</Text>
             <Text>{user.emailVerified ? 'メール認証済み' : 'メール未認証'}</Text>
-            <Image source={{ uri: this.state.downloadURL }} style={{ width: 100, height: 100 }} />
+            <Text>{name}</Text>
+            <Image source={{ uri: iconURL }} style={{ width: 100, height: 100 }} />
+            <Image source={{ uri: iconURLThumb }} style={{ width: 100, height: 100 }} />
           </View>
         )}
         {idToken && (
@@ -129,12 +107,14 @@ class Profile extends Component {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={this.uploadImage}
+              onPress={() => {
+                this.props.navigation.navigate('ProfileEdit', { iconURL, name });
+              }}
               underlayColor={Color.white}
               style={basicStyles.button}
             >
               <View>
-                <Text style={basicStyles.buttonText}>画像を変更</Text>
+                <Text style={basicStyles.buttonText}>プロフィールを編集</Text>
               </View>
             </TouchableHighlight>
           </View>
