@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import firebase from 'react-native-firebase';
+import { ImageResizer } from 'react-native-image-resizer';
 
 import { Container } from '../components/Container';
 import Loader from '../components/Loader';
 
 import basicStyles, { Color } from '../styles';
+
+// const ImageResizer = require('react-native-image-resizer').default;
 
 class ProfileEdit extends Component {
   static navigationOptions = {
@@ -28,6 +31,7 @@ class ProfileEdit extends Component {
       name,
       iconURL,
       selectedImagePath: '',
+      resizedImagePath: '',
     };
   }
 
@@ -92,12 +96,24 @@ class ProfileEdit extends Component {
       console.log(image);
 
       this.setState({ selectedImagePath: image.path });
+
+      ImageResizer.createResizedImage(image.path, 128, 128, 'JPEG', 80)
+        .then(({ uri }) => {
+          this.setState({
+            resizedImagePath: uri,
+          });
+
+          console.log('resized', uri);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   };
 
   render() {
     const {
-      name, nameValidationMsg, iconURL, selectedImagePath,
+      name, nameValidationMsg, iconURL, selectedImagePath, resizedImagePath,
     } = this.state;
 
     const uri = selectedImagePath || iconURL;
@@ -135,6 +151,8 @@ class ProfileEdit extends Component {
         <View>
           <Text>oioi</Text>
           <Image source={{ uri }} style={{ width: 100, height: 100 }} />
+          <Image source={{ uri: resizedImagePath }} style={{ width: 100, height: 100 }} />
+
           <TouchableHighlight
             onPress={this.selectImage}
             underlayColor={Color.white}

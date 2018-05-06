@@ -24,6 +24,8 @@ target 'clientfavomorn' do
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
   pod 'Firebase/Firestore'
+  pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer'
+
 end
 
 # very important to have, unless you removed React dependencies for Libraries 
