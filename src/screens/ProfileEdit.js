@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import firebase from 'react-native-firebase';
-import { ImageResizer } from 'react-native-image-resizer';
+import ImageResizer from 'react-native-image-resizer';
 
 import { Container } from '../components/Container';
 import Loader from '../components/Loader';
@@ -39,7 +39,7 @@ class ProfileEdit extends Component {
     if (!this.validate()) return;
 
     const { uid } = this.props.user;
-    const { name, selectedImagePath } = this.state;
+    const { name, selectedImagePath, resizedImagePath } = this.state;
     if (!uid) return;
 
     if (!selectedImagePath) {
@@ -49,29 +49,50 @@ class ProfileEdit extends Component {
 
     const storageRef = firebase.storage().ref('images');
     const imageRef = storageRef.child(`${uid}/profile.jpg`);
+    const thumbImageRef = storageRef.child(`${uid}/thumb_profile.jpg`);
 
-    imageRef
-      .put(selectedImagePath)
+    const promise1 = imageRef
+      .put(selectedImagePath, {
+        contentType: 'image/jpeg',
+      })
       .then((snapshot) => {
         console.log('Uploaded a blob or file!', snapshot);
-
-        const db = firebase.firestore();
-
-        db
-          .doc(`users/${uid}`)
-          .update({ iconURL: snapshot.downloadURL, name })
-          .then(() => {
-            console.log('Document successfully written!');
-
-            this.props.navigation.goBack();
-          })
-          .catch((error) => {
-            console.error('Error writing document: ', error);
-          });
+        return snapshot.downloadURL;
       })
       .catch((err) => {
         console.error('Uploading error', err);
       });
+
+    const promise2 = thumbImageRef
+      .put(resizedImagePath, {
+        contentType: 'image/jpeg',
+      })
+      .then((snapshot) => {
+        console.log('Uploaded a blob or file!', snapshot);
+        return snapshot.downloadURL;
+      })
+      .catch((err) => {
+        console.error('Uploading error', err);
+      });
+
+    Promise.all([promise1, promise2]).then((values) => {
+      const iconURL = values[0];
+      const thumbIconURL = values[1];
+
+      const db = firebase.firestore();
+
+      db
+        .doc(`users/${uid}`)
+        .update({ iconURL, thumbIconURL, name })
+        .then(() => {
+          console.log('Document successfully written!');
+
+          this.props.navigation.goBack();
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error);
+        });
+    });
   };
 
   validate = () => {
@@ -89,8 +110,8 @@ class ProfileEdit extends Component {
   };
   selectImage = () => {
     ImagePicker.openPicker({
-      width: 100,
-      height: 100,
+      width: 400,
+      height: 400,
       cropping: true,
     }).then((image) => {
       console.log(image);
@@ -151,7 +172,6 @@ class ProfileEdit extends Component {
         <View>
           <Text>oioi</Text>
           <Image source={{ uri }} style={{ width: 100, height: 100 }} />
-          <Image source={{ uri: resizedImagePath }} style={{ width: 100, height: 100 }} />
 
           <TouchableHighlight
             onPress={this.selectImage}

@@ -40,16 +40,24 @@ class Profile extends Component {
   };
 
   componentWillMount() {
+    this.fetchUser();
+  }
+
+  componentWillUpdate() {
+    this.fetchUser();
+  }
+
+  fetchUser = () => {
     const { uid } = this.props.user;
     const db = firebase.firestore();
-    db
+    return db
       .doc(`users/${uid}`)
       .get()
       .then((snapshot) => {
         const userData = snapshot.data();
         this.setState({ userData });
       });
-  }
+  };
 
   logout = () => {
     firebase
