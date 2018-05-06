@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TouchableHighlight, Image, TextInput } fr
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
-import ImageResizer from 'react-native-image-resizer';
+import ImageResizer from 'react-native-image-resizer'; // eslint-disable-line import/no-unresolved,import/extensions
 
 import firebase from 'react-native-firebase';
 

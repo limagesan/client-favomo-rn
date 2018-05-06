@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, FlatList, Image } from 'react-native';
+import { connect } from 'react-redux';
 
 import SafariView from 'react-native-safari-view';
+import firebase from 'react-native-firebase';
+
+import { logout } from '../actions';
 
 import { posts } from '../assets/data';
 import { Container } from '../components/Container';
+
+const db = firebase.firestore();
 
 class Feed extends Component {
   static navigationOptions = {
@@ -17,12 +23,31 @@ class Feed extends Component {
   }
 
   componentDidMount() {
-    console.log('check state in Feed', this.props);
+    this.getFeed();
   }
 
   onPressButton() {
     this.props.navigation.goBack();
   }
+
+  getFeed = () => {
+    if (!this.props.user) {
+      this.props.dispatch(logout());
+      return;
+    }
+    const { uid } = this.props.user;
+
+    db
+      .collection('posts')
+      .where(`poster.follower.${uid}`, '==', true)
+      .get()
+      .then((snapshot) => {
+        console.log('feed res', snapshot);
+
+        const { docs } = snapshot;
+        console.log('feed docs', docs);
+      });
+  };
 
   render() {
     return (
@@ -41,7 +66,6 @@ class MyListItem extends React.PureComponent {
   render() {
     const textColor = this.props.selected ? 'red' : 'black';
     const { post } = this.props;
-    console.log('post', post);
     return (
       <View
         style={{
@@ -230,4 +254,6 @@ class MultiSelectList extends React.PureComponent {
   }
 }
 
-export default Feed;
+const mapStateToProps = state => ({ ...state });
+
+export default connect(mapStateToProps)(Feed);

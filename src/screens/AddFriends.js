@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { View, TextInput, Text, Image, TouchableHighlight } from 'react-native';
+import { connect } from 'react-redux';
+
 import firebase from 'react-native-firebase';
 
 import baseStyles, { Color } from '../styles';
 import Loader from '../components/Loader';
 import { Container } from '../components/Container';
 
-class AddFriend extends Component {
+const db = firebase.firestore();
+
+class AddFriends extends Component {
   static navigationOptions = {
     title: 'AddFriends',
     headerTintColor: 'black',
@@ -27,7 +31,6 @@ class AddFriend extends Component {
     const { searchId } = this.state;
     this.setState({ loading: true });
 
-    const db = firebase.firestore();
     db
       .collection('users')
       .where('id', '==', searchId)
@@ -44,12 +47,45 @@ class AddFriend extends Component {
         }
 
         const searchedUser = docs[0].data();
+        const { ref } = docs[0];
 
         this.setState({ searchedUser });
 
-        console.log('user', searchedUser.iconURL);
+        this.searchedUserRef = ref;
+
+        console.log('user', searchedUser.iconURL, ref, ref.path);
       });
   }
+
+  follow = async () => {
+    const { uid } = this.props.user;
+    const usersUpdate = {};
+    usersUpdate[`follower.${uid}`] = true;
+
+    const arr = this.searchedUserRef.path.split('/');
+    const searchedUserId = arr[1];
+
+    const postsUpdate = {};
+    postsUpdate[`poster.follower.${uid}`] = true;
+
+    const { docs } = await db
+      .collection('posts')
+      .where('poster.uid', '==', searchedUserId)
+      .get();
+
+    // 複数のトランザクション
+    const batch = db.batch();
+
+    batch.update(this.searchedUserRef, usersUpdate);
+
+    for (let i = 0; i < docs.length; i += 1) {
+      batch.update(docs[i].ref, postsUpdate);
+    }
+
+    batch.commit().then(() => {
+      console.log('follow process completed');
+    });
+  };
 
   render() {
     const buttonStyle = [baseStyles.button];
@@ -84,6 +120,15 @@ class AddFriend extends Component {
           <View>
             <Text>{searchedUser.name}</Text>
             <Image source={{ uri: searchedUser.iconURL }} style={{ width: 100, height: 100 }} />
+            <TouchableHighlight
+              onPress={this.follow}
+              style={buttonStyle}
+              underlayColor={Color.white}
+            >
+              <View>
+                <Text style={baseStyles.buttonText}>フォローする</Text>
+              </View>
+            </TouchableHighlight>
           </View>
         )}
         <Loader loading={this.state.loading} />
@@ -92,4 +137,6 @@ class AddFriend extends Component {
   }
 }
 
-export default AddFriend;
+const mapStateToProps = state => ({ ...state });
+
+export default connect(mapStateToProps)(AddFriends);
