@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, TouchableHighlight, Image, TextInput } fr
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
+import ImageResizer from 'react-native-image-resizer';
+
 import firebase from 'react-native-firebase';
 
 import { Container } from '../../components/Container';
@@ -20,6 +22,7 @@ class Step2 extends Component {
     nameValidationMsg: '',
     loading: false,
     selectedImagePath: '',
+    resizedImagePath: '',
   };
 
   submit = () => {
@@ -27,33 +30,73 @@ class Step2 extends Component {
 
     const { uid } = this.props.user;
     const { signUpName } = this.props;
+    const { selectedImagePath, resizedImagePath } = this.state;
     if (!uid) return;
 
-    const storageRef = firebase.storage().ref('images');
+    if (!selectedImagePath) {
+      const db = firebase.firestore();
 
+      db
+        .doc(`users/${uid}`)
+        .update({ name: signUpName })
+        .then(() => {
+          console.log('Document successfully written!');
+
+          this.props.navigation.goBack();
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error);
+        });
+
+      return;
+    }
+
+    const storageRef = firebase.storage().ref('images');
     const imageRef = storageRef.child(`${uid}/profile.jpg`);
-    imageRef
-      .put(this.state.selectedImagePath)
+    const thumbImageRef = storageRef.child(`${uid}/thumb_profile.jpg`);
+
+    const promise1 = imageRef
+      .put(selectedImagePath, {
+        contentType: 'image/jpeg',
+      })
       .then((snapshot) => {
         console.log('Uploaded a blob or file!', snapshot);
-
-        const db = firebase.firestore();
-
-        db
-          .doc(`users/${uid}`)
-          .update({ iconURL: snapshot.downloadURL, name: signUpName })
-          .then(() => {
-            console.log('Document successfully written!');
-
-            this.props.dispatch(login());
-          })
-          .catch((error) => {
-            console.error('Error writing document: ', error);
-          });
+        return snapshot.downloadURL;
       })
       .catch((err) => {
         console.error('Uploading error', err);
       });
+
+    const promise2 = thumbImageRef
+      .put(resizedImagePath, {
+        contentType: 'image/jpeg',
+      })
+      .then((snapshot) => {
+        console.log('Uploaded a blob or file!', snapshot);
+        return snapshot.downloadURL;
+      })
+      .catch((err) => {
+        console.error('Uploading error', err);
+      });
+
+    Promise.all([promise1, promise2]).then((values) => {
+      const iconURL = values[0];
+      const thumbIconURL = values[1];
+
+      const db = firebase.firestore();
+
+      db
+        .doc(`users/${uid}`)
+        .update({ iconURL, thumbIconURL, name: signUpName })
+        .then(() => {
+          console.log('Document successfully written!');
+
+          this.props.navigation.goBack();
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error);
+        });
+    });
   };
 
   validate = () => {
@@ -70,15 +113,28 @@ class Step2 extends Component {
 
     return true;
   };
+
   selectImage = () => {
     ImagePicker.openPicker({
-      width: 300,
+      width: 400,
       height: 400,
       cropping: true,
     }).then((image) => {
       console.log(image);
 
       this.setState({ selectedImagePath: image.path });
+
+      ImageResizer.createResizedImage(image.path, 128, 128, 'JPEG', 80)
+        .then(({ uri }) => {
+          this.setState({
+            resizedImagePath: uri,
+          });
+
+          console.log('resized', uri);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   };
 
@@ -115,7 +171,10 @@ class Step2 extends Component {
         </View>
         <View>
           <Text>oioi</Text>
-          <Image source={{ uri: this.state.selectedImagePath }} style={{ width: 100, height: 100 }} />
+          <Image
+            source={{ uri: this.state.selectedImagePath }}
+            style={{ width: 100, height: 100 }}
+          />
           <TouchableHighlight
             onPress={this.selectImage}
             underlayColor={Color.white}

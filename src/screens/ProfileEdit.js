@@ -43,8 +43,19 @@ class ProfileEdit extends Component {
     if (!uid) return;
 
     if (!selectedImagePath) {
-      this.props.nagivation.goBack();
-      return;
+      const db = firebase.firestore();
+
+      return db
+        .doc(`users/${uid}`)
+        .update({ name })
+        .then(() => {
+          console.log('Document successfully written!');
+
+          this.props.navigation.goBack();
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error);
+        });
     }
 
     const storageRef = firebase.storage().ref('images');

@@ -16,6 +16,7 @@ class App extends Component {
   constructor(props) {
     super();
     AsyncStorage.getItem('logined').then((logined) => {
+      console.log('read storage', logined);
       if (logined) {
         props.dispatch(login());
       }
@@ -23,7 +24,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.props.dispatch(logout());
+    this.props.dispatch(logout());
 
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.props.dispatch(updateUser(user));
