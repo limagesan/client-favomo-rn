@@ -23,6 +23,7 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/UIView+React.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTComponent.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTShadowView.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTLayout.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/RCTRootView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Modules/RCTUIManager.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Modules/RCTUIManagerUtils.h \

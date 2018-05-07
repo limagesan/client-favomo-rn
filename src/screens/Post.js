@@ -16,15 +16,30 @@ class Post extends Component {
     captionValidationMsg: '',
   };
 
-  onPressButton = () => {
+  onPressButton = async () => {
     const db = firebase.firestore();
 
     const { uid } = this.props.user;
     const { url, caption } = this.state;
 
+    const doc = await db.doc(`users/${uid}`).get();
+
+    const value = doc.data();
+
     db
       .collection('posts')
-      .add({ url, caption, poster: { uid } })
+      .add({
+        url,
+        caption,
+        poster: {
+          uid,
+          id: value.id,
+          name: value.name,
+          thumbIconURL: value.thumbIconURL,
+          follower: value.follower,
+        },
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      })
       .then(() => {
         console.log('Document successfully written!');
       })

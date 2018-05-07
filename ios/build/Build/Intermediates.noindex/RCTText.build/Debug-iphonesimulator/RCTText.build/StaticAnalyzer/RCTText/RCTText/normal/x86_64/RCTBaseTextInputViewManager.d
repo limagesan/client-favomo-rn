@@ -28,8 +28,10 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFont.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView+Layout.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLayout.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUIManager.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUIManagerUtils.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUIManagerObserverCoordinator.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputShadowView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/BaseText/RCTBaseTextShadowView.h \

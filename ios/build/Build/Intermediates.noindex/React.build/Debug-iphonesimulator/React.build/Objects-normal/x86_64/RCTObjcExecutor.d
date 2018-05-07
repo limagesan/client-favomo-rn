@@ -396,4 +396,6 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Profiler/RCTProfile.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/JSBigString.h \
-  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/MessageQueueThread.h
+  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/MessageQueueThread.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/RAMBundleRegistry.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/JSModulesUnbundle.h

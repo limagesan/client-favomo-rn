@@ -16,10 +16,11 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTShadowView+Layout.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTShadowView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTComponent.h \
-  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/RCTRootView.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTLayout.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/RCTRootView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/Surface/RCTSurfaceDelegate.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/Surface/RCTSurfaceRootShadowView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/Surface/RCTSurfaceRootShadowViewDelegate.h \
@@ -37,4 +38,5 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Base/RCTEventDispatcher.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Views/UIView+React.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Modules/RCTUIManagerObserverCoordinator.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/React/Modules/RCTUIManagerUtils.h

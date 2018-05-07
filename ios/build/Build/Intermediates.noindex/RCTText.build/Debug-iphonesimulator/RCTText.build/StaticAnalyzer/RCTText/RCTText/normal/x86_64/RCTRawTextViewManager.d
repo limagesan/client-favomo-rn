@@ -25,4 +25,5 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/RawText/RCTRawTextShadowView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLayout.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h

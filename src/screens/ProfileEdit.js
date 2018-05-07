@@ -11,7 +11,7 @@ import Loader from '../components/Loader';
 
 import basicStyles, { Color } from '../styles';
 
-// const ImageResizer = require('react-native-image-resizer').default;
+const db = firebase.firestore();
 
 class ProfileEdit extends Component {
   static navigationOptions = {
@@ -43,8 +43,6 @@ class ProfileEdit extends Component {
     if (!uid) return;
 
     if (!selectedImagePath) {
-      const db = firebase.firestore();
-
       return db
         .doc(`users/${uid}`)
         .update({ name })
@@ -86,23 +84,38 @@ class ProfileEdit extends Component {
         console.error('Uploading error', err);
       });
 
-    Promise.all([promise1, promise2]).then((values) => {
+    Promise.all([promise1, promise2]).then(async (values) => {
       const iconURL = values[0];
       const thumbIconURL = values[1];
 
-      const db = firebase.firestore();
+      const { docs } = await db
+        .collection('posts')
+        .where('poster.uid', '==', uid)
+        .get();
 
-      db
-        .doc(`users/${uid}`)
-        .update({ iconURL, thumbIconURL, name })
-        .then(() => {
-          console.log('Document successfully written!');
+      const userDoc = await db.doc(`users/${uid}`).get();
+      const userRef = userDoc.ref;
 
-          this.props.navigation.goBack();
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error);
-        });
+      const batch = db.batch();
+
+      const postsUpdate = {};
+      postsUpdate['poster.thumbIconURL'] = thumbIconURL;
+      postsUpdate['poster.name'] = name;
+
+      console.log('userDoc', userDoc, 'userRef', userRef);
+
+      console.log('docs', docs);
+      for (let i = 0; i < docs.length; i += 1) {
+        batch.update(docs[i].ref, postsUpdate);
+      }
+
+      batch.update(userRef, { iconURL, thumbIconURL, name });
+
+      batch.commit().then(() => {
+        console.log('Document successfully written!');
+
+        this.props.navigation.goBack();
+      });
     });
   };
 
@@ -119,6 +132,7 @@ class ProfileEdit extends Component {
 
     return true;
   };
+
   selectImage = () => {
     ImagePicker.openPicker({
       width: 400,

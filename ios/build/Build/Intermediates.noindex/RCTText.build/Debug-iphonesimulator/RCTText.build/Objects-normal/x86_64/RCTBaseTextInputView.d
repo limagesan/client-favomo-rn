@@ -29,5 +29,7 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTViewManager.h \
   /Users/hiroki/works/favomo/client-favomo-rn/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/TextInput/RCTInputAccessoryView.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/TextInput/RCTInputAccessoryViewContent.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/RCTTextAttributes.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/Text/TextInput/RCTTextSelection.h

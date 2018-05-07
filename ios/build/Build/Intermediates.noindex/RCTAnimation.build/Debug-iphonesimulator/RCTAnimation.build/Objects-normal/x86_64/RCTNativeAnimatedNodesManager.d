@@ -40,4 +40,5 @@ dependencies: \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTPropsAnimatedNode.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/NativeAnimation/Drivers/RCTSpringAnimation.h \
   /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTStyleAnimatedNode.h \
-  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTTransformAnimatedNode.h
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTTransformAnimatedNode.h \
+  /Users/hiroki/works/favomo/client-favomo-rn/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTTrackingAnimatedNode.h

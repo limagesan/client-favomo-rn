@@ -50,5 +50,34 @@ dependencies: \
   ../../../ios/Pods/Headers/Public/FirebaseAuth/FirebaseAuth/FIRUser.h \
   ../../../ios/Pods/Headers/Public/FirebaseAuth/FirebaseAuth/FIRUserInfo.h \
   ../../../ios/Pods/Headers/Public/FirebaseAuth/FirebaseAuth/FIRUserMetadata.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FirebaseFirestore.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRCollectionReference.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRQuery.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRListenerRegistration.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRDocumentChange.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRDocumentReference.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRDocumentSnapshot.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRFieldPath.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRFieldValue.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRFirestore.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRFirestoreErrors.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRFirestoreSettings.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRGeoPoint.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRQuerySnapshot.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRSetOptions.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRSnapshotMetadata.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRTimestamp.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRTransaction.h \
+  ../../../ios/Pods/Headers/Public/FirebaseFirestore/FirebaseFirestore/FIRWriteBatch.h \
   ../../../ios/Pods/Headers/Public/FirebaseInstanceID/FirebaseInstanceID/FirebaseInstanceID.h \
-  ../../../ios/Pods/Headers/Public/FirebaseInstanceID/FirebaseInstanceID/FIRInstanceID.h
+  ../../../ios/Pods/Headers/Public/FirebaseInstanceID/FirebaseInstanceID/FIRInstanceID.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FirebaseStorage.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorage.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageConstants.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageDownloadTask.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageObservableTask.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageTask.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageMetadata.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageReference.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageUploadTask.h \
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage/FIRStorageTaskSnapshot.h
