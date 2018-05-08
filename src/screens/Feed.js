@@ -1,16 +1,36 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, FlatList, Image } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList, Image, TextInput, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { OpenGraphAwareInput, OpenGraphDisplay, OpenGraphParser } from 'react-native-opengraph-kit';
 
 import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
 
 import { logout } from '../actions';
 
-import { posts } from '../assets/data';
+// import { posts } from '../assets/data';
 import { Container } from '../components/Container';
 
 const db = firebase.firestore();
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 50,
+    padding: 10,
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    minHeight: 100,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 5,
+  },
+});
 
 class Feed extends Component {
   static navigationOptions = {
@@ -20,6 +40,7 @@ class Feed extends Component {
   constructor() {
     super();
     this.onPressButton = this.onPressButton.bind(this);
+    this.state = { data: [], posts: [] };
   }
 
   componentDidMount() {
@@ -30,29 +51,78 @@ class Feed extends Component {
     this.props.navigation.goBack();
   }
 
-  getFeed = () => {
+  getFeed = async () => {
     if (!this.props.user) {
       this.props.dispatch(logout());
       return;
     }
     const { uid } = this.props.user;
 
-    db
-      .collection('posts')
-      .where(`poster.follower.${uid}`, '==', true)
-      .get()
-      .then((snapshot) => {
-        console.log('feed res', snapshot);
+    try {
+      const snapshot = await db
+        .collection('posts')
+        .where(`poster.follower.${uid}`, '==', true)
+        .get();
 
-        const { docs } = snapshot;
-        console.log('feed docs', docs);
+      console.log('feed res', snapshot, snapshot.query.selectFields);
+
+      const { docs } = snapshot;
+      console.log('feed docs', docs);
+
+      let posts = [];
+
+      docs.forEach((doc, i) => {
+        posts[i] = doc.data();
+        posts[i].id = doc.id;
+      });
+
+      let urls = '';
+      posts.forEach((post) => {
+        urls = `${urls} + ${post.url} + ' '`;
+      });
+      console.log('posts', posts);
+
+      const data = await OpenGraphParser.extractMeta(urls);
+
+      posts = posts.map((post, i) => {
+        const newPost = post;
+        newPost.data = data[i];
+        return newPost;
+      });
+
+      this.setState({ posts });
+    } catch (error) {
+      console.error('error', error);
+    }
+  };
+
+  handleIconPress = () => {
+    console.log('Pressed X');
+  };
+
+  handleTextChange = (event) => {
+    OpenGraphParser.extractMeta(event.nativeEvent.text)
+      .then((data) => {
+        console.log(data);
+        this.setState({ data });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
   render() {
     return (
       <Container>
-        <MultiSelectList data={posts} />
+        {/* <View style={styles.container}>
+          <Text style={styles.title}>OpenGraphAwareInput</Text>
+          <OpenGraphAwareInput showIcon containerStyle={styles.textInput} />
+          <Text style={styles.title}>Using OpenGraphParser with normal TextInput</Text>
+          <TextInput style={styles.textInput} onChange={this.handleTextChange} />
+          <Text style={styles.title}>OpenGraphDisplay</Text>
+          {this.state.data.map((meta, i) => <OpenGraphDisplay data={meta} />)}
+        </View> */}
+        <MultiSelectList data={this.state.posts} />
       </Container>
     );
   }
@@ -82,7 +152,7 @@ class MyListItem extends React.PureComponent {
                 height: 94,
                 borderRadius: 10,
               }}
-              source={require('../assets/bruno.png')}
+              source={{ uri: post.data.image }}
             />
           </View>
           <View style={{ paddingLeft: 10, flex: 11 }}>
@@ -125,10 +195,12 @@ class MyListItem extends React.PureComponent {
                     fontWeight: 'bold',
                   }}
                 >
-                  finesse(Remix)[feat.Cardi B]
+                  {/* finesse(Remix)[feat.Cardi B] */}
+                  {post.data.title}
                 </Text>
-                <Text style={{ fontSize: 11 }}>
-                  Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify
+                <Text style={{ fontSize: 11 }} numberOfLines={3}>
+                  {/* Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify */}
+                  {post.data.description}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -144,7 +216,7 @@ class MyListItem extends React.PureComponent {
                   height: 35,
                   borderRadius: 17.5,
                 }}
-                source={{ uri: post.user.iconUrl }}
+                source={{ uri: post.poster.thumbIconURL }}
               />
               <View
                 style={{
@@ -155,7 +227,7 @@ class MyListItem extends React.PureComponent {
                 }}
               >
                 <View style={{ flex: 4 }}>
-                  <Text style={{ fontSize: 10 }}>{post.user.id}</Text>
+                  <Text style={{ fontSize: 10 }}>{post.poster.id}</Text>
                   <Text style={{ marginTop: 5 }}>{post.caption}</Text>
                 </View>
               </View>
@@ -228,7 +300,7 @@ class MultiSelectList extends React.PureComponent {
     });
   };
 
-  keyExtractor = (post, index) => post;
+  keyExtractor = (post, index) => post.id;
 
   renderItem = ({ item }) => (
     <MyListItem

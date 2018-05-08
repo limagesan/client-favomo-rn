@@ -42,6 +42,8 @@ class Post extends Component {
       })
       .then(() => {
         console.log('Document successfully written!');
+
+        this.props.navigation.goBack();
       })
       .catch((error) => {
         console.error('Error writing document: ', error);
