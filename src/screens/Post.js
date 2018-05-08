@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Text, View, TextInput, Image, TouchableOpacity, TouchableHighlight } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
+import { OpenGraphParser } from 'react-native-opengraph-kit';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -14,6 +15,7 @@ class Post extends Component {
     caption: '',
     urlValidationMsg: '',
     captionValidationMsg: '',
+    content: null,
   };
 
   onPressButton = async () => {
@@ -50,13 +52,25 @@ class Post extends Component {
       });
   };
 
+  handleChange = async (text) => {
+    this.setState({ url: text, urlValidationMsg: '' });
+    try {
+      const contents = await OpenGraphParser.extractMeta(text);
+      if (contents.length > 0) {
+        this.setState({ content: contents[0] });
+      }
+    } catch (error) {
+      console.error('error', error);
+    }
+  };
+
   comopnentWillMount() {
     this.setState();
   }
 
   render() {
     const {
-      url, caption, urlValidationMsg, captionValidationMsg,
+      url, caption, urlValidationMsg, captionValidationMsg, content,
     } = this.state;
 
     return (
@@ -73,9 +87,7 @@ class Post extends Component {
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <TextInput
-              onChangeText={(value) => {
-                this.setState({ url: value, urlValidationMsg: '' });
-              }}
+              onChangeText={this.handleChange}
               value={url}
               maxLength={500}
               keyboardType="default"
@@ -106,6 +118,37 @@ class Post extends Component {
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{captionValidationMsg}</Text>
           </View>
+          {content && (
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 4 }}>
+                <Image
+                  style={{
+                    width: 94,
+                    height: 94,
+                    borderRadius: 10,
+                  }}
+                  source={{ uri: content.image }}
+                />
+              </View>
+              <View style={{ paddingLeft: 10, flex: 11 }}>
+                <View>
+                  <Text
+                    style={{
+                      marginTop: 7,
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {content.title}
+                  </Text>
+                  <Text style={{ fontSize: 11 }} numberOfLines={3}>
+                    {content.description}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          )}
+
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
             <TouchableHighlight
               onPress={this.onPressButton}

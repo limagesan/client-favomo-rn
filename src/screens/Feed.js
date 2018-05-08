@@ -5,12 +5,11 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
-  TextInput,
   StyleSheet,
   RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { OpenGraphAwareInput, OpenGraphDisplay, OpenGraphParser } from 'react-native-opengraph-kit';
+import { OpenGraphParser } from 'react-native-opengraph-kit';
 
 import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
@@ -127,7 +126,11 @@ class Feed extends Component {
           <Text style={styles.title}>OpenGraphDisplay</Text>
           {this.state.data.map((meta, i) => <OpenGraphDisplay data={meta} />)}
         </View> */}
-        <MultiSelectList data={this.state.posts} onRefresh={this.onRefresh} refreshing={this.state.refreshing} />
+        <MultiSelectList
+          data={this.state.posts}
+          onRefresh={this.onRefresh}
+          refreshing={this.state.refreshing}
+        />
       </Container>
     );
   }
@@ -199,12 +202,11 @@ class MyListItem extends React.PureComponent {
                     fontSize: 15,
                     fontWeight: 'bold',
                   }}
+                  numberOfLines={2}
                 >
-                  {/* finesse(Remix)[feat.Cardi B] */}
                   {post.data.title}
                 </Text>
                 <Text style={{ fontSize: 11 }} numberOfLines={3}>
-                  {/* Finesse(Remix)[feat.Cardi B], an album by Bruno Mars, Cardi B on Spotify */}
                   {post.data.description}
                 </Text>
               </View>
