@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, FlatList, Image, TextInput, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  TextInput,
+  StyleSheet,
+  RefreshControl,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { OpenGraphAwareInput, OpenGraphDisplay, OpenGraphParser } from 'react-native-opengraph-kit';
 
@@ -40,7 +49,7 @@ class Feed extends Component {
   constructor() {
     super();
     this.onPressButton = this.onPressButton.bind(this);
-    this.state = { data: [], posts: [] };
+    this.state = { posts: [], refreshing: false };
   }
 
   componentDidMount() {
@@ -50,6 +59,12 @@ class Feed extends Component {
   onPressButton() {
     this.props.navigation.goBack();
   }
+
+  onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.getFeed();
+    this.setState({ refreshing: false });
+  };
 
   getFeed = async () => {
     if (!this.props.user) {
@@ -91,6 +106,7 @@ class Feed extends Component {
       });
 
       this.setState({ posts });
+      return;
     } catch (error) {
       console.error('error', error);
     }
@@ -98,17 +114,6 @@ class Feed extends Component {
 
   handleIconPress = () => {
     console.log('Pressed X');
-  };
-
-  handleTextChange = (event) => {
-    OpenGraphParser.extractMeta(event.nativeEvent.text)
-      .then((data) => {
-        console.log(data);
-        this.setState({ data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   render() {
@@ -122,7 +127,7 @@ class Feed extends Component {
           <Text style={styles.title}>OpenGraphDisplay</Text>
           {this.state.data.map((meta, i) => <OpenGraphDisplay data={meta} />)}
         </View> */}
-        <MultiSelectList data={this.state.posts} />
+        <MultiSelectList data={this.state.posts} onRefresh={this.onRefresh} refreshing={this.state.refreshing} />
       </Container>
     );
   }
@@ -321,6 +326,9 @@ class MultiSelectList extends React.PureComponent {
         style={{
           width: 375,
         }}
+        refreshControl={
+          <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
+        }
       />
     );
   }
