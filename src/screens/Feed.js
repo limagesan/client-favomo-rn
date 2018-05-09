@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { OpenGraphParser } from 'react-native-opengraph-kit';
@@ -14,6 +15,7 @@ import { OpenGraphParser } from 'react-native-opengraph-kit';
 import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
 import YouTube from 'react-native-youtube';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import { logout } from '../actions';
 
@@ -41,6 +43,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const youtubeStyles = EStyleSheet.create({
+  container: {
+    height: 200,
+    alignSelf: 'stretch',
+  },
+});
+
 class Feed extends Component {
   static navigationOptions = {
     title: 'Feed',
@@ -54,6 +63,8 @@ class Feed extends Component {
 
   componentDidMount() {
     this.getFeed();
+    const { height, width } = Dimensions.get('window');
+    console.log('dimensions', height, width);
   }
 
   onPressButton() {
@@ -119,17 +130,6 @@ class Feed extends Component {
   render() {
     return (
       <Container>
-        <YouTube
-          videoId="KVZ-P-ZI6W4" // The YouTube video ID
-          play // control playback of video with true/false
-          fullscreen // control whether the video should play in fullscreen or inline
-          loop // control whether the video should loop when ended
-          onReady={e => this.setState({ isReady: true })}
-          onChangeState={e => this.setState({ status: e.state })}
-          onChangeQuality={e => this.setState({ quality: e.quality })}
-          onError={e => this.setState({ error: e.error })}
-          style={{ alignSelf: 'stretch', height: 300 }}
-        />
         <MultiSelectList
           data={this.state.posts}
           onRefresh={this.onRefresh}
@@ -140,14 +140,66 @@ class Feed extends Component {
   }
 }
 
+class YoutubeItem extends React.PureComponent {
+  onPress = () => {
+    console.log('pressed');
+  };
+
+  render() {
+    const { item } = this.props;
+    const { url } = item;
+    let id = '';
+    if (url.indexOf('youtube.com') >= 0) {
+      const matches = url.match(/watch\?v=.{11}/);
+      id = matches[0].match(/.{11}$/);
+    } else if (url.indexOf('youtu.be') >= 0) {
+      const matches = url.match(/youtu\.be\/.{11}/);
+      id = matches[0].match(/.{11}$/);
+    }
+    if (id.length > 0) {
+      [id] = id;
+    }
+
+    const { width } = Dimensions.get('window');
+    let height = width * 9;
+    height /= 16;
+
+    return (
+      <View
+        style={{
+          height,
+          width,
+        }}
+      >
+        <YouTube
+          videoId={id} // The YouTube video ID
+          play // control playback of video with true/false
+          fullscreen={false} // control whether the video should play in fullscreen or inline
+          loop={false} // control whether the video should loop when ended
+          onReady={e => this.setState({ isReady: true })}
+          onChangeState={e => this.setState({ status: e.state })}
+          onChangeQuality={e => this.setState({ quality: e.quality })}
+          onError={e => this.setState({ error: e.error })}
+          style={{
+            height,
+            width,
+            alignSelf: 'stretch',
+          }}
+        />
+      </View>
+    );
+  }
+}
+
 class MyListItem extends React.PureComponent {
   onPress = () => {
-    this.props.onPressItem(this.props.post);
+    this.props.onPressItem(this.props.item);
   };
 
   render() {
     const textColor = this.props.selected ? 'red' : 'black';
-    const { post } = this.props;
+    const { item } = this.props;
+    console.log('item', item);
     return (
       <View
         style={{
@@ -164,7 +216,7 @@ class MyListItem extends React.PureComponent {
                 height: 94,
                 borderRadius: 10,
               }}
-              source={{ uri: post.data.image }}
+              source={{ uri: item.data.image }}
             />
           </View>
           <View style={{ paddingLeft: 10, flex: 11 }}>
@@ -197,7 +249,7 @@ class MyListItem extends React.PureComponent {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {post.url}
+                    {item.url}
                   </Text>
                 </View>
                 <Text
@@ -208,10 +260,10 @@ class MyListItem extends React.PureComponent {
                   }}
                   numberOfLines={2}
                 >
-                  {post.data.title}
+                  {item.data.title}
                 </Text>
                 <Text style={{ fontSize: 11 }} numberOfLines={3}>
-                  {post.data.description}
+                  {item.data.description}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -227,7 +279,7 @@ class MyListItem extends React.PureComponent {
                   height: 35,
                   borderRadius: 17.5,
                 }}
-                source={{ uri: post.poster.thumbIconURL }}
+                source={{ uri: item.poster.thumbIconURL }}
               />
               <View
                 style={{
@@ -238,8 +290,8 @@ class MyListItem extends React.PureComponent {
                 }}
               >
                 <View style={{ flex: 4 }}>
-                  <Text style={{ fontSize: 10 }}>{post.poster.id}</Text>
-                  <Text style={{ marginTop: 5 }}>{post.caption}</Text>
+                  <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
+                  <Text style={{ marginTop: 5 }}>{item.caption}</Text>
                 </View>
               </View>
               <View
@@ -292,11 +344,11 @@ class MultiSelectList extends React.PureComponent {
     selected: new Map(),
   };
 
-  onPressItem = (post) => {
+  onPressItem = (item) => {
     // updater functions are preferred for transactional updates
     SafariView.isAvailable()
       .then(SafariView.show({
-        url: post.url,
+        url: item.url,
       }))
       .catch((error) => {
         // Fallback WebView code for iOS 8 and earlier
@@ -304,23 +356,30 @@ class MultiSelectList extends React.PureComponent {
     this.setState((state) => {
       // copy the map rather than modifying state.
       const selected = new Map(state.selected);
-      selected.set(post.id, !selected.get(post.id)); // toggle
+      selected.set(item.id, !selected.get(item.id)); // toggle
       return {
         selected,
       };
     });
   };
 
-  keyExtractor = (post, index) => post.id;
+  keyExtractor = (item, index) => item.id;
 
-  renderItem = ({ item }) => (
-    <MyListItem
-      id={item.id}
-      onPressItem={this.onPressItem}
-      selected={!!this.state.selected.get(item.id)}
-      post={item}
-    />
-  );
+  renderItem = ({ item }) => {
+    const ListItem =
+      item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
+        <YoutubeItem id={item.id} item={item} />
+      ) : (
+        <MyListItem
+          id={item.id}
+          onPressItem={this.onPressItem}
+          selected={!!this.state.selected.get(item.id)}
+          item={item}
+        />
+      );
+
+    return ListItem;
+  };
 
   render() {
     return (

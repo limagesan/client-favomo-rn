@@ -42,6 +42,7 @@
 		F51216C72097579900688155 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F51216A12097579900688155 /* GoogleService-Info.plist */; };
 		F5331E58209EB72100F9D75C /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5331E38209EB70100F9D75C /* libRCTImageResizer.a */; };
 		F53321D020A2DAF300F9D75C /* libRCTYouTube.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53321BD20A2DAE600F9D75C /* libRCTYouTube.a */; };
+		F533225520A2DC8700F9D75C /* YTPlayerView-iframe-player.html in Resources */ = {isa = PBXBuildFile; fileRef = F533222B20A2DC8600F9D75C /* YTPlayerView-iframe-player.html */; };
 		F5BD573B20976132003D1B09 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5BD571420976132003D1B09 /* FontAwesome.ttf */; };
 		F5BD573D2097613C003D1B09 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5BD573C2097613C003D1B09 /* Ionicons.ttf */; };
 		F5BD578720976597003D1B09 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BD57862097657C003D1B09 /* libSafariViewManager.a */; };
@@ -386,6 +387,7 @@
 		F51216A12097579900688155 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F5331E2B209EB70100F9D75C /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		F53321A220A2DAE500F9D75C /* RCTYouTube.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTYouTube.xcodeproj; path = "../node_modules/react-native-youtube/RCTYouTube.xcodeproj"; sourceTree = "<group>"; };
+		F533222B20A2DC8600F9D75C /* YTPlayerView-iframe-player.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "YTPlayerView-iframe-player.html"; path = "../node_modules/react-native-youtube/assets/YTPlayerView-iframe-player.html"; sourceTree = "<group>"; };
 		F5BD571420976132003D1B09 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		F5BD573C2097613C003D1B09 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 		13B07FAE1A68108700A75B9A /* clientfavomorn */ = {
 			isa = PBXGroup;
 			children = (
+				F533222B20A2DC8600F9D75C /* YTPlayerView-iframe-player.html */,
 				F5BD571420976132003D1B09 /* FontAwesome.ttf */,
 				F5BD573C2097613C003D1B09 /* Ionicons.ttf */,
 				F51216A12097579900688155 /* GoogleService-Info.plist */,
@@ -1209,6 +1212,7 @@
 			files = (
 				F5BD573D2097613C003D1B09 /* Ionicons.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F533225520A2DC8700F9D75C /* YTPlayerView-iframe-player.html in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F51216C72097579900688155 /* GoogleService-Info.plist in Resources */,
 				F5BD573B20976132003D1B09 /* FontAwesome.ttf in Resources */,
