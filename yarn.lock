@@ -4788,7 +4788,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -4904,14 +4904,6 @@ react-native-navigation@^1.1.440:
   dependencies:
     lodash "4.x.x"
 
-react-native-opengraph-kit@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-opengraph-kit/-/react-native-opengraph-kit-2.0.0.tgz#41e9904fea5b776ae938dea4ee1a88905fb2c80d"
-  dependencies:
-    html-entities "~1.2.0"
-    lodash.debounce "~4.0.8"
-    proptypes "^1.1.0"
-
 "react-native-opengraph-kit@https://github.com/limagesan/react-native-opengraph-kit":
   version "2.0.0"
   resolved "https://github.com/limagesan/react-native-opengraph-kit#cce8e51e279b09dc0dbec1f7d811a25e8c51fce0"
@@ -4943,6 +4935,12 @@ react-native-vector-icons@^4.6.0:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
+
+react-native-youtube@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-youtube/-/react-native-youtube-1.1.0.tgz#efa30c4f7385d1951af643188e30760efd6c0784"
+  dependencies:
+    prop-types "^15.5.0"
 
 react-native@^0.55.3:
   version "0.55.3"

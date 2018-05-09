@@ -13,6 +13,7 @@ import { OpenGraphParser } from 'react-native-opengraph-kit';
 
 import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
+import YouTube from 'react-native-youtube';
 
 import { logout } from '../actions';
 
@@ -118,14 +119,17 @@ class Feed extends Component {
   render() {
     return (
       <Container>
-        {/* <View style={styles.container}>
-          <Text style={styles.title}>OpenGraphAwareInput</Text>
-          <OpenGraphAwareInput showIcon containerStyle={styles.textInput} />
-          <Text style={styles.title}>Using OpenGraphParser with normal TextInput</Text>
-          <TextInput style={styles.textInput} onChange={this.handleTextChange} />
-          <Text style={styles.title}>OpenGraphDisplay</Text>
-          {this.state.data.map((meta, i) => <OpenGraphDisplay data={meta} />)}
-        </View> */}
+        <YouTube
+          videoId="KVZ-P-ZI6W4" // The YouTube video ID
+          play // control playback of video with true/false
+          fullscreen // control whether the video should play in fullscreen or inline
+          loop // control whether the video should loop when ended
+          onReady={e => this.setState({ isReady: true })}
+          onChangeState={e => this.setState({ status: e.state })}
+          onChangeQuality={e => this.setState({ quality: e.quality })}
+          onError={e => this.setState({ error: e.error })}
+          style={{ alignSelf: 'stretch', height: 300 }}
+        />
         <MultiSelectList
           data={this.state.posts}
           onRefresh={this.onRefresh}

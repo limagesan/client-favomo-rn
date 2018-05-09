@@ -41,6 +41,7 @@
 		E682C05A631148569383DEF0 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 290FEBAF2499449BAD1AED92 /* libRNFirebase.a */; };
 		F51216C72097579900688155 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F51216A12097579900688155 /* GoogleService-Info.plist */; };
 		F5331E58209EB72100F9D75C /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5331E38209EB70100F9D75C /* libRCTImageResizer.a */; };
+		F53321D020A2DAF300F9D75C /* libRCTYouTube.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53321BD20A2DAE600F9D75C /* libRCTYouTube.a */; };
 		F5BD573B20976132003D1B09 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5BD571420976132003D1B09 /* FontAwesome.ttf */; };
 		F5BD573D2097613C003D1B09 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5BD573C2097613C003D1B09 /* Ionicons.ttf */; };
 		F5BD578720976597003D1B09 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5BD57862097657C003D1B09 /* libSafariViewManager.a */; };
@@ -334,6 +335,13 @@
 			remoteGlobalIDString = 5D72D2E81C16249000E22EC1;
 			remoteInfo = RCTImageResizer;
 		};
+		F53321BC20A2DAE600F9D75C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F53321A220A2DAE500F9D75C /* RCTYouTube.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8BDB9BC91B4289AE00EF9FEF;
+			remoteInfo = RCTYouTube;
+		};
 		F5BD57852097657C003D1B09 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */;
@@ -377,6 +385,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		F51216A12097579900688155 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F5331E2B209EB70100F9D75C /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
+		F53321A220A2DAE500F9D75C /* RCTYouTube.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTYouTube.xcodeproj; path = "../node_modules/react-native-youtube/RCTYouTube.xcodeproj"; sourceTree = "<group>"; };
 		F5BD571420976132003D1B09 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		F5BD573C2097613C003D1B09 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		F5BD575B2097657C003D1B09 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
@@ -395,6 +404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F53321D020A2DAF300F9D75C /* libRCTYouTube.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -589,6 +599,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F53321A220A2DAE500F9D75C /* RCTYouTube.xcodeproj */,
 				F5331E2B209EB70100F9D75C /* RCTImageResizer.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -682,6 +693,14 @@
 			isa = PBXGroup;
 			children = (
 				F5331E38209EB70100F9D75C /* libRCTImageResizer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F53321A320A2DAE500F9D75C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F53321BD20A2DAE600F9D75C /* libRCTYouTube.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -858,6 +877,10 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = F53321A320A2DAE500F9D75C /* Products */;
+					ProjectRef = F53321A220A2DAE500F9D75C /* RCTYouTube.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -1156,6 +1179,13 @@
 			remoteRef = F5331E37209EB70100F9D75C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F53321BD20A2DAE600F9D75C /* libRCTYouTube.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTYouTube.a;
+			remoteRef = F53321BC20A2DAE600F9D75C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F5BD57862097657C003D1B09 /* libSafariViewManager.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1417,6 +1447,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../nodemodules/react-native-safari-view/ios/**",
 					"$(SRCROOT)/../nodemodules/react-native-image-resizer/ios/**",
+					"$(SRCROOT)/../nodemodules/react-native-image-youtube/ios",
 				);
 				INFOPLIST_FILE = clientfavomorn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1444,6 +1475,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../nodemodules/react-native-safari-view/ios/**",
 					"$(SRCROOT)/../nodemodules/react-native-image-resizer/ios/**",
+					"$(SRCROOT)/../nodemodules/react-native-image-youtube/ios",
 				);
 				INFOPLIST_FILE = clientfavomorn/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
