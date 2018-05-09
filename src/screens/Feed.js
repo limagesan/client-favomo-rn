@@ -16,6 +16,7 @@ import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
 import YouTube from 'react-native-youtube';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import { logout } from '../actions';
 
@@ -109,7 +110,7 @@ class Feed extends Component {
       console.log('posts', posts);
 
       const data = await OpenGraphParser.extractMeta(urls);
-
+      console.log('data', data);
       posts = posts.map((post, i) => {
         const newPost = post;
         newPost.data = data[i];
@@ -167,7 +168,8 @@ class YoutubeItem extends React.PureComponent {
     return (
       <View
         style={{
-          height,
+          borderTopWidth: 1,
+          height: height + 80,
           width,
         }}
       >
@@ -186,6 +188,72 @@ class YoutubeItem extends React.PureComponent {
             alignSelf: 'stretch',
           }}
         />
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 10,
+            padding: 10,
+          }}
+        >
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+              borderRadius: 17.5,
+            }}
+            source={{ uri: item.poster.thumbIconURL }}
+          />
+          <View
+            style={{
+              paddingTop: 11.5,
+              marginLeft: 10,
+              flexDirection: 'row',
+              flex: 1,
+            }}
+          >
+            <View style={{ flex: 4 }}>
+              <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
+              <Text style={{ marginTop: 5 }}>{item.caption}</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              paddingRight: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                console.log('liked');
+              }}
+            >
+              <Image
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+                source={require('../assets/thumbs-up.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                console.log('smiled');
+              }}
+            >
+              <Image
+                style={{
+                  marginLeft: 10,
+                  width: 25,
+                  height: 25,
+                }}
+                source={require('../assets/happiness.png')}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
@@ -197,15 +265,37 @@ class MyListItem extends React.PureComponent {
   };
 
   render() {
-    const textColor = this.props.selected ? 'red' : 'black';
     const { item } = this.props;
-    console.log('item', item);
+    const { shortIconRef } = item.data;
+
+    let favicon = '../assets/spotify.png';
+    // http://www.ietf.org/rfc/rfc3986.txt 50p参照
+    const urlRegexp = /^(([^:/?#]+):)?(\/\/([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/i;
+
+    if (shortIconRef) {
+      let matches = shortIconRef.match(/^https|^http/);
+      if (matches && matches.length > 0) {
+        favicon = shortIconRef;
+      }
+      matches = shortIconRef.match(/^\/\//);
+      if (matches && matches.length > 0) {
+        const matches2 = item.url.match(urlRegexp);
+        favicon = `${matches2[1]}${shortIconRef}`;
+      }
+      matches = shortIconRef.match(/^\/[^/]/);
+      if (matches && matches.length > 0) {
+        const matches2 = item.url.match(urlRegexp);
+        favicon = `${matches2[1]}${matches2[3]}${shortIconRef}`;
+      }
+    }
+    console.log('favicon', favicon);
+
     return (
       <View
         style={{
           borderTopWidth: 1,
           padding: 10,
-          height: 140,
+          height: 180,
         }}
       >
         <View style={{ flexDirection: 'row' }}>
@@ -235,10 +325,7 @@ class MyListItem extends React.PureComponent {
                       width: 15,
                       height: 15,
                     }}
-                    source={{
-                      uri:
-                        'https://firebasestorage.googleapis.com/v0/b/favomo-6c925.appspot.com/o/images%2Fmountains.jpg?alt=media&token=743b06f0-ecd9-446c-9ada-42bd192f43f7',
-                    }}
+                    source={{ uri: favicon }}
                   />
                   <Text
                     style={{
@@ -267,71 +354,65 @@ class MyListItem extends React.PureComponent {
                 </Text>
               </View>
             </TouchableOpacity>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 10,
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 10,
+          }}
+        >
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+              borderRadius: 17.5,
+            }}
+            source={{ uri: item.poster.thumbIconURL }}
+          />
+          <View
+            style={{
+              paddingTop: 11.5,
+              marginLeft: 10,
+              flexDirection: 'row',
+              flex: 1,
+            }}
+          >
+            <View style={{ flex: 4 }}>
+              <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
+              <Text style={{ marginTop: 5 }}>{item.caption}</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              paddingRight: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                console.log('liked');
+              }}
+            >
+              <Icon name="thumbs-o-up" size={30} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                console.log('smiled');
               }}
             >
               <Image
                 style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: 17.5,
-                }}
-                source={{ uri: item.poster.thumbIconURL }}
-              />
-              <View
-                style={{
-                  paddingTop: 11.5,
                   marginLeft: 10,
-                  flexDirection: 'row',
-                  flex: 1,
+                  width: 25,
+                  height: 25,
                 }}
-              >
-                <View style={{ flex: 4 }}>
-                  <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
-                  <Text style={{ marginTop: 5 }}>{item.caption}</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  paddingRight: 10,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    console.log('liked');
-                  }}
-                >
-                  <Image
-                    style={{
-                      width: 30,
-                      height: 30,
-                    }}
-                    source={require('../assets/thumbs-up.png')}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    console.log('smiled');
-                  }}
-                >
-                  <Image
-                    style={{
-                      marginLeft: 10,
-                      width: 25,
-                      height: 25,
-                    }}
-                    source={require('../assets/happiness.png')}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
+                source={require('../assets/happiness.png')}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
