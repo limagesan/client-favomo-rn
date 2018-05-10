@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  ScrollView,
-  Image,
-  RefreshControl,
-} from 'react-native';
+import { Text, View, FlatList, ScrollView, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 import { OpenGraphParser } from 'react-native-opengraph-kit';
 
 import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-import SharedContents from '../components/SharedContents';
+import ListItem from '../components/ListItem';
 import YoutubeListItem from '../components/YoutubeListItem';
 import { logout } from '../actions';
 
@@ -108,7 +99,6 @@ class Feed extends Component {
 }
 
 class MultiSelectList extends React.PureComponent {
-
   onPressItem = (item) => {
     // updater functions are preferred for transactional updates
     SafariView.isAvailable()
@@ -123,11 +113,11 @@ class MultiSelectList extends React.PureComponent {
   keyExtractor = (item, index) => item.id;
 
   renderItem = ({ item }) => {
-    const ListItem =
+    const Item =
       item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
         <YoutubeListItem id={item.id} item={item} />
       ) : (
-        <MyListItem
+        <ListItem
           id={item.id}
           onPressItem={this.onPressItem}
           selected={!!this.state.selected.get(item.id)}
@@ -135,7 +125,7 @@ class MultiSelectList extends React.PureComponent {
         />
       );
 
-    return ListItem;
+    return Item;
   };
 
   render() {
@@ -172,94 +162,6 @@ class MultiSelectList extends React.PureComponent {
         </ScrollView>
       );
     return view;
-  }
-}
-
-
-class MyListItem extends React.PureComponent {
-  onPress = () => {
-    this.props.onPressItem(this.props.item);
-  };
-
-  render() {
-    const { item } = this.props;
-
-    return (
-      <View
-        style={{
-          borderTopWidth: 1,
-          padding: 10,
-          height: 190,
-        }}
-      >
-        <SharedContents contents={item.data} onPress={this.onPress} />
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 10,
-          }}
-        >
-          <Image
-            style={{
-              width: 35,
-              height: 35,
-              borderRadius: 17.5,
-            }}
-            source={{ uri: item.poster.thumbIconURL }}
-          />
-          <View
-            style={{
-              marginLeft: 10,
-              flexDirection: 'row',
-              flex: 1,
-            }}
-          >
-            <View style={{ flex: 4 }}>
-              <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
-              <Text style={{ marginTop: 5 }}>{item.caption}</Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            paddingRight: 10,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              console.log('tap comment');
-            }}
-          >
-            <Text style={{ fontSize: 14 }}>コメントする</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('liked');
-            }}
-            style={{ marginLeft: 20 }}
-          >
-            <Icon name="thumbs-o-up" size={28} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('smiled');
-            }}
-          >
-            <Image
-              style={{
-                marginLeft: 10,
-                width: 25,
-                height: 25,
-              }}
-              source={require('../assets/happiness.png')}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
   }
 }
 
