@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -12,6 +12,7 @@ import basicStyles, { Color } from '../../styles';
 import log, { sub } from '../../utils/log';
 
 import { Container } from '../../components/Container';
+import { BaseTextInput } from '../../components/TextInput';
 
 class Step1 extends Component {
   static navigationOptions = {
@@ -135,7 +136,7 @@ class Step1 extends Component {
         </View>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <TextInput
+            <BaseTextInput
               onChangeText={(value) => {
                 this.props.dispatch(updateSignUpEmail(value));
                 this.setState({ emailValidationMsg: '' });
@@ -143,17 +144,10 @@ class Step1 extends Component {
               value={signUpEmail}
               maxLength={40}
               placeholder="メールアドレス"
-              keyboardType="default"
-              style={{
-                height: 40,
-                width: 300,
-                borderColor: 'gray',
-                borderWidth: 1,
-                marginTop: 20,
-              }}
+              keyboardType="email-address"
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
-            <TextInput
+            <BaseTextInput
               onChangeText={(value) => {
                 this.props.dispatch(updateSignUpPassword(value));
                 this.setState({ passwordValidationMsg: '' });
@@ -162,18 +156,11 @@ class Step1 extends Component {
               maxLength={40}
               secureTextEntry
               placeholder="パスワード"
-              style={{
-                height: 40,
-                width: 300,
-                borderColor: 'gray',
-                borderWidth: 1,
-                marginTop: 20,
-              }}
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>
               {passwordValidationMsg}
             </Text>
-            <TextInput
+            <BaseTextInput
               onChangeText={(value) => {
                 this.props.dispatch(updateSignUpPassword2(value));
                 this.setState({ password2ValidationMsg: '' });

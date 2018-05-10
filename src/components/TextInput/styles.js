@@ -1,12 +1,11 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
-  input: {
-    height: 50,
+  base: {
+    height: 40,
     width: 300,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 20,
-    flex: 1,
+    marginTop: 20,
   },
 });

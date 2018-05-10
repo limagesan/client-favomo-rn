@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  ScrollView,
   Image,
   StyleSheet,
   RefreshControl,
@@ -68,6 +69,10 @@ class Feed extends Component {
     console.log('dimensions', height, width);
   }
 
+  componentWillUpdate() {
+    console.log('will update');
+  }
+
   onPressButton() {
     this.props.navigation.goBack();
   }
@@ -130,14 +135,92 @@ class Feed extends Component {
 
   render() {
     return (
-      <Container>
-        <MultiSelectList
-          data={this.state.posts}
-          onRefresh={this.onRefresh}
-          refreshing={this.state.refreshing}
-        />
-      </Container>
+      <MultiSelectList
+        data={this.state.posts}
+        onRefresh={this.onRefresh}
+        refreshing={this.state.refreshing}
+      />
     );
+  }
+}
+
+class MultiSelectList extends React.PureComponent {
+  state = {
+    selected: new Map(),
+  };
+
+  onPressItem = (item) => {
+    // updater functions are preferred for transactional updates
+    SafariView.isAvailable()
+      .then(SafariView.show({
+        url: item.url,
+      }))
+      .catch((error) => {
+        // Fallback WebView code for iOS 8 and earlier
+      });
+    this.setState((state) => {
+      // copy the map rather than modifying state.
+      const selected = new Map(state.selected);
+      selected.set(item.id, !selected.get(item.id)); // toggle
+      return {
+        selected,
+      };
+    });
+  };
+
+  keyExtractor = (item, index) => item.id;
+
+  renderItem = ({ item }) => {
+    const ListItem =
+      item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
+        <YoutubeItem id={item.id} item={item} />
+      ) : (
+        <MyListItem
+          id={item.id}
+          onPressItem={this.onPressItem}
+          selected={!!this.state.selected.get(item.id)}
+          item={item}
+        />
+      );
+
+    return ListItem;
+  };
+
+  render() {
+    const view = this.props.data.length > 0 ? (
+      <FlatList
+        data={this.props.data}
+        extraData={this.state}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+        style={{
+          width: 375,
+          backgroundColor: '#FFF',
+        }}
+        refreshControl={
+          <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
+        }
+      />
+    ) : (
+      <ScrollView
+        contentContainerStyle={{
+          flex: 1,
+          backgroundColor: 'white',
+          alignItems: 'center',
+          padding: 20,
+        }}
+        refreshControl={
+          <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
+        }
+      >
+        <View>
+          <Text style={{ fontSize: 26 }}>
+            投稿はありません
+          </Text>
+        </View>
+      </ScrollView>
+    );
+    return view;
   }
 }
 
@@ -175,7 +258,7 @@ class YoutubeItem extends React.PureComponent {
       >
         <YouTube
           videoId={id} // The YouTube video ID
-          play // control playback of video with true/false
+          play={false} // control playback of video with true/false
           fullscreen={false} // control whether the video should play in fullscreen or inline
           loop={false} // control whether the video should loop when ended
           onReady={e => this.setState({ isReady: true })}
@@ -416,66 +499,6 @@ class MyListItem extends React.PureComponent {
           </View>
         </View>
       </View>
-    );
-  }
-}
-
-class MultiSelectList extends React.PureComponent {
-  state = {
-    selected: new Map(),
-  };
-
-  onPressItem = (item) => {
-    // updater functions are preferred for transactional updates
-    SafariView.isAvailable()
-      .then(SafariView.show({
-        url: item.url,
-      }))
-      .catch((error) => {
-        // Fallback WebView code for iOS 8 and earlier
-      });
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      const selected = new Map(state.selected);
-      selected.set(item.id, !selected.get(item.id)); // toggle
-      return {
-        selected,
-      };
-    });
-  };
-
-  keyExtractor = (item, index) => item.id;
-
-  renderItem = ({ item }) => {
-    const ListItem =
-      item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
-        <YoutubeItem id={item.id} item={item} />
-      ) : (
-        <MyListItem
-          id={item.id}
-          onPressItem={this.onPressItem}
-          selected={!!this.state.selected.get(item.id)}
-          item={item}
-        />
-      );
-
-    return ListItem;
-  };
-
-  render() {
-    return (
-      <FlatList
-        data={this.props.data}
-        extraData={this.state}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
-        style={{
-          width: 375,
-        }}
-        refreshControl={
-          <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
-        }
-      />
     );
   }
 }

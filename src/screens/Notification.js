@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 
 import basicStyles from '../styles';
 
@@ -10,9 +10,9 @@ export default class Notification extends Component {
 
   render() {
     return (
-      <View style={basicStyles.container}>
-        <Text style={basicStyles.title}>Post</Text>
-      </View>
+      <ScrollView contentContainerStyle={basicStyles.container}>
+        <Text>Post</Text>
+      </ScrollView>
     );
   }
 }

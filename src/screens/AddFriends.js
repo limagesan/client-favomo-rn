@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, Image, TouchableHighlight } from 'react-native';
+import { View, Text, Image, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 
 import firebase from 'react-native-firebase';
@@ -7,6 +7,7 @@ import firebase from 'react-native-firebase';
 import baseStyles, { Color } from '../styles';
 import Loader from '../components/Loader';
 import { Container } from '../components/Container';
+import { BaseTextInput } from '../components/TextInput';
 
 const db = firebase.firestore();
 
@@ -96,19 +97,12 @@ class AddFriends extends Component {
     return (
       <Container>
         <Text>AddFriends</Text>
-        <TextInput
+        <BaseTextInput
           onChangeText={(value) => {
             this.setState({ searchId: value, validationMsg: '' });
           }}
           value={searchId}
           maxLength={40}
-          style={{
-            height: 40,
-            width: 300,
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginTop: 20,
-          }}
         />
         <Text style={{ fontSize: 12, marginTop: 5, color: 'black' }}>{validationMsg}</Text>
         <TouchableHighlight onPress={this.search} style={buttonStyle} underlayColor={Color.white}>

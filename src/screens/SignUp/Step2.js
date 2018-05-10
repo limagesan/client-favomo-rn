@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TouchableHighlight, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, Image } from 'react-native';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -9,6 +9,7 @@ import firebase from 'react-native-firebase';
 
 import { Container } from '../../components/Container';
 import Loader from '../../components/Loader';
+import { BaseTextInput } from '../../components/TextInput';
 
 import { updateSignUpName, login } from '../../actions';
 
@@ -25,28 +26,26 @@ class Step2 extends Component {
     resizedImagePath: '',
   };
 
-  submit = () => {
+  submit = async () => {
     if (!this.validate()) return;
 
     const { uid } = this.props.user;
     const { signUpName } = this.props;
     const { selectedImagePath, resizedImagePath } = this.state;
     if (!uid) return;
+    this.setState({ loading: true });
 
     if (!selectedImagePath) {
       const db = firebase.firestore();
 
-      db
-        .doc(`users/${uid}`)
-        .update({ name: signUpName })
-        .then(() => {
-          console.log('Document successfully written!');
+      try {
+        await db.doc(`users/${uid}`).update({ name: signUpName });
+        this.props.dispatch(login());
+      } catch (error) {
+        console.error('Error writing document: ', error);
+      }
 
-          this.props.navigation.goBack();
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error);
-        });
+      this.setState({ loading: false });
 
       return;
     }
@@ -79,24 +78,21 @@ class Step2 extends Component {
         console.error('Uploading error', err);
       });
 
-    Promise.all([promise1, promise2]).then((values) => {
+    try {
+      const values = await Promise.all([promise1, promise2]);
+
       const iconURL = values[0];
       const thumbIconURL = values[1];
 
       const db = firebase.firestore();
 
-      db
-        .doc(`users/${uid}`)
-        .update({ iconURL, thumbIconURL, name: signUpName })
-        .then(() => {
-          console.log('Document successfully written!');
+      await db.doc(`users/${uid}`).update({ iconURL, thumbIconURL, name: signUpName });
+      this.props.dispatch(login());
+    } catch (error) {
+      console.error('Error: ', error);
+    }
 
-          this.props.navigation.goBack();
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error);
-        });
-    });
+    this.setState({ loading: false });
   };
 
   validate = () => {
@@ -185,7 +181,7 @@ class Step2 extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        <TextInput
+        <BaseTextInput
           onChangeText={(value) => {
             this.props.dispatch(updateSignUpName(value));
             this.setState({ nameValidationMsg: '' });

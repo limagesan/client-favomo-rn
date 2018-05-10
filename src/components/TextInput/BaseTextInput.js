@@ -3,6 +3,8 @@ import { TextInput } from 'react-native';
 
 import styles from './styles';
 
-const BaseTextInput = props => <TextInput {...props} style={styles.input} />;
+const BaseTextInput = props => (
+  <TextInput {...props} defaultValue={props.value} value="" style={styles.base} />
+);
 
 export default BaseTextInput;

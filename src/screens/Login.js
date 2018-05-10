@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
@@ -11,6 +11,8 @@ import basicStyles, { Color } from '../styles';
 import log, { sub } from '../utils/log';
 import { Container } from '../components/Container';
 import Loader from '../components/Loader';
+import { BaseTextInput } from '../components/TextInput';
+
 
 class Login extends Component {
   static navigationOptions = {
@@ -119,7 +121,7 @@ class Login extends Component {
         </View>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <TextInput
+            <BaseTextInput
               onChangeText={(value) => {
                 this.props.dispatch(updateLoginEmail(value));
                 this.setState({ emailValidationMsg: '' });
@@ -137,7 +139,7 @@ class Login extends Component {
               }}
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
-            <TextInput
+            <BaseTextInput
               onChangeText={(value) => {
                 this.props.dispatch(updateLoginPassword(value));
                 this.setState({ passwordValidationMsg: '' });
