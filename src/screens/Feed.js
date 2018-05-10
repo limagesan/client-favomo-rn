@@ -108,9 +108,6 @@ class Feed extends Component {
 }
 
 class MultiSelectList extends React.PureComponent {
-  state = {
-    selected: new Map(),
-  };
 
   onPressItem = (item) => {
     // updater functions are preferred for transactional updates
@@ -121,14 +118,6 @@ class MultiSelectList extends React.PureComponent {
       .catch((error) => {
         // Fallback WebView code for iOS 8 and earlier
       });
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      const selected = new Map(state.selected);
-      selected.set(item.id, !selected.get(item.id)); // toggle
-      return {
-        selected,
-      };
-    });
   };
 
   keyExtractor = (item, index) => item.id;
