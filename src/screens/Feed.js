@@ -187,39 +187,38 @@ class MultiSelectList extends React.PureComponent {
   };
 
   render() {
-    const view = this.props.data.length > 0 ? (
-      <FlatList
-        data={this.props.data}
-        extraData={this.state}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
-        style={{
-          width: 375,
-          backgroundColor: '#FFF',
-        }}
-        refreshControl={
-          <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
-        }
-      />
-    ) : (
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          backgroundColor: 'white',
-          alignItems: 'center',
-          padding: 20,
-        }}
-        refreshControl={
-          <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
-        }
-      >
-        <View>
-          <Text style={{ fontSize: 26 }}>
-            投稿はありません
-          </Text>
-        </View>
-      </ScrollView>
-    );
+    const view =
+      this.props.data.length > 0 ? (
+        <FlatList
+          data={this.props.data}
+          extraData={this.state}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderItem}
+          style={{
+            width: 375,
+            backgroundColor: '#FFF',
+          }}
+          refreshControl={
+            <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
+          }
+        />
+      ) : (
+        <ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            backgroundColor: 'white',
+            alignItems: 'center',
+            padding: 20,
+          }}
+          refreshControl={
+            <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
+          }
+        >
+          <View>
+            <Text style={{ fontSize: 26 }}>投稿はありません</Text>
+          </View>
+        </ScrollView>
+      );
     return view;
   }
 }
@@ -252,7 +251,7 @@ class YoutubeItem extends React.PureComponent {
       <View
         style={{
           borderTopWidth: 1,
-          height: height + 80,
+          height: height + 90,
           width,
         }}
       >
@@ -273,35 +272,34 @@ class YoutubeItem extends React.PureComponent {
         />
         <View
           style={{
-            flexDirection: 'row',
             marginTop: 10,
             padding: 10,
           }}
         >
-          <Image
-            style={{
-              width: 35,
-              height: 35,
-              borderRadius: 17.5,
-            }}
-            source={{ uri: item.poster.thumbIconURL }}
-          />
-          <View
-            style={{
-              paddingTop: 11.5,
-              marginLeft: 10,
-              flexDirection: 'row',
-              flex: 1,
-            }}
-          >
-            <View style={{ flex: 4 }}>
-              <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
-              <Text style={{ marginTop: 5 }}>{item.caption}</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Image
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 17.5,
+              }}
+              source={{ uri: item.poster.thumbIconURL }}
+            />
+            <View
+              style={{
+                marginLeft: 10,
+                flexDirection: 'row',
+                flex: 1,
+              }}
+            >
+              <View style={{ flex: 4 }}>
+                <Text style={{ fontSize: 10 }}>{item.poster.id}</Text>
+                <Text style={{ marginTop: 5 }}>{item.caption}</Text>
+              </View>
             </View>
           </View>
           <View
             style={{
-              flex: 1,
               flexDirection: 'row',
               justifyContent: 'flex-end',
               alignItems: 'flex-end',
@@ -310,16 +308,18 @@ class YoutubeItem extends React.PureComponent {
           >
             <TouchableOpacity
               onPress={() => {
-                console.log('liked');
+                console.log('tap comment');
               }}
             >
-              <Image
-                style={{
-                  width: 30,
-                  height: 30,
-                }}
-                source={require('../assets/thumbs-up.png')}
-              />
+              <Text style={{ fontSize: 14 }}>コメントする</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                console.log('liked');
+              }}
+              style={{ marginLeft: 20 }}
+            >
+              <Icon name="thumbs-o-up" size={28} color="black" />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -378,7 +378,7 @@ class MyListItem extends React.PureComponent {
         style={{
           borderTopWidth: 1,
           padding: 10,
-          height: 180,
+          height: 190,
         }}
       >
         <View style={{ flexDirection: 'row' }}>
@@ -455,7 +455,6 @@ class MyListItem extends React.PureComponent {
           />
           <View
             style={{
-              paddingTop: 11.5,
               marginLeft: 10,
               flexDirection: 'row',
               flex: 1,
@@ -466,37 +465,44 @@ class MyListItem extends React.PureComponent {
               <Text style={{ marginTop: 5 }}>{item.caption}</Text>
             </View>
           </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-end',
-              paddingRight: 10,
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+            paddingRight: 10,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              console.log('tap comment');
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                console.log('liked');
+            <Text style={{ fontSize: 14 }}>コメントする</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('liked');
+            }}
+            style={{ marginLeft: 20 }}
+          >
+            <Icon name="thumbs-o-up" size={28} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('smiled');
+            }}
+          >
+            <Image
+              style={{
+                marginLeft: 10,
+                width: 25,
+                height: 25,
               }}
-            >
-              <Icon name="thumbs-o-up" size={30} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                console.log('smiled');
-              }}
-            >
-              <Image
-                style={{
-                  marginLeft: 10,
-                  width: 25,
-                  height: 25,
-                }}
-                source={require('../assets/happiness.png')}
-              />
-            </TouchableOpacity>
-          </View>
+              source={require('../assets/happiness.png')}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
