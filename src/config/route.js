@@ -18,23 +18,48 @@ import {
 
 import { Step1, Step2, Step3 } from '../screens/SignUp';
 
-const FeedStack = StackNavigator({
-  Feed: {
-    screen: Feed,
+const navStyle = {
+  headerStyle: {
+    backgroundColor: 'orange',
   },
-});
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+};
 
-const MyboxStack = StackNavigator({
-  Mybox: {
-    screen: Mybox,
+const FeedStack = StackNavigator(
+  {
+    Feed: {
+      screen: Feed,
+    },
   },
-});
+  {
+    navigationOptions: navStyle,
+  },
+);
 
-const NotificationStack = StackNavigator({
-  Notification: {
-    screen: Notification,
+const MyboxStack = StackNavigator(
+  {
+    Mybox: {
+      screen: Mybox,
+    },
   },
-});
+  {
+    navigationOptions: navStyle,
+  },
+);
+
+const NotificationStack = StackNavigator(
+  {
+    Notification: {
+      screen: Notification,
+    },
+  },
+  {
+    navigationOptions: navStyle,
+  },
+);
 
 const ProfileStack = StackNavigator(
   {
@@ -51,7 +76,10 @@ const ProfileStack = StackNavigator(
       screen: Notification,
     },
   },
-  { headerMode: 'screen' },
+  {
+    navigationOptions: navStyle,
+    headerMode: 'screen',
+  },
 );
 
 const SignUpStack = StackNavigator(

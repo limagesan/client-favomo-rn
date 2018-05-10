@@ -6,7 +6,6 @@ import {
   FlatList,
   ScrollView,
   Image,
-  StyleSheet,
   RefreshControl,
   Dimensions,
 } from 'react-native';
@@ -16,64 +15,29 @@ import { OpenGraphParser } from 'react-native-opengraph-kit';
 import SafariView from 'react-native-safari-view';
 import firebase from 'react-native-firebase';
 import YouTube from 'react-native-youtube';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import { logout } from '../actions';
 
-// import { posts } from '../assets/data';
-import { Container } from '../components/Container';
-
 const db = firebase.firestore();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    padding: 10,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    minHeight: 100,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 5,
-  },
-});
-
-const youtubeStyles = EStyleSheet.create({
-  container: {
-    height: 200,
-    alignSelf: 'stretch',
-  },
-});
 
 class Feed extends Component {
   static navigationOptions = {
     title: 'Feed',
   };
 
-  constructor() {
-    super();
-    this.onPressButton = this.onPressButton.bind(this);
-    this.state = { posts: [], refreshing: false };
-  }
+  state = { posts: [], refreshing: false };
 
-  componentDidMount() {
+  componentWillMount() {
     this.getFeed();
-    const { height, width } = Dimensions.get('window');
-    console.log('dimensions', height, width);
   }
 
   componentWillUpdate() {
     console.log('will update');
   }
 
-  onPressButton() {
+  onPressButton = () => {
     this.props.navigation.goBack();
   }
 
