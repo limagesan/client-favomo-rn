@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 import basicStyles, { Color } from '../styles';
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 
 export default props => (
   <Container>

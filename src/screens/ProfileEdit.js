@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import firebase from 'react-native-firebase';
-import ImageResizer from 'react-native-image-resizer';
+import ImageResizer from 'react-native-image-resizer'; // eslint-disable-line import/no-unresolved,import/extensions
 
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 import Loader from '../components/Loader';
 
 import basicStyles, { Color } from '../styles';

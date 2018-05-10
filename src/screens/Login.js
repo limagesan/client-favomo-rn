@@ -9,10 +9,9 @@ import { updateLoginEmail, updateLoginPassword, login } from '../actions';
 import basicStyles, { Color } from '../styles';
 
 import log, { sub } from '../utils/log';
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 import Loader from '../components/Loader';
 import { BaseTextInput } from '../components/TextInput';
-
 
 class Login extends Component {
   static navigationOptions = {

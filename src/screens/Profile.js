@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 
 import { clearIdToken, clearUser, logout } from '../actions';
 import basicStyles, { Color } from '../styles';

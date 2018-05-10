@@ -11,7 +11,7 @@ import Loader from '../../components/Loader';
 import basicStyles, { Color } from '../../styles';
 import log, { sub } from '../../utils/log';
 
-import { Container } from '../../components/Container';
+import Container from '../../components/Container';
 import { BaseTextInput } from '../../components/TextInput';
 
 class Step1 extends Component {

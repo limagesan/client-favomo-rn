@@ -6,7 +6,7 @@ import SafariView from 'react-native-safari-view';
 import Api from '../Api';
 import basicStyles from '../styles';
 import { posts } from '../assets/data';
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 
 export default class Mybox extends Component {
   static navigationOptions = {

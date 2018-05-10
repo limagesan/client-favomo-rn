@@ -7,7 +7,7 @@ import ImageResizer from 'react-native-image-resizer'; // eslint-disable-line im
 
 import firebase from 'react-native-firebase';
 
-import { Container } from '../../components/Container';
+import Container from '../../components/Container';
 import Loader from '../../components/Loader';
 import { BaseTextInput } from '../../components/TextInput';
 

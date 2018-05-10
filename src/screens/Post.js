@@ -6,7 +6,7 @@ import { OpenGraphParser } from 'react-native-opengraph-kit';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 import basicStyles, { Color } from '../styles';
 
 class Post extends Component {

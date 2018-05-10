@@ -6,7 +6,7 @@ import firebase from 'react-native-firebase';
 
 import baseStyles, { Color } from '../styles';
 import Loader from '../components/Loader';
-import { Container } from '../components/Container';
+import Container from '../components/Container';
 import { BaseTextInput } from '../components/TextInput';
 
 const db = firebase.firestore();
