@@ -112,17 +112,12 @@ class MultiSelectList extends React.PureComponent {
 
   keyExtractor = (item, index) => item.id;
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item, index }) => {
     const Item =
       item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
         <YoutubeListItem id={item.id} item={item} />
       ) : (
-        <ListItem
-          id={item.id}
-          onPressItem={this.onPressItem}
-          selected={!!this.state.selected.get(item.id)}
-          item={item}
-        />
+        <ListItem id={item.id} index={index} onPressItem={this.onPressItem} item={item} />
       );
 
     return Item;
@@ -138,7 +133,7 @@ class MultiSelectList extends React.PureComponent {
           renderItem={this.renderItem}
           style={{
             width: 375,
-            backgroundColor: '#FFF',
+            backgroundColor: '#E4E4E4',
           }}
           refreshControl={
             <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />

@@ -33,6 +33,7 @@ class YoutubeListItem extends React.PureComponent {
           borderTopWidth: 1,
           height: height + 90,
           width,
+          backgroundColor: '#FFF',
         }}
       >
         <YouTube

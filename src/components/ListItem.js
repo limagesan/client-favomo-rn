@@ -11,13 +11,14 @@ class ListItem extends React.PureComponent {
 
   render() {
     const { item } = this.props;
-
+    const borderTopWidth = this.props.index === 0 ? 0 : 1;
     return (
       <View
         style={{
-          borderTopWidth: 1,
+          borderTopWidth,
           padding: 10,
           height: 190,
+          backgroundColor: '#FFF',
         }}
       >
         <SharedContents contents={item.data} onPress={this.onPress} />
