@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableHighlight } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 import firebase from 'react-native-firebase';
 
-import baseStyles, { Color } from '../styles';
+import baseStyles from '../styles';
+import { MidiumButton } from '../components/Button';
 import Loader from '../components/Loader';
 import Container from '../components/Container';
 import { BaseTextInput } from '../components/TextInput';
@@ -105,24 +106,12 @@ class AddFriends extends Component {
           maxLength={40}
         />
         <Text style={{ fontSize: 12, marginTop: 5, color: 'black' }}>{validationMsg}</Text>
-        <TouchableHighlight onPress={this.search} style={buttonStyle} underlayColor={Color.white}>
-          <View>
-            <Text style={baseStyles.buttonText}>検索</Text>
-          </View>
-        </TouchableHighlight>
+        <MidiumButton onPress={this.search} value="検索" />
         {searchedUser && (
           <View>
             <Text>{searchedUser.name}</Text>
             <Image source={{ uri: searchedUser.iconURL }} style={{ width: 100, height: 100 }} />
-            <TouchableHighlight
-              onPress={this.follow}
-              style={buttonStyle}
-              underlayColor={Color.white}
-            >
-              <View>
-                <Text style={baseStyles.buttonText}>フォローする</Text>
-              </View>
-            </TouchableHighlight>
+            <MidiumButton onPress={this.follow} value="フォローする" />
           </View>
         )}
         <Loader loading={this.state.loading} />

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-import basicStyles, { Color } from '../styles';
+import { MidiumButton } from '../components/Button';
 import Container from '../components/Container';
 
 export default props => (
@@ -10,17 +10,12 @@ export default props => (
       <Text style={{ marginTop: 70, fontSize: 36 }}>Favomo</Text>
     </View>
     <View style={{ flex: 1 }}>
-      <TouchableHighlight
+      <MidiumButton
         onPress={() => {
           props.navigation.navigate('SignUp');
         }}
-        underlayColor={Color.white}
-        style={basicStyles.button}
-      >
-        <View>
-          <Text style={basicStyles.buttonText}>サインアップ</Text>
-        </View>
-      </TouchableHighlight>
+        value="サインアップ"
+      />
       <TouchableOpacity
         onPress={() => {
           props.navigation.navigate('Login');

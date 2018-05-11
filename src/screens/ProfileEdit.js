@@ -6,6 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import firebase from 'react-native-firebase';
 import ImageResizer from 'react-native-image-resizer'; // eslint-disable-line import/no-unresolved,import/extensions
 
+import { MidiumButton } from '../components/Button';
 import Container from '../components/Container';
 import Loader from '../components/Loader';
 
@@ -197,16 +198,7 @@ class ProfileEdit extends Component {
         <View>
           <Text>oioi</Text>
           <Image source={{ uri }} style={{ width: 100, height: 100 }} />
-
-          <TouchableHighlight
-            onPress={this.selectImage}
-            underlayColor={Color.white}
-            style={basicStyles.button}
-          >
-            <View>
-              <Text style={basicStyles.buttonText}>画像を変更</Text>
-            </View>
-          </TouchableHighlight>
+          <MidiumButton onPress={this.selectImage} value="画像を変更" />
         </View>
         <TextInput
           onChangeText={(value) => {
@@ -224,15 +216,7 @@ class ProfileEdit extends Component {
         />
         <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{nameValidationMsg}</Text>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-          <TouchableHighlight
-            onPress={this.submit}
-            underlayColor={Color.white}
-            style={basicStyles.button}
-          >
-            <View>
-              <Text style={basicStyles.buttonText}>変更</Text>
-            </View>
-          </TouchableHighlight>
+          <MidiumButton onPress={this.submit} value="変更" />
         </View>
       </Container>
     );

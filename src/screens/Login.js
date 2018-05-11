@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { updateLoginEmail, updateLoginPassword, login } from '../actions';
-import basicStyles, { Color } from '../styles';
-
-import log, { sub } from '../utils/log';
+import { MidiumButton } from '../components/Button';
 import Container from '../components/Container';
 import Loader from '../components/Loader';
 import { BaseTextInput } from '../components/TextInput';
+
+import { updateLoginEmail, updateLoginPassword, login } from '../actions';
+import log, { sub } from '../utils/log';
 
 class Login extends Component {
   static navigationOptions = {
@@ -160,15 +160,7 @@ class Login extends Component {
             </Text>
           </View>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-            <TouchableHighlight
-              onPress={this.onPressButton}
-              underlayColor={Color.white}
-              style={basicStyles.button}
-            >
-              <View>
-                <Text style={basicStyles.buttonText}>ログイン</Text>
-              </View>
-            </TouchableHighlight>
+            <MidiumButton onPress={this.onPressButton} value="ログイン" />
           </View>
         </View>
       </Container>

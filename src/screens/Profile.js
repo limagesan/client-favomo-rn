@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Container from '../components/Container';
-
+import { MidiumButton } from '../components/Button';
 import { clearIdToken, clearUser, logout } from '../actions';
-import basicStyles, { Color } from '../styles';
+import basicStyles from '../styles';
 import log, { sub } from '../utils/log';
 
 class Profile extends Component {
@@ -105,26 +105,13 @@ class Profile extends Component {
         )}
         {idToken && (
           <View>
-            <TouchableHighlight
-              onPress={this.logout}
-              underlayColor={Color.white}
-              style={basicStyles.button}
-            >
-              <View>
-                <Text style={basicStyles.buttonText}>ログアウト</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight
+            <MidiumButton onPress={this.logout} value="ログアウト" />
+            <MidiumButton
               onPress={() => {
                 this.props.navigation.navigate('ProfileEdit', { iconURL, name });
               }}
-              underlayColor={Color.white}
-              style={basicStyles.button}
-            >
-              <View>
-                <Text style={basicStyles.buttonText}>プロフィールを編集</Text>
-              </View>
-            </TouchableHighlight>
+              value="プロフィールを編集"
+            />
           </View>
         )}
         {!idToken && <Text>ログインしていません</Text>}

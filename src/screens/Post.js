@@ -6,6 +6,7 @@ import { OpenGraphParser } from 'react-native-opengraph-kit';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { MidiumButton } from '../components/Button';
 import Container from '../components/Container';
 import basicStyles, { Color } from '../styles';
 
@@ -150,15 +151,7 @@ class Post extends Component {
           )}
 
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-            <TouchableHighlight
-              onPress={this.onPressButton}
-              underlayColor={Color.white}
-              style={basicStyles.button}
-            >
-              <View>
-                <Text style={basicStyles.buttonText}>シェア</Text>
-              </View>
-            </TouchableHighlight>
+            <MidiumButton onPress={this.onPressButton} value="シェア" />
           </View>
         </View>
       </Container>

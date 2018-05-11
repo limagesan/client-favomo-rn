@@ -144,7 +144,6 @@ class Step1 extends Component {
               value={signUpEmail}
               maxLength={40}
               placeholder="メールアドレス"
-              keyboardType="email-address"
             />
             <Text style={{ fontSize: 12, marginTop: 5, color: 'red' }}>{emailValidationMsg}</Text>
             <BaseTextInput
