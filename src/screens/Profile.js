@@ -12,7 +12,6 @@ import ListItem from '../components/ListItem';
 import YoutubeListItem from '../components/YoutubeListItem';
 import Container from '../components/Container';
 import { EmailVerifyPrompt } from '../components/Prompt';
-import { clearIdToken, clearUser, logout } from '../actions';
 import basicStyles from '../styles';
 import log, { sub } from '../utils/log';
 
@@ -27,7 +26,7 @@ const styles = EStyleSheet.create({
   itemSeparator: {
     width: '100%',
     height: EStyleSheet.hairlineWidth,
-    backgroundColor: 'black',
+    backgroundColor: 'gray',
   },
 });
 
@@ -83,7 +82,6 @@ class Profile extends Component {
 
   getFeed = async () => {
     if (!this.props.user) {
-      this.props.dispatch(logout());
       return;
     }
     const { uid } = this.props.user;
@@ -140,18 +138,6 @@ class Profile extends Component {
 
   handleIconPress = () => {
     console.log('Pressed X');
-  };
-
-  logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then((res) => {
-        log(sub.firebase, 'logout', res);
-        this.props.dispatch(clearIdToken());
-        this.props.dispatch(clearUser());
-        this.props.dispatch(logout());
-      });
   };
 
   verifyEmail() {

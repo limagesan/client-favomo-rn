@@ -8,7 +8,6 @@ import firebase from 'react-native-firebase';
 
 import ListItem from '../components/ListItem';
 import YoutubeListItem from '../components/YoutubeListItem';
-import { logout } from '../actions';
 
 const db = firebase.firestore();
 
@@ -39,7 +38,6 @@ class Feed extends Component {
 
   getFeed = async () => {
     if (!this.props.user) {
-      this.props.dispatch(logout());
       return;
     }
     const { uid } = this.props.user;
