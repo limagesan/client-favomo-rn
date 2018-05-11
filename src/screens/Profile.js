@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   FlatList,
   RefreshControl,
   ScrollView,
@@ -14,10 +13,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { OpenGraphParser } from 'react-native-opengraph-kit';
 import SafariView from 'react-native-safari-view';
 
+import UserProfileView from '../components/UserProfileView';
 import ListItem from '../components/ListItem';
 import YoutubeListItem from '../components/YoutubeListItem';
 import Container from '../components/Container';
-import { MidiumButton } from '../components/Button';
+import { EmailVerifyPrompt } from '../components/Prompt';
 import { clearIdToken, clearUser, logout } from '../actions';
 import basicStyles from '../styles';
 import log, { sub } from '../utils/log';
@@ -51,7 +51,7 @@ class Profile extends Component {
 
   state = {
     userData: {},
-    posts: [],
+    posts: [{ id: 0 }],
     refreshing: false,
   };
 
@@ -113,7 +113,7 @@ class Profile extends Component {
         return newPost;
       });
 
-      this.setState({ posts });
+      this.setState(prevState => ({ posts: prevState.posts.concat(posts) }));
       return;
     } catch (error) {
       console.error('error', error);
@@ -164,40 +164,20 @@ class Profile extends Component {
       });
   }
 
+  // TODO レンダリングが多すぎるのをなんとかしたい
   render() {
-    const { user, idToken } = this.props;
-    const { iconURL, name, iconURLThumb } = this.state.userData;
+    const user = Object.assign({}, this.props.user._user, this.state.userData); // eslint-disable-line no-underscore-dangle
+
     return (
       <Container>
-        {user && (
-          <View>
-            <Text>ユーザー情報</Text>
-            <Text>{user.email}</Text>
-            <Text>{user.emailVerified ? 'メール認証済み' : 'メール未認証'}</Text>
-            <Image
-              source={{ uri: iconURL }}
-              style={{ width: 150, height: 150, borderRadius: 75 }}
-            />
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{name}</Text>
-            <Text>{user.id}</Text>
-          </View>
-        )}
-        {idToken && (
-          <View>
-            <MidiumButton onPress={this.logout} value="ログアウト" />
-            <MidiumButton
-              onPress={() => {
-                this.props.navigation.navigate('ProfileEdit', { iconURL, name });
-              }}
-              value="プロフィールを編集"
-            />
-          </View>
-        )}
-        {!idToken && <Text>ログインしていません</Text>}
+        {user.emailVerified || <EmailVerifyPrompt />}
         <MultiSelectList
           data={this.state.posts}
           onRefresh={this.onRefresh}
           refreshing={this.state.refreshing}
+          user={user}
+          onLogout={this.logout}
+          navigation={this.props.navigation}
         />
       </Container>
     );
@@ -219,6 +199,16 @@ class MultiSelectList extends React.PureComponent {
   keyExtractor = (item, index) => item.id;
 
   renderItem = ({ item, index }) => {
+    if (index === 0) {
+      return (
+        <UserProfileView
+          user={this.props.user}
+          onLogout={this.props.onLogout}
+          navigation={this.props.navigation}
+        />
+      );
+    }
+
     const Item =
       item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
         <YoutubeListItem id={item.id} item={item} />

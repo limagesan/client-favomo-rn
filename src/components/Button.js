@@ -16,27 +16,27 @@ const styles = StyleSheet.create({
   },
   midiumContainer: {
     marginBottom: 30,
-    width: 260,
+    width: 130,
     alignItems: 'center',
     backgroundColor: '#2196F3',
     borderRadius: 10,
   },
   midiumText: {
-    padding: 20,
-    color: 'black',
-    fontSize: 20,
+    padding: 10,
+    color: 'white',
+    fontSize: 16,
   },
   smallContainer: {
     marginBottom: 30,
-    width: 260,
+    width: 60,
     alignItems: 'center',
     backgroundColor: '#2196F3',
     borderRadius: 10,
   },
   smallText: {
-    padding: 20,
+    padding: 3,
     color: 'black',
-    fontSize: 20,
+    fontSize: 12,
   },
 });
 
