@@ -38,7 +38,6 @@ class YoutubeListItem extends React.PureComponent {
       <TouchableWithoutFeedback>
         <View
           style={{
-            borderTopWidth: 1,
             height: height + 90,
             width,
             backgroundColor: '#FFF',

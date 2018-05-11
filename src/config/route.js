@@ -14,6 +14,7 @@ import {
   ProfileEdit,
   Welcome,
   AddFriends,
+  Settings,
 } from '../screens';
 
 import { Step1, Step2, Step3 } from '../screens/SignUp';
@@ -74,6 +75,9 @@ const ProfileStack = StackNavigator(
     },
     Notice: {
       screen: Notification,
+    },
+    Settings: {
+      screen: Settings,
     },
   },
   {

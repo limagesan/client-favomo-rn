@@ -29,7 +29,7 @@ const UserProfileView = ({ user, navigation, onLogout }) => (
             }}
           />
           <Text style={{ fontSize: 18, fontWeight: 'bold', alignSelf: 'center' }}>{user.name}</Text>
-          <Text style={{ fontSize: 12, alignSelf: 'center' }}>@{user.id}</Text>
+          {user.id && <Text style={{ fontSize: 12, alignSelf: 'center' }}>@{user.id}</Text>}
         </View>
       )}
       <View>

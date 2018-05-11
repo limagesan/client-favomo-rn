@@ -7,3 +7,4 @@ export { default as Profile } from './Profile';
 export { default as ProfileEdit } from './ProfileEdit';
 export { default as Welcome } from './Welcome';
 export { default as AddFriends } from './AddFriends';
+export { default as Settings } from './Settings';

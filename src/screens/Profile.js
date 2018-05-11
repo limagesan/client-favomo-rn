@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  RefreshControl,
-  ScrollView,
-} from 'react-native';
+import { Text, View, TouchableOpacity, FlatList, RefreshControl, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { OpenGraphParser } from 'react-native-opengraph-kit';
 import SafariView from 'react-native-safari-view';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 import UserProfileView from '../components/UserProfileView';
 import ListItem from '../components/ListItem';
@@ -23,6 +17,19 @@ import basicStyles from '../styles';
 import log, { sub } from '../utils/log';
 
 const db = firebase.firestore();
+
+const styles = EStyleSheet.create({
+  flatList: {
+    width: '100%',
+    backgroundColor: '#E4E4E4',
+    flex: 1,
+  },
+  itemSeparator: {
+    width: '100%',
+    height: EStyleSheet.hairlineWidth,
+    backgroundColor: 'black',
+  },
+});
 
 class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -40,7 +47,7 @@ class Profile extends Component {
     headerRight: (
       <TouchableOpacity
         onPress={() => {
-          console.log('tap settings');
+          navigation.navigate('Settings');
         }}
         style={basicStyles.rightBarButtonContainer}
       >
@@ -227,14 +234,11 @@ class MultiSelectList extends React.PureComponent {
           extraData={this.state}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
-          style={{
-            width: 375,
-            backgroundColor: '#E4E4E4',
-            flex: 1,
-          }}
+          style={styles.flatList}
           refreshControl={
             <RefreshControl refreshing={this.props.refreshing} onRefresh={this.props.onRefresh} />
           }
+          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
         />
       ) : (
         <ScrollView

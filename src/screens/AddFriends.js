@@ -15,7 +15,6 @@ const db = firebase.firestore();
 class AddFriends extends Component {
   static navigationOptions = {
     title: 'AddFriends',
-    headerTintColor: 'black',
   };
 
   constructor() {

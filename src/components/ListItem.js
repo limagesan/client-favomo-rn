@@ -11,12 +11,10 @@ class ListItem extends React.PureComponent {
 
   render() {
     const { item } = this.props;
-    const borderTopWidth = this.props.index === 0 ? 0 : 1;
     return (
       <TouchableWithoutFeedback style={{ flex: 1 }}>
         <View
           style={{
-            borderTopWidth,
             padding: 10,
             height: 190,
             backgroundColor: '#FFF',
