@@ -12,6 +12,7 @@ import ListItem from '../components/ListItem';
 import YoutubeListItem from '../components/YoutubeListItem';
 import Container from '../components/Container';
 import { EmailVerifyPrompt } from '../components/Prompt';
+import { updateUserData } from '../actions';
 import basicStyles from '../styles';
 import log, { sub } from '../utils/log';
 
@@ -56,7 +57,6 @@ class Profile extends Component {
   });
 
   state = {
-    userData: {},
     posts: [{ id: 0 }],
     refreshing: false,
   };
@@ -132,7 +132,7 @@ class Profile extends Component {
       .get()
       .then((snapshot) => {
         const userData = snapshot.data();
-        this.setState({ userData });
+        this.props.dispatch(updateUserData(userData));
       });
   };
 
@@ -159,7 +159,7 @@ class Profile extends Component {
 
   // TODO レンダリングが多すぎるのをなんとかしたい
   render() {
-    const user = Object.assign({}, this.props.user._user, this.state.userData); // eslint-disable-line no-underscore-dangle
+    const user = Object.assign({}, this.props.user._user, this.props.userData); // eslint-disable-line no-underscore-dangle
 
     return (
       <Container>

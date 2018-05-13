@@ -61,6 +61,7 @@ class ListItem extends React.PureComponent {
             <TouchableOpacity
               onPress={() => {
                 console.log('tap comment');
+                this.props.onComment(item, 'お前もこれ好きなの？w');
               }}
             >
               <Text style={{ fontSize: 14 }}>コメントする</Text>
@@ -68,6 +69,7 @@ class ListItem extends React.PureComponent {
             <TouchableOpacity
               onPress={() => {
                 console.log('liked');
+                this.props.onPressLike(item);
               }}
               style={{ marginLeft: 20 }}
             >

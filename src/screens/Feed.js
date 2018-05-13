@@ -30,6 +30,105 @@ class Feed extends Component {
     this.props.navigation.goBack();
   };
 
+  onPressLike = (item) => {
+    const { uid } = this.props.user;
+    const { userData } = this.props;
+    const action = {
+      from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
+      target: { id: item.id, url: item.url, caption: item.caption },
+      type: 'like',
+      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const postsUpdate = {};
+    postsUpdate[`actions.${uid}.exist`] = true;
+    postsUpdate[`actions.${uid}.like.exist`] = true;
+    postsUpdate[`actions.${uid}.like.createdAt`] = firebase.firestore.FieldValue.serverTimestamp();
+    db
+      .doc(`posts/${item.id}`)
+      .update(postsUpdate)
+      .then(() => {
+        console.log('liked transation completed');
+      });
+
+    const posterUid = item.poster.uid;
+    db
+      .collection('annotations')
+      .doc(`${posterUid}`)
+      .collection('annotations')
+      .add(action)
+      .then(() => {
+        console.log('Transaction successfully committed!');
+      })
+      .catch((error) => {
+        console.log('Transaction failed: ', error);
+      });
+  };
+
+  onComment = (item, message) => {
+    const { uid } = this.props.user;
+    const postsUpdate = {};
+    postsUpdate[`actions.${uid}.exist`] = true;
+    const comment = {
+      value: message,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    const { userData } = this.props;
+
+    const action = {
+      from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
+      target: { id: item.id, url: item.url, caption: item.caption },
+      type: 'comment',
+      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const postRef = db.doc(`posts/${item.id}`);
+    db
+      .runTransaction(transaction =>
+        transaction.get(postRef).then((doc) => {
+          const data = doc.data();
+          let id = 1;
+
+          if (
+            data.actions &&
+            data.actions[uid] &&
+            data.actions[uid].comments &&
+            data.actions[uid].comments.value
+          ) {
+            const comments = data.actions[uid].comments.value;
+            Object.keys(comments).forEach((key) => {
+              const opponentId = parseInt(key, 10);
+              if (opponentId >= id) {
+                // autoIncrement の idを作成
+                id = opponentId + 1;
+              }
+            });
+          }
+          postsUpdate[`actions.${uid}.comments.value.${id}`] = comment;
+
+          transaction.update(postRef, postsUpdate);
+        }))
+      .then(() => {
+        console.log('Transaction successfully committed!');
+      })
+      .catch((error) => {
+        console.log('Transaction failed: ', error);
+      });
+
+    const posterUid = item.poster.uid;
+    db
+      .collection('annotations')
+      .doc(`${posterUid}`)
+      .collection('annotations')
+      .add(action)
+      .then(() => {
+        console.log('Transaction successfully committed!');
+      })
+      .catch((error) => {
+        console.log('Transaction failed: ', error);
+      });
+  };
+
   onRefresh = () => {
     this.setState({ refreshing: true });
     this.getFeed();
@@ -62,7 +161,7 @@ class Feed extends Component {
 
       let urls = '';
       posts.forEach((post) => {
-        urls = `${urls} + ${post.url} + ' '`;
+        urls = `${urls} , ${post.url}`;
       });
       console.log('posts', posts);
 
@@ -91,6 +190,8 @@ class Feed extends Component {
         data={this.state.posts}
         onRefresh={this.onRefresh}
         refreshing={this.state.refreshing}
+        onPressLike={this.onPressLike}
+        onComment={this.onComment}
       />
     );
   }
@@ -115,7 +216,14 @@ class MultiSelectList extends React.PureComponent {
       item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
         <YoutubeListItem id={item.id} item={item} />
       ) : (
-        <ListItem id={item.id} index={index} onPressItem={this.onPressItem} item={item} />
+        <ListItem
+          id={item.id}
+          index={index}
+          onPressItem={this.onPressItem}
+          onPressLike={this.props.onPressLike}
+          onComment={this.props.onComment}
+          item={item}
+        />
       );
 
     return Item;

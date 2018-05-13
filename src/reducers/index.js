@@ -5,6 +5,7 @@ import {
   CLEAR_USER,
   LOGIN,
   LOGOUT,
+  UPDATE_USERDATA,
   UPDATE_SIGNUP_EMAIL,
   UPDATE_SIGNUP_PASSWORD,
   UPDATE_SIGNUP_PASSWORD2,
@@ -22,6 +23,7 @@ const initialState = {
   user: null,
   idToken: null,
   logined: false,
+  userData: null,
   signUpEmail: '',
   signUpPassword: '',
   signUpPassword2: '',
@@ -43,6 +45,8 @@ export default (state = initialState, action) => {
     case LOGOUT:
       AsyncStorage.removeItem('logined');
       return { ...state, logined: false };
+    case UPDATE_USERDATA:
+      return { ...state, userData: action.userData };
     case UPDATE_SIGNUP_EMAIL:
       return { ...state, signUpEmail: action.value };
     case UPDATE_SIGNUP_PASSWORD:

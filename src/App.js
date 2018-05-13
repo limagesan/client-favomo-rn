@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import firebase from 'react-native-firebase';
 
-import { updateIdToken, updateUser, login, logout } from './actions';
+import { updateIdToken, updateUser, login, updateUserData } from './actions';
 import { MainStack, AuthStack } from './config/route';
+
+const db = firebase.firestore();
 
 EStyleSheet.build({
   $white: '#FFFFFF',
@@ -24,7 +26,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(logout());
+    // this.props.dispatch(logout());
 
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.props.dispatch(updateUser(user));
@@ -32,6 +34,8 @@ class App extends Component {
         user.getIdToken(/* fourceRefresh */ true).then((idToken) => {
           this.props.dispatch(updateIdToken(idToken));
         });
+
+        this.fetchUser(user.uid);
       }
     });
     Linking.addEventListener('url', this.handleOpenURL);
@@ -41,6 +45,15 @@ class App extends Component {
     this.authSubscription();
     Linking.removeEventListener('url', this.handleOpenURL);
   }
+
+  fetchUser = uid =>
+    db
+      .doc(`users/${uid}`)
+      .get()
+      .then((snapshot) => {
+        const userData = snapshot.data();
+        this.props.dispatch(updateUserData(userData));
+      });
 
   handleOpenURL(event) {
     console.log('DeepLink: ', event.url);
