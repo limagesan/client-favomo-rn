@@ -10,7 +10,12 @@ class ListItem extends React.PureComponent {
   };
 
   render() {
-    const { item } = this.props;
+    const { item, uid } = this.props;
+    if (item.actions) {
+      console.log('check', uid, item.actions, item.actions[uid].like.exist);
+    }
+    const liked =
+      item.actions && item.actions[uid] && item.actions[uid].like && item.actions[uid].like.exist;
     return (
       <TouchableWithoutFeedback style={{ flex: 1 }}>
         <View
@@ -69,11 +74,15 @@ class ListItem extends React.PureComponent {
             <TouchableOpacity
               onPress={() => {
                 console.log('liked');
-                this.props.onPressLike(item);
+                this.props.onPressLike(item, liked);
               }}
               style={{ marginLeft: 20 }}
             >
-              <Icon name="thumbs-o-up" size={28} color="black" />
+              {liked ? (
+                <Icon name="thumbs-up" size={28} color="black" />
+              ) : (
+                <Icon name="thumbs-o-up" size={28} color="black" />
+              )}
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {

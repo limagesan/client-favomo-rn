@@ -30,7 +30,7 @@ class Feed extends Component {
     this.props.navigation.goBack();
   };
 
-  onPressLike = (item) => {
+  onPressLike = (item, liked) => {
     const { uid } = this.props.user;
     const { userData } = this.props;
     const action = {
@@ -42,7 +42,7 @@ class Feed extends Component {
 
     const postsUpdate = {};
     postsUpdate[`actions.${uid}.exist`] = true;
-    postsUpdate[`actions.${uid}.like.exist`] = true;
+    postsUpdate[`actions.${uid}.like.exist`] = !liked;
     postsUpdate[`actions.${uid}.like.createdAt`] = firebase.firestore.FieldValue.serverTimestamp();
     db
       .doc(`posts/${item.id}`)
@@ -52,17 +52,38 @@ class Feed extends Component {
       });
 
     const posterUid = item.poster.uid;
-    db
-      .collection('annotations')
-      .doc(`${posterUid}`)
-      .collection('annotations')
-      .add(action)
-      .then(() => {
-        console.log('Transaction successfully committed!');
-      })
-      .catch((error) => {
-        console.log('Transaction failed: ', error);
-      });
+    if (liked) {
+      db
+        .collection('annotations')
+        .doc(`${posterUid}`)
+        .collection('annotations')
+        .where('target.id', '==', item.id)
+        .where('type', '==', 'like')
+        .get()
+        .then((snapshot) => {
+          const { docs } = snapshot;
+          if (!docs || docs.length === 0) {
+            return;
+          }
+          const annotationRef = docs[0].ref;
+          db.doc(annotationRef.path).delete();
+        })
+        .catch((err) => {
+          console.log('error', err);
+        });
+    } else {
+      db
+        .collection('annotations')
+        .doc(`${posterUid}`)
+        .collection('annotations')
+        .add(action)
+        .then(() => {
+          console.log('Transaction successfully committed!');
+        })
+        .catch((error) => {
+          console.log('Transaction failed: ', error);
+        });
+    }
   };
 
   onComment = (item, message) => {
@@ -185,6 +206,7 @@ class Feed extends Component {
   };
 
   render() {
+    const { uid } = this.props.user;
     return (
       <MultiSelectList
         data={this.state.posts}
@@ -192,6 +214,7 @@ class Feed extends Component {
         refreshing={this.state.refreshing}
         onPressLike={this.onPressLike}
         onComment={this.onComment}
+        uid={uid}
       />
     );
   }
@@ -223,6 +246,7 @@ class MultiSelectList extends React.PureComponent {
           onPressLike={this.props.onPressLike}
           onComment={this.props.onComment}
           item={item}
+          uid={this.props.uid}
         />
       );
 
