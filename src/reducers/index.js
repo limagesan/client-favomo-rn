@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native';
-
 import {
   UPDATE_USER,
   CLEAR_USER,
@@ -40,10 +38,8 @@ export default (state = initialState, action) => {
     case CLEAR_USER:
       return { ...state, user: null };
     case LOGIN:
-      AsyncStorage.setItem('logined', 'true');
       return { ...state, logined: true };
     case LOGOUT:
-      AsyncStorage.removeItem('logined');
       return { ...state, logined: false };
     case UPDATE_USERDATA:
       return { ...state, userData: action.userData };

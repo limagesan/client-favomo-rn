@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 export const UPDATE_USER = 'UPDATE_USER';
 export const CLEAR_USER = 'CLEAR_USER';
 export const LOGIN = 'LOGIN';
@@ -17,8 +19,12 @@ export const CLEAR_LOGIN_VALUES = 'CLEAR_LOGIN_VALUES';
 
 export const updateUser = user => ({ type: UPDATE_USER, user });
 export const clearUser = () => ({ type: CLEAR_USER });
-export const login = () => ({ type: LOGIN });
-export const logout = () => ({ type: LOGOUT });
+export const login = () => {
+  return { type: LOGIN };
+};
+export const logout = () => {
+  return { type: LOGOUT };
+};
 export const updateUserData = userData => ({ type: UPDATE_USERDATA, userData });
 export const updateSignUpEmail = value => ({ type: UPDATE_SIGNUP_EMAIL, value });
 export const updateSignUpPassword = value => ({ type: UPDATE_SIGNUP_PASSWORD, value });

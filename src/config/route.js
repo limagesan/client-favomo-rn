@@ -9,7 +9,7 @@ import {
   Post,
   Feed,
   Login,
-  Notification,
+  Notifications,
   Profile,
   ProfileEdit,
   Welcome,
@@ -51,10 +51,10 @@ const MyboxStack = StackNavigator(
   },
 );
 
-const NotificationStack = StackNavigator(
+const NotificationsStack = StackNavigator(
   {
-    Notification: {
-      screen: Notification,
+    Notifications: {
+      screen: Notifications,
     },
   },
   {
@@ -74,7 +74,7 @@ const ProfileStack = StackNavigator(
       screen: AddFriends,
     },
     Notice: {
-      screen: Notification,
+      screen: Notifications,
     },
     Settings: {
       screen: Settings,
@@ -112,7 +112,7 @@ const TabNav = TabNavigator(
     Feed: { screen: FeedStack },
     Mybox: { screen: MyboxStack },
     Post: { screen: FeedStack },
-    Notification: { screen: NotificationStack },
+    Notifications: { screen: NotificationsStack },
     Profile: { screen: ProfileStack },
   },
   {
@@ -142,7 +142,7 @@ const TabNav = TabNavigator(
           iconName = `ios-list${focused ? '' : '-outline'}`;
         } else if (routeName === 'Profile') {
           iconName = `ios-person${focused ? '' : '-outline'}`;
-        } else if (routeName === 'Notification') {
+        } else if (routeName === 'Notifications') {
           iconName = `ios-notifications${focused ? '' : '-outline'}`;
         } else if (routeName === 'Post') {
           iconName = 'ios-add-circle-outline';

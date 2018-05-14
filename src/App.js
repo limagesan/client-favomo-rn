@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import firebase from 'react-native-firebase';
 
-import { updateIdToken, updateUser, login, updateUserData } from './actions';
+import { updateIdToken, updateUser, login, updateUserData, logout } from './actions';
 import { MainStack, AuthStack } from './config/route';
 
 const db = firebase.firestore();
@@ -20,13 +20,13 @@ class App extends Component {
     AsyncStorage.getItem('logined').then((logined) => {
       console.log('read storage', logined);
       if (logined) {
-        props.dispatch(login());
+        // props.dispatch(login());
       }
     });
   }
 
   componentDidMount() {
-    // this.props.dispatch(logout());
+    this.props.dispatch(logout());
 
     this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
       this.props.dispatch(updateUser(user));
@@ -36,6 +36,8 @@ class App extends Component {
         });
 
         this.fetchUser(user.uid);
+      } else {
+        this.props.dispatch(logout());
       }
     });
     Linking.addEventListener('url', this.handleOpenURL);

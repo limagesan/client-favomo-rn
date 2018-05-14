@@ -12,7 +12,7 @@ class ListItem extends React.PureComponent {
   render() {
     const { item, uid } = this.props;
     if (item.actions) {
-      console.log('check', uid, item.actions, item.actions[uid].like.exist);
+      // console.log('check', uid, item.actions, item.actions[uid].like.exist);
     }
     const liked =
       item.actions && item.actions[uid] && item.actions[uid].like && item.actions[uid].like.exist;

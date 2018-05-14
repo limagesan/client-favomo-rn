@@ -19,7 +19,7 @@ class Feed extends Component {
   state = { posts: [], refreshing: false };
 
   componentWillMount() {
-    this.getFeed();
+    this.fetchFeed();
   }
 
   componentWillUpdate() {
@@ -54,9 +54,9 @@ class Feed extends Component {
     const posterUid = item.poster.uid;
     if (liked) {
       db
-        .collection('annotations')
+        .collection('notifications')
         .doc(`${posterUid}`)
-        .collection('annotations')
+        .collection('notifications')
         .where('target.id', '==', item.id)
         .where('type', '==', 'like')
         .get()
@@ -65,17 +65,17 @@ class Feed extends Component {
           if (!docs || docs.length === 0) {
             return;
           }
-          const annotationRef = docs[0].ref;
-          db.doc(annotationRef.path).delete();
+          const notificationRef = docs[0].ref;
+          db.doc(notificationRef.path).delete();
         })
         .catch((err) => {
           console.log('error', err);
         });
     } else {
       db
-        .collection('annotations')
+        .collection('notifications')
         .doc(`${posterUid}`)
-        .collection('annotations')
+        .collection('notifications')
         .add(action)
         .then(() => {
           console.log('Transaction successfully committed!');
@@ -138,9 +138,9 @@ class Feed extends Component {
 
     const posterUid = item.poster.uid;
     db
-      .collection('annotations')
+      .collection('notifications')
       .doc(`${posterUid}`)
-      .collection('annotations')
+      .collection('notifications')
       .add(action)
       .then(() => {
         console.log('Transaction successfully committed!');
@@ -150,13 +150,13 @@ class Feed extends Component {
       });
   };
 
-  onRefresh = () => {
+  onRefresh = async () => {
     this.setState({ refreshing: true });
-    this.getFeed();
+    await this.fetchFeed();
     this.setState({ refreshing: false });
   };
 
-  getFeed = async () => {
+  fetchFeed = async () => {
     if (!this.props.user) {
       return;
     }

@@ -67,7 +67,7 @@ class Profile extends Component {
   }
 
   componentWillUpdate() {
-    this.fetchUser();
+    // this.fetchUser();
   }
 
   onPressButton = () => {
@@ -78,6 +78,127 @@ class Profile extends Component {
     this.setState({ refreshing: true });
     this.getFeed();
     this.setState({ refreshing: false });
+  };
+
+  onPressLike = (item, liked) => {
+    console.log('onPressLike');
+    const { uid } = this.props.user;
+    const { userData } = this.props;
+    const action = {
+      from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
+      target: { id: item.id, url: item.url, caption: item.caption },
+      type: 'like',
+      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const postsUpdate = {};
+    postsUpdate[`actions.${uid}.exist`] = true;
+    postsUpdate[`actions.${uid}.like.exist`] = !liked;
+    postsUpdate[`actions.${uid}.like.createdAt`] = firebase.firestore.FieldValue.serverTimestamp();
+    db
+      .doc(`posts/${item.id}`)
+      .update(postsUpdate)
+      .then(() => {
+        console.log('liked transation completed');
+      });
+
+    const posterUid = item.poster.uid;
+    if (liked) {
+      db
+        .collection('notifications')
+        .doc(`${posterUid}`)
+        .collection('notifications')
+        .where('target.id', '==', item.id)
+        .where('type', '==', 'like')
+        .get()
+        .then((snapshot) => {
+          const { docs } = snapshot;
+          if (!docs || docs.length === 0) {
+            return;
+          }
+          const notificationRef = docs[0].ref;
+          db.doc(notificationRef.path).delete();
+        })
+        .catch((err) => {
+          console.log('error', err);
+        });
+    } else {
+      db
+        .collection('notifications')
+        .doc(`${posterUid}`)
+        .collection('notifications')
+        .add(action)
+        .then(() => {
+          console.log('Transaction successfully committed!');
+        })
+        .catch((error) => {
+          console.log('Transaction failed: ', error);
+        });
+    }
+  };
+
+  onComment = (item, message) => {
+    const { uid } = this.props.user;
+    const postsUpdate = {};
+    postsUpdate[`actions.${uid}.exist`] = true;
+    const comment = {
+      value: message,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    const { userData } = this.props;
+
+    const action = {
+      from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
+      target: { id: item.id, url: item.url, caption: item.caption },
+      type: 'comment',
+      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const postRef = db.doc(`posts/${item.id}`);
+    db
+      .runTransaction(transaction =>
+        transaction.get(postRef).then((doc) => {
+          const data = doc.data();
+          let id = 1;
+
+          if (
+            data.actions &&
+            data.actions[uid] &&
+            data.actions[uid].comments &&
+            data.actions[uid].comments.value
+          ) {
+            const comments = data.actions[uid].comments.value;
+            Object.keys(comments).forEach((key) => {
+              const opponentId = parseInt(key, 10);
+              if (opponentId >= id) {
+                // autoIncrement の idを作成
+                id = opponentId + 1;
+              }
+            });
+          }
+          postsUpdate[`actions.${uid}.comments.value.${id}`] = comment;
+
+          transaction.update(postRef, postsUpdate);
+        }))
+      .then(() => {
+        console.log('Transaction successfully committed!');
+      })
+      .catch((error) => {
+        console.log('Transaction failed: ', error);
+      });
+
+    const posterUid = item.poster.uid;
+    db
+      .collection('notifications')
+      .doc(`${posterUid}`)
+      .collection('notifications')
+      .add(action)
+      .then(() => {
+        console.log('Transaction successfully committed!');
+      })
+      .catch((error) => {
+        console.log('Transaction failed: ', error);
+      });
   };
 
   getFeed = async () => {
@@ -118,7 +239,7 @@ class Profile extends Component {
         return newPost;
       });
 
-      this.setState(prevState => ({ posts: prevState.posts.concat(posts) }));
+      this.setState({ posts: [{ id: 0 }].concat(posts) });
       return;
     } catch (error) {
       console.error('error', error);
@@ -160,6 +281,7 @@ class Profile extends Component {
   // TODO レンダリングが多すぎるのをなんとかしたい
   render() {
     const user = Object.assign({}, this.props.user._user, this.props.userData); // eslint-disable-line no-underscore-dangle
+    const { uid } = this.props.user;
 
     return (
       <Container>
@@ -168,9 +290,12 @@ class Profile extends Component {
           data={this.state.posts}
           onRefresh={this.onRefresh}
           refreshing={this.state.refreshing}
+          onPressLike={this.onPressLike}
+          onComment={this.onComment}
           user={user}
           onLogout={this.logout}
           navigation={this.props.navigation}
+          uid={uid}
         />
       </Container>
     );
@@ -206,7 +331,15 @@ class MultiSelectList extends React.PureComponent {
       item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0 ? (
         <YoutubeListItem id={item.id} item={item} />
       ) : (
-        <ListItem id={item.id} index={index} onPressItem={this.onPressItem} item={item} />
+        <ListItem
+          id={item.id}
+          index={index}
+          onPressItem={this.onPressItem}
+          onPressLike={this.props.onPressLike}
+          onComment={this.props.onComment}
+          item={item}
+          uid={this.props.uid}
+        />
       );
 
     return Item;
