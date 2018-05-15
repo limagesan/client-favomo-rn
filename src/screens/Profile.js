@@ -74,9 +74,9 @@ class Profile extends Component {
     this.props.navigation.goBack();
   };
 
-  onRefresh = () => {
+  onRefresh = async () => {
     this.setState({ refreshing: true });
-    this.getFeed();
+    await this.getFeed();
     this.setState({ refreshing: false });
   };
 
@@ -88,7 +88,7 @@ class Profile extends Component {
       from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
       target: { id: item.id, url: item.url, caption: item.caption },
       type: 'like',
-      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     const postsUpdate = {};
@@ -151,7 +151,7 @@ class Profile extends Component {
       from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
       target: { id: item.id, url: item.url, caption: item.caption },
       type: 'comment',
-      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     const postRef = db.doc(`posts/${item.id}`);

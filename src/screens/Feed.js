@@ -37,7 +37,7 @@ class Feed extends Component {
       from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
       target: { id: item.id, url: item.url, caption: item.caption },
       type: 'like',
-      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     const postsUpdate = {};
@@ -100,7 +100,8 @@ class Feed extends Component {
       from: { uid, name: userData.name, thumbIconURL: userData.thumbIconURL },
       target: { id: item.id, url: item.url, caption: item.caption },
       type: 'comment',
-      cratedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      value: message,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     const postRef = db.doc(`posts/${item.id}`);

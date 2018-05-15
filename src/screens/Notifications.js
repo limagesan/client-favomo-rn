@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-  Image,
-  RefreshControl,
-} from 'react-native';
+import { Text, View, TouchableOpacity, FlatList, Image, RefreshControl } from 'react-native';
 import { connect } from 'react-redux';
 
 import firebase from 'react-native-firebase';
-
-import basicStyles from '../styles';
 
 const db = firebase.firestore();
 
@@ -42,6 +32,7 @@ class Notifications extends Component {
       .collection('notifications')
       .doc(uid)
       .collection('notifications')
+      .orderBy('createdAt', 'desc')
       .get()
       .then((snapshot) => {
         console.log('snapshot', snapshot);
@@ -59,14 +50,11 @@ class Notifications extends Component {
   render() {
     console.log('oioioi', this.state.notifications);
     return (
-      <ScrollView contentContainerStyle={basicStyles.container}>
-        <Text>Post</Text>
-        <NotificationsList
-          onRefresh={this.onRefresh}
-          refreshing={this.state.refreshing}
-          data={this.state.notifications}
-        />
-      </ScrollView>
+      <NotificationsList
+        onRefresh={this.onRefresh}
+        refreshing={this.state.refreshing}
+        data={this.state.notifications}
+      />
     );
   }
 }
@@ -107,19 +95,28 @@ class LikeNotificationItem extends React.PureComponent {
 class CommentNotificationItem extends React.PureComponent {
   render() {
     const { item } = this.props;
-
+    console.log('comment item', item);
     return (
       <TouchableOpacity onPress={this.props.onPress}>
         <View
           style={{
             padding: 10,
-            height: 190,
             backgroundColor: '#FFF',
             flex: 1,
           }}
         >
-          <Image source={{ uri: item.from.thumbIconURL }} />
-          <Text>{item.from.name}</Text>
+          <Image
+            style={{
+              width: 35,
+              height: 35,
+              borderRadius: 17.5,
+            }}
+            source={{ uri: item.from.thumbIconURL }}
+          />
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ fontWeight: 'bold' }}>{item.from.name}</Text>
+            <Text>さんがコメントしました</Text>
+          </View>
           <Text>{item.value}</Text>
         </View>
       </TouchableOpacity>

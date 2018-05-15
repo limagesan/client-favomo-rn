@@ -20,7 +20,7 @@ class App extends Component {
     AsyncStorage.getItem('logined').then((logined) => {
       console.log('read storage', logined);
       if (logined) {
-        // props.dispatch(login());
+        props.dispatch(login());
       }
     });
   }
